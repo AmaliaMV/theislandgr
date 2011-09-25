@@ -1,0 +1,6 @@
+cielo = texturas/cielo1.bmp
+agua =  texturas/agua1.bmp
+pasto = texturas/pasto1.bmp
+suelo = texturas/suelo3.bmp
+arena = texturas/arena.bmp
+mapa = mapas/mapa11.map
