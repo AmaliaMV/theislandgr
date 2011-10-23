@@ -11,12 +11,13 @@
 #include <string>
 using namespace std;
 
-static const string AGUA = "agua";
-static const string CIELO = "cielo";
-static const string MAPA = "mapa";
-static const string PASTO = "pasto";
-static const string SUELO = "suelo";
-static const string ARENA = "arena";
+static const string AGUA = "AGUA";
+static const string CIELO = "CIELO";
+static const string MAPA = "MAPA";
+static const string PASTO = "PASTO";
+static const string SUELO = "SUELO";
+static const string ARENA = "ARENA";
+static const string PALMERA = "PALMERA";
 
 static const string CLAVE_VALIDAS[] =
 {
@@ -25,7 +26,8 @@ static const string CLAVE_VALIDAS[] =
 		MAPA,
 		PASTO,
 		SUELO,
-		ARENA
+		ARENA,
+		PALMERA
 };
 
 static const unsigned int CANT_CLAVES = sizeof(CLAVE_VALIDAS)/sizeof(string) ;
