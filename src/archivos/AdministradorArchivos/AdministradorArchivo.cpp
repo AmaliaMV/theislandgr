@@ -21,8 +21,8 @@ string AdministradorArchivo::getNombreArchivo ( const string clave ) const
 	if ( iterador != mapaDeArchivos->end() )
 		return iterador->second;
 
-	string mensaje = "correspondiente a la clave ";
-	mensaje += clave;
+	string mensaje = "correspondiente a la clave: '" + clave + "' en el archivo de configuracion.";
+
 	throw new EArchivoInexistente ( mensaje );
 }
 
