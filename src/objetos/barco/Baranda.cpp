@@ -9,7 +9,7 @@
 
 const unsigned int Baranda::cantPalitos = 10;
 
-Baranda::Baranda():ObjetoDibujable()
+Baranda::Baranda():ObjetoDibujable( new Textura24("texturas/maderaBaranda.bmp"))
 {
 	palito = new PaloDeBaranda ("texturas/maderaBaranda.bmp");
 //	this->displayList();
