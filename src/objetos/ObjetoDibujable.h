@@ -16,16 +16,15 @@ using namespace std;
 
 class ObjetoDibujable {
 public:
-	ObjetoDibujable( Textura *textura ); /* Textura = del objeto */
-	virtual void dibujar();
-	virtual ~ObjetoDibujable();
+	ObjetoDibujable();
+	virtual void dibujar() const;
+	virtual ~ObjetoDibujable() = 0;
 
 protected:
-	const Textura* getTextura() const;
-	GLuint getIdDisplayList() const ;
+	void compilarDisplayList() const;
+	virtual void displayList() const= 0;
 
 private:
-	Textura *textura;
 	GLuint idDisplayList;
 
 };
