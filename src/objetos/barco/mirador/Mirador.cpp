@@ -17,7 +17,7 @@ Mirador::Mirador(string nombreTexturaBorde, string nombreTexturaPiso, string nom
 	this->baranda = new CilindroConTextura(nombreTexturaBaranda, RADIO/20, RADIO/2);
 	this->pasamano = new ToroideConTextura(nombreTexturaBorde, RADIO, RADIO/10);
 
-	this->displayList();
+	this->compilarDisplayList();
 }
 
 Mirador::~Mirador()
@@ -27,7 +27,7 @@ Mirador::~Mirador()
 	delete this->pasamano;
 }
 
-void Mirador::dibujarBaranda()
+void Mirador::dibujarBaranda() const
 {
 	float fi, pasoFi;
 
@@ -44,16 +44,12 @@ void Mirador::dibujarBaranda()
 	}
 }
 
-void Mirador::displayList()
+void Mirador::displayList() const
 {
-	glNewList(this->getIdDisplayList(), GL_COMPILE);
-
-		this->piso->dibujar();
-		this->dibujarBaranda();
-		glPushMatrix();
-			glTranslatef(0.0, 0.0, RADIO/2);
-			this->pasamano->dibujar();
-		glPopMatrix();
-
-	glEndList();
+	this->piso->dibujar();
+	this->dibujarBaranda();
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, RADIO/2);
+		this->pasamano->dibujar();
+	glPopMatrix();
 }

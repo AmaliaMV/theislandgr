@@ -20,8 +20,8 @@ public:
 	virtual ~Mirador();
 
 private:
-	void displayList();
-	void dibujarBaranda();
+	void displayList() const;
+	void dibujarBaranda() const;
 
 	PisoDeMirador *piso;
 	CilindroConTextura *baranda;

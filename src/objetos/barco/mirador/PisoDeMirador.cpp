@@ -16,7 +16,7 @@ PisoDeMirador::PisoDeMirador( string nombreTexturaBorde, string nombreTexturaPis
 	this->piso = new CirculoConTextura ( nombreTexturaPiso, this->RADIO );
 	this->borde = new BordePisoMirador ( nombreTexturaBorde, this->RADIO, this->ESPESOR );
 
-	this->displayList();
+	this->compilarDisplayList();
 }
 
 PisoDeMirador::~PisoDeMirador()
@@ -25,18 +25,14 @@ PisoDeMirador::~PisoDeMirador()
 	delete this->borde;
 }
 
-void PisoDeMirador::displayList()
+void PisoDeMirador::displayList() const
 {
-	glNewList(this->getIdDisplayList(), GL_COMPILE);
+	glColor3f (1.0, 1.0, 1.0);
 
-		glColor3f (1.0, 1.0, 1.0);
-
+	this->piso->dibujar();
+	this->borde->dibujar();
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, ESPESOR);
 		this->piso->dibujar();
-		this->borde->dibujar();
-		glPushMatrix();
-			glTranslatef(0.0, 0.0, ESPESOR);
-			this->piso->dibujar();
-		glPopMatrix();
-
-	glEndList();
+	glPopMatrix();
 }
