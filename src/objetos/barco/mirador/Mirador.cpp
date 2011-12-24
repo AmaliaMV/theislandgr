@@ -7,8 +7,10 @@
 
 #include "Mirador.h"
 
-Mirador::Mirador(string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
-		float radio): ObjetoDibujable ()
+Mirador::Mirador(EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar,
+		string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
+		float radio)
+	: ObjetoDibujable(), DecoradorBarco(transformacion, aDecorar)
 {
 	this->CANT_PALITOS = 16;
 	this->RADIO = radio;
@@ -52,4 +54,9 @@ void Mirador::displayList() const
 		glTranslatef(0.0, 0.0, RADIO/2);
 		this->pasamano->dibujar();
 	glPopMatrix();
+}
+
+void Mirador::dibujar()
+{
+	ObjetoDibujable::dibujar();
 }

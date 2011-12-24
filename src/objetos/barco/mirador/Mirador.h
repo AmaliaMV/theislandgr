@@ -10,14 +10,20 @@
 
 #include "PisoDeMirador.h"
 
+#include "../DecoradorBarco.h"
+
 #include "../../CilindroConTextura.h"
 #include "../../ToroideConTextura.h"
 
-class Mirador: public ObjetoDibujable {
+class Mirador: public ObjetoDibujable, public DecoradorBarco {
 public:
-	Mirador(string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
+	Mirador(EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar,
+			string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
 			float radio);
 	virtual ~Mirador();
+
+protected:
+	void dibujar();
 
 private:
 	void displayList() const;

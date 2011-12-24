@@ -8,9 +8,9 @@
 #ifndef PISODEMIRADOR_H_
 #define PISODEMIRADOR_H_
 
-#include "../../CirculoConTextura.h"
-
 #include "BordePisoMirador.h"
+
+#include "../../CirculoConTextura.h"
 
 class PisoDeMirador: public ObjetoDibujable {
 public:
