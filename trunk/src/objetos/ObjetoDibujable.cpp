@@ -7,29 +7,24 @@
 
 #include "ObjetoDibujable.h"
 
-ObjetoDibujable::ObjetoDibujable( Textura *textura )
+ObjetoDibujable::ObjetoDibujable()
 {
 	this->idDisplayList = FuncOpenGL::pedirIdDisplayList();
-	this->textura = textura;
 }
 
 ObjetoDibujable::~ObjetoDibujable()
 {
-	delete textura;
 	FuncOpenGL::liberarIdDisplayList( idDisplayList );
 }
 
-GLuint ObjetoDibujable::getIdDisplayList() const
+void ObjetoDibujable::dibujar() const
 {
-	return this->idDisplayList;
+	glCallList( idDisplayList );
 }
 
-const Textura* ObjetoDibujable::getTextura() const
+void ObjetoDibujable::compilarDisplayList() const
 {
-	return textura;
-}
-
-void ObjetoDibujable::dibujar()
-{
-	glCallList(this->getIdDisplayList());
+	glNewList(idDisplayList, GL_COMPILE);
+		this->displayList();
+	glEndList();
 }
