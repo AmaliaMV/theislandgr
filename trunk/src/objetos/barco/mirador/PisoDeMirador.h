@@ -18,7 +18,7 @@ public:
 	virtual ~PisoDeMirador();
 
 private:
-	void displayList();
+	void displayList() const;
 
 	float RADIO;
 	float ESPESOR;
