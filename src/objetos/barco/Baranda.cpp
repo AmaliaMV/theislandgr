@@ -9,7 +9,7 @@
 
 const unsigned int Baranda::cantPalitos = 10;
 
-Baranda::Baranda():ObjetoDibujable( new Textura24("texturas/maderaBaranda.bmp"))
+Baranda::Baranda()
 {
 	palito = new PaloDeBaranda ("texturas/maderaBaranda.bmp");
 //	this->displayList();
@@ -20,13 +20,13 @@ void Baranda::displayList()
 {
 	float x, y, tita, pasoTita;
 
-	pasoTita = ( CteBarco::titaMax - CteBarco::titaMin )/ cantPalitos;
+	pasoTita = ( CteBarco::TITA_MAX - CteBarco::TITA_MIN )/ cantPalitos;
 
 //	glNewList( this->getIdDisplayList(), GL_COMPILE);
-	for ( tita = CteBarco::titaMin; tita <= CteBarco::titaMax; tita += pasoTita )
+	for ( tita = CteBarco::TITA_MIN; tita <= CteBarco::TITA_MAX; tita += pasoTita )
 	{
-		x = ( CteBarco::radioX - palito->getLado()/2 )* Matematica::cosHex( tita );
-		y = ( CteBarco::radioY - palito->getLado()/2 )* Matematica::sinHex( tita );
+		x = ( CteBarco::RADIO_X - palito->getLado()/2 )* Matematica::cosHex( tita );
+		y = ( CteBarco::RADIO_Y - palito->getLado()/2 )* Matematica::sinHex( tita );
 
 		glPushMatrix();
 			glTranslatef( x, y, 0.0 );

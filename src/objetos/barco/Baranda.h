@@ -9,12 +9,12 @@
 #define BARANDA_H_
 
 #include "ConstantesBarco.h"
-#include "PaloDeBaranda.h"
+#include "barcoBasico/PaloDeBaranda.h"
 #include "../ObjetoDibujable.h"
 #include "../../grafica/textura/Textura24.h"
 #include "../../matematica/Matematica.h"
 
-class Baranda: public ObjetoDibujable {
+class Baranda {
 public:
 	Baranda();
 	void dibujar();
