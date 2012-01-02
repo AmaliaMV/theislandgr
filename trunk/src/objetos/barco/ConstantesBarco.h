@@ -23,6 +23,8 @@ public:
 	/* angulo q barro en forma vertical */
 	static const float FI_MIN;
 	static const float FI_MAX;
+	/* angulo max para la baranda*/
+	static const float FI_MAX_BARANDA;
 
 	/*Para la vela principal*/
 	static const float LARGO_VELA_PPAL;
