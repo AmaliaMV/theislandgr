@@ -7,16 +7,15 @@
 
 #include "Mirador.h"
 
-Mirador::Mirador(EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar,
-		string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
-		float radio)
+Mirador::Mirador( string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
+		float radio, EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar )
 	: ObjetoDibujable(), DecoradorBarco(transformacion, aDecorar)
 {
 	this->CANT_PALITOS = 16;
 	this->RADIO = radio;
 
 	this->piso = new PisoDeMirador(nombreTexturaBorde, nombreTexturaPiso, RADIO);
-	this->baranda = new CilindroConTextura(nombreTexturaBaranda, RADIO/20, RADIO/2);
+	this->baranda = new LadoCilindroConTextura(nombreTexturaBaranda, RADIO/20, RADIO/2);
 	this->pasamano = new ToroideConTextura(nombreTexturaBorde, RADIO, RADIO/10);
 
 	this->compilarDisplayList();
