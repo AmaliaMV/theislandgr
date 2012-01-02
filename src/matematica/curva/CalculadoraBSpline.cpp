@@ -7,6 +7,7 @@
 
 #include "CalculadoraBSpline.h"
 
+const float CalculadoraBSpline::CENTRO = 0.5;
 CalculadoraBSpline::CalculadoraBSpline() { }
 
 CalculadoraBSpline::~CalculadoraBSpline() { }
