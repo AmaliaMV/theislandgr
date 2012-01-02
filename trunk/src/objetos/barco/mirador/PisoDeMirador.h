@@ -10,7 +10,7 @@
 
 #include "BordePisoMirador.h"
 
-#include "../../CirculoConTextura.h"
+#include "../../geometricos/CirculoConTextura.h"
 
 class PisoDeMirador: public ObjetoDibujable {
 public:

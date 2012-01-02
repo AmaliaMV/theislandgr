@@ -12,8 +12,8 @@
 
 #include "../DecoradorBarco.h"
 
-#include "../../LadoCilindroConTextura.h"
-#include "../../ToroideConTextura.h"
+#include "../../geometricos/LadoCilindroConTextura.h"
+#include "../../geometricos/ToroideConTextura.h"
 
 class Mirador: public ObjetoDibujable, public DecoradorBarco {
 public:

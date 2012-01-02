@@ -11,7 +11,7 @@
 #include "../DecoradorBarco.h"
 
 #include "../../ODTextura.h"
-#include "../../CilindroConTextura.h"
+#include "../../geometricos/CilindroConTextura.h"
 
 #include "TelaVela.h"
 
