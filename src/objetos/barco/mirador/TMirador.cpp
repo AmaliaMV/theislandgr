@@ -7,11 +7,14 @@
 
 #include "TMirador.h"
 
-TMirador::TMirador():EstrategiaTransformacion() {}
+TMirador::TMirador( float altura ):EstrategiaTransformacion()
+{
+	this->ALTURA = altura;
+}
 
 TMirador::~TMirador() {}
 
 void TMirador::ejecutar()
 {
-	glTranslatef(0.0, 0.0, 30.0);
+	glTranslatef(0.0, 0.0, CteBarco::ALTURA_MIRADOR);
 }

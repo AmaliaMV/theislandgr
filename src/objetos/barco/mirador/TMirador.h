@@ -9,12 +9,15 @@
 #define TMIRADOR_H_
 
 #include "../EstrategiaTransformacion.h"
+#include "../ConstantesBarco.h"
 
 class TMirador: public EstrategiaTransformacion{
 public:
-	TMirador();
+	TMirador( float altura );
 	virtual void ejecutar();
 	virtual ~TMirador();
+private:
+	float ALTURA;
 };
 
 #endif /* TMIRADOR_H_ */

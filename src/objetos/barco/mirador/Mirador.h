@@ -12,14 +12,13 @@
 
 #include "../DecoradorBarco.h"
 
-#include "../../CilindroConTextura.h"
+#include "../../LadoCilindroConTextura.h"
 #include "../../ToroideConTextura.h"
 
 class Mirador: public ObjetoDibujable, public DecoradorBarco {
 public:
-	Mirador(EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar,
-			string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda,
-			float radio);
+	Mirador( string nombreTexturaBorde, string nombreTexturaPiso, string nombreTexturaBaranda, float radio,
+			EstrategiaTransformacion* transformacion, ComponenteBarco* aDecorar );
 	virtual ~Mirador();
 
 protected:
@@ -30,7 +29,7 @@ private:
 	void dibujarBaranda() const;
 
 	PisoDeMirador *piso;
-	CilindroConTextura *baranda;
+	LadoCilindroConTextura *baranda;
 	ToroideConTextura *pasamano;
 
 	unsigned int CANT_PALITOS;
