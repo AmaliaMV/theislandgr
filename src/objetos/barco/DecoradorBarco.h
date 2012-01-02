@@ -15,7 +15,7 @@
 class DecoradorBarco: public ComponenteBarco {
 public:
 	DecoradorBarco( EstrategiaTransformacion *transformacion, ComponenteBarco *aDecorar );
-	virtual void dibujarComponente();
+	void dibujarComponente();
 	virtual ~DecoradorBarco() =0;
 
 private:
