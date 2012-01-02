@@ -22,7 +22,7 @@ void PisoDeBarco::generarCoordPtos()
 	float tita, pasoTita;
 	unsigned int pto = 0;
 
-	pasoTita = ( CteBarco::titaMax - CteBarco::titaMin )/ cantPasosTita;
+	pasoTita = ( CteBarco::TITA_MAX - CteBarco::TITA_MIN )/ cantPasosTita;
 
 	ptos [pto    ] = 0.0;
 	ptos [pto + 1] = 0.0;
@@ -30,10 +30,10 @@ void PisoDeBarco::generarCoordPtos()
 
 	pto += CteObjeto::CANT_COORD_PTO;
 
-	for ( tita = CteBarco::titaMin; tita <= CteBarco::titaMax; tita += pasoTita, pto += CteObjeto::CANT_COORD_PTO )
+	for ( tita = CteBarco::TITA_MIN; tita <= CteBarco::TITA_MAX; tita += pasoTita, pto += CteObjeto::CANT_COORD_PTO )
 	{
-		ptos [pto    ] = CteBarco::radioX * Matematica::cosHex( tita );
-		ptos [pto + 1] = CteBarco::radioY * Matematica::sinHex( tita );
+		ptos [pto    ] = CteBarco::RADIO_X * Matematica::cosHex( tita );
+		ptos [pto + 1] = CteBarco::RADIO_Y * Matematica::sinHex( tita );
 		ptos [pto + 2] = 0.0;
 	}
 }
@@ -53,16 +53,16 @@ void PisoDeBarco::generarCoodText()
 	float tita, pasoTita, centro = 0.5;
 	unsigned int pto = 0;
 
-	pasoTita = ( CteBarco::titaMax - CteBarco::titaMin )/ cantPasosTita;
+	pasoTita = ( CteBarco::TITA_MAX - CteBarco::TITA_MIN )/ cantPasosTita;
 
 	text [pto    ] = centro;
 	text [pto + 1] = centro;
 
 	pto += CteObjeto::CANT_COORD_TEXTURA;
 
-	for ( tita = CteBarco::titaMin; tita <= CteBarco::titaMax; tita += pasoTita, pto += CteObjeto::CANT_COORD_TEXTURA )
+	for ( tita = CteBarco::TITA_MIN; tita <= CteBarco::TITA_MAX; tita += pasoTita, pto += CteObjeto::CANT_COORD_TEXTURA )
 	{
-		text [pto    ] =  CteBarco::radioX / CteBarco::radioY * Matematica::cosHex( tita ) + centro;
+		text [pto    ] =  CteBarco::RADIO_X / CteBarco::RADIO_Y * Matematica::cosHex( tita ) + centro;
 		text [pto + 1] =  Matematica::sinHex( tita ) + centro;
 	}
 }

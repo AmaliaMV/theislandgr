@@ -28,16 +28,16 @@ void CascoDeBarco::generarCoordPtos()
 	float tita, fi, pasoFi, pasoTita;
 	unsigned int pto = 0;
 
-	pasoFi = ( CteBarco::fiMax - CteBarco::fiMin ) / cantPasosFi;
-	pasoTita = ( CteBarco::titaMax - CteBarco::titaMin )/ cantPasosTita;
+	pasoFi = ( CteBarco::FI_MAX - CteBarco::FI_MIN ) / cantPasosFi;
+	pasoTita = ( CteBarco::TITA_MAX - CteBarco::TITA_MIN )/ cantPasosTita;
 
-	for ( fi = CteBarco::fiMin; fi <= CteBarco::fiMax; fi+= pasoFi )
+	for ( fi = CteBarco::FI_MIN; fi <= CteBarco::FI_MAX; fi+= pasoFi )
 	{
-		for ( tita = CteBarco::titaMin; tita <= CteBarco::titaMax; tita += pasoTita, pto += CteObjeto::CANT_COORD_PTO )
+		for ( tita = CteBarco::TITA_MIN; tita <= CteBarco::TITA_MAX; tita += pasoTita, pto += CteObjeto::CANT_COORD_PTO )
 		{
-			ptos [pto    ] = CteBarco::radioX * Matematica::cosHex( fi ) * Matematica::cosHex( tita );
-			ptos [pto + 1] = CteBarco::radioY * Matematica::cosHex( fi ) * Matematica::sinHex( tita );
-			ptos [pto + 2] = CteBarco::radioZ * Matematica::sinHex( fi );
+			ptos [pto    ] = CteBarco::RADIO_X * Matematica::cosHex( fi ) * Matematica::cosHex( tita );
+			ptos [pto + 1] = CteBarco::RADIO_Y * Matematica::cosHex( fi ) * Matematica::sinHex( tita );
+			ptos [pto + 2] = CteBarco::RADIO_Z * Matematica::sinHex( fi );
 		}
 	}
 }

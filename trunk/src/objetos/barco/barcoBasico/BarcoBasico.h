@@ -8,12 +8,12 @@
 #ifndef BARCOBASICO_H_
 #define BARCOBASICO_H_
 
-#include "barcoBasico/CascoDeBarco.h"
-#include "barcoBasico/PisoDeBarco.h"
+#include "CascoDeBarco.h"
+#include "PisoDeBarco.h"
 
-#include "ComponenteBarco.h"
+#include "../ComponenteBarco.h"
 
-#include "../ObjetoDibujable.h"
+#include "../../ObjetoDibujable.h"
 
 class BarcoBasico: public ComponenteBarco, public ObjetoDibujable {
 public:
