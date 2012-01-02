@@ -13,7 +13,7 @@
 
 /* la curva originalmente va de 0 a 1, pero al calcularla se hizo un desplazamiento
  * de las coordenadas x e y a 0.5 */
-#define CENTRO 0.5
+
 class CalculadoraBSpline {
 public:
 	static void f_bspline( float *ctrlPtos, float u, float &x, float &y);
@@ -28,6 +28,7 @@ public:
 
 private:
 	CalculadoraBSpline();
+	static const float CENTRO;
 
 };
 

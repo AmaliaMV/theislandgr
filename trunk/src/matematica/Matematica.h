@@ -22,6 +22,8 @@ public:
 	static double cosRad(double anguloRad);
 	static double sinRad(double anguloRad);
 
+	static unsigned int factorial( unsigned int i );
+
 	virtual ~Matematica();
 
 private:
