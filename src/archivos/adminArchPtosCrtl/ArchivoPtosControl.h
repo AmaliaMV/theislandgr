@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../matematica/curva/PuntosControl.h"
-#include "EArchivoInexistente.h"
+#include "../../matematica/curva/PuntosControl.h"
+#include "../EArchivoInexistente.h"
 
 struct archEncabezado
 {
