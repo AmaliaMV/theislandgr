@@ -19,11 +19,15 @@ Baupres::Baupres( string nombreText, string nombreArchPtos,
 
 	const unsigned int cantPtosH = FI_MAX / PASO_ROT_FI + 1; // cuento al 0 dos veces
 	const unsigned int cantPtosV = bezierCubica->cantCurvas(ptosCtrl) * PASO_ROT_Z;
+	delete bezierCubica;
 
 	this->init(cantPtosH * cantPtosV, cantPtosH*(cantPtosV-1)*2, GL_TRIANGLE_STRIP);
 }
 
-Baupres::~Baupres() { }
+Baupres::~Baupres()
+{
+	delete ptos;
+}
 
 void Baupres::generarCoordPtos()
 {
