@@ -18,52 +18,112 @@ const float BordeIsla::ESCALADOxy = 20.0;
 const float BordeIsla::ESCALADOz =  BordeIsla::ESCALADOxy / 9.00;
 const float BordeIsla::ALTURA_ENTRE_NIVELES = 0.4;
 
-BordeIsla::BordeIsla( PuntosControl *ptos, string nombreTextura, const int paso, const int cantNivelesHorizontales ) :ObjetoDibujable ( new Textura24(nombreTextura) )
+BordeIsla::BordeIsla( PuntosControl *ptos, string nombreTextura, const int cantNivelesHorizontales )
+	: ODTextura( new Textura24( nombreTextura ) )
 {
-	this->superficie = new BordeBSpline ( ptos, cantNivelesHorizontales, ESCALADOxy, ESCALADOz, PENDIENTE, ALTURA_ENTRE_NIVELES );
+	this->curva = new BSplineCerrada ( ptos );
+	this->ptosHorizontales = this->curva->getCantCurvas() * ( CteIsla::PASO_BARRIDO + 1 );
+	this->ptosVerticales = cantNivelesHorizontales;
 
-	this->displayList();
+	this->init( this->getCantPtos(), this->getCantReferencias(), GL_TRIANGLE_STRIP );
 }
 
 BordeIsla::~BordeIsla()
 {
-	delete superficie;
+	delete curva;
 }
 
-float BordeIsla::getAlturaMax()
+float BordeIsla::getAlturaMax() const
 {
-	return this->superficie->getAltura();
+	return ALTURA_ENTRE_NIVELES * (ptosVerticales-1) * ESCALADOz;
 }
-float BordeIsla::getEscalado()
+
+float BordeIsla::getEscalado() const
 {
 	return ESCALADOxy;
 }
-void BordeIsla::displayList()
+
+void BordeIsla::generarCoordPtos()
 {
-	float *ptos, *coordText;
-	unsigned int *indice;
+	unsigned int curvaNum, ptoNum, pos;
+	int nivel;
+	float x, y, factor;
+	float puntos[ORDEN_BSPLINE][CteObjeto::CANT_COORD_PTO];
 
-	ptos = this->superficie->generarPtos();
-	coordText = this->superficie->generarCoorText();
-	indice = this->superficie->generarIndice();
+	factor = 1.0;
+	pos = 0;
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glVertexPointer(CteObjeto::CANT_COORD_PTO, GL_FLOAT, 0, ptos);
-		glTexCoordPointer(CteObjeto::CANT_COORD_TEXTURA, GL_FLOAT, 0, coordText);
+	for ( nivel = (ptosVerticales - 1) ; 0 <= nivel ; nivel-- ) //-1 porq cuento desde cero
+	{
+		for ( curvaNum = 0; curvaNum < this->curva->getCantCurvas(); curvaNum++ ) // todas la curva
+		{
+			this->curva->cargarPtosCrtl( puntos, curvaNum );
 
-			glNewList( this->getIdDisplayList(), GL_COMPILE);
-			Textura::habilitar();
-			this->getTextura()->usar();
-			glColor3f(1.0, 1.0, 1.0);
-			glDrawElements (GL_TRIANGLE_STRIP, superficie->getCantReferencias(), GL_UNSIGNED_INT, indice);
-			Textura::deshabilitar();
-			glEndList();
+			for (ptoNum = 0; ptoNum <= CteIsla::PASO_BARRIDO; ptoNum++) // ptos de ctrl de un tramo de la curva cerrada
+			{
+				CalculadoraBSpline::f_bsplineCentrada05( *puntos, (float)ptoNum/CteIsla::PASO_BARRIDO, x, y );
 
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+				ptos[ pos++ ] = x * factor * ESCALADOxy;
+				ptos[ pos++ ] = y * factor * ESCALADOxy;
+				ptos[ pos++ ] = ALTURA_ENTRE_NIVELES * nivel * ESCALADOz;
 
-	delete [] ptos;
-	delete [] coordText;
-	delete [] indice;
+			}
+		}
+		factor += PENDIENTE;
+	}
+}
+
+void BordeIsla::generarIndice()
+{
+	unsigned int pos, posFila, posColumna;
+	pos = 0;
+
+	for ( posFila = 0; posFila < ptosVerticales - 1 ; posFila++ )
+	{
+		for ( posColumna = 0 ; posColumna < ptosHorizontales; posColumna++ )
+		{
+			indice [ pos++ ] = posColumna + ptosHorizontales * posFila;
+			indice [ pos++ ] = posColumna + ptosHorizontales * ( posFila + 1);
+		}
+
+		indice [ pos++ ] = ptosHorizontales * posFila;
+		indice [ pos++ ] = ptosHorizontales * ( posFila + 1);
+	}
+}
+
+void BordeIsla::generarCoodText()
+{
+	unsigned int curvaNum, ptoNum, pos;
+	float incY, valorTextY;
+	float puntos[ORDEN_BSPLINE][CteObjeto::CANT_COORD_PTO];
+	int nivel;
+
+	incY = 0.70 / ( ptosVerticales * 20/9 ); //todo
+	valorTextY = 1.0;
+	pos = 0;
+
+	for ( nivel = (ptosVerticales - 1);  0 <= nivel; nivel-- )
+	{
+		for ( curvaNum = 0; curvaNum < this->curva->getCantCurvas(); curvaNum++)
+		{
+			this->curva->cargarPtosCrtl( puntos, curvaNum );
+
+			for (ptoNum = 0; ptoNum <= CteIsla::PASO_BARRIDO; ptoNum++)
+			{
+				text [ pos++ ] = (float)( curvaNum * ( CteIsla::PASO_BARRIDO + 1 ) + ptoNum ) / (( CteIsla::PASO_BARRIDO + 1) * this->curva->getCantCurvas() );
+				text [ pos++ ] =  valorTextY ;
+			}
+		}
+		valorTextY -= incY;
+	}
+}
+
+unsigned int BordeIsla::getCantPtos() const
+{
+	return ptosHorizontales * ptosVerticales;
+}
+
+unsigned int BordeIsla::getCantReferencias() const
+{
+	return 2 * ( ptosHorizontales + 1 ) * ( ptosVerticales - 1 );
 }
