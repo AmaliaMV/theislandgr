@@ -23,9 +23,10 @@
 #include "mirador/Mirador.h"
 #include "mirador/TMirador.h"
 
+//#include "canon/Canon.h"
 #include "barcoBasico/BarcoBasico.h"
 
-
+#include "baranda/BarandaEntera.h"
 
 class Barco: public ObjetoDibujable {
 public:
@@ -38,8 +39,8 @@ protected:
 private:
 	ComponenteBarco *partesBarco;
 
-	Baupres *baupres;
-	ComponenteBarco* crearMastilPpal( ComponenteBarco *parteBarco);
+//	Canon *canon;
+	ComponenteBarco* crearPaloMayor( ComponenteBarco *parteBarco);
 	ComponenteBarco* crearMastilSecundario( float desplazamiento, ComponenteBarco *parteBarco );
 
 };
