@@ -8,17 +8,26 @@
 #ifndef PALMERA_H_
 #define PALMERA_H_
 
-#include "ObjetoDibujable.h"
+#include "ODTextura.h"
+
 #include "../grafica/textura/Textura32.h"
 
-class Palmera: public ObjetoDibujable {
+class Palmera: public ODTextura {
 public:
 	Palmera( string nombreTextura );
-	void dibujar();
 	virtual ~Palmera();
 
-private:
+protected:
+	void generarCoordPtos();
+	void generarIndice();
+	void generarCoodText();
+
 	void displayList();
+
+private:
+
+	unsigned int TAM_INDICE;
+	unsigned int TAM_PTOS;
 };
 
 #endif /* PALMERA_H_ */
