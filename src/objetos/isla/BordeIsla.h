@@ -8,11 +8,14 @@
 #ifndef BORDEISLA_H_
 #define BORDEISLA_H_
 
-#include "../ObjetoDibujable.h"
-#include "../../grafica/textura/Textura24.h"
-#include "BordeBSpline.h"
+#include "ConstantesIsla.h"
 
-class BordeIsla: public ObjetoDibujable {
+#include "../ODTextura.h"
+
+#include "../../grafica/textura/Textura24.h"
+#include "../../matematica/curva/BSplineCerrada.h"
+#include "../../matematica/curva/CalculadoraBSpline.h"
+class BordeIsla: public ODTextura {
 public:
 
 	/*
@@ -36,10 +39,15 @@ public:
 	 * 	nivelesH		es la cantidad de niveles horizontales q va a tener
 	 * 					la superficie
 	 */
-	BordeIsla( PuntosControl *ptos, string nombreTextura, const int paso, const int nivelesH );
-	float getAlturaMax();
-	float getEscalado();
+	BordeIsla( PuntosControl *ptos, string nombreTextura, const int nivelesH );
+	float getAlturaMax() const;
+	float getEscalado() const;
 	virtual ~BordeIsla();
+
+protected:
+	void generarCoordPtos();
+	void generarIndice();
+	void generarCoodText();
 
 private:
 	static const float PENDIENTE;
@@ -47,10 +55,13 @@ private:
 	static const float ESCALADOz;
 	static const float ALTURA_ENTRE_NIVELES;
 
-	BordeBSpline *superficie;
+	unsigned int ptosHorizontales;
+	unsigned int ptosVerticales;
 
-	void displayList();
+	BSplineCerrada *curva;
 
+	unsigned int getCantPtos() const;
+	unsigned int getCantReferencias() const;
 };
 
 #endif /* BORDEISLA_H_ */
