@@ -10,7 +10,7 @@
 
 #include "Agua.h"
 #include "Cielo.h"
-#include "Isla.h"
+#include "isla/Isla.h"
 
 #define DIRECTORIO_DE_TEXTURAS texturas
 

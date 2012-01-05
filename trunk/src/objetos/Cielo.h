@@ -8,14 +8,20 @@
 #ifndef CIELO_H_
 #define CIELO_H_
 
-#include "ObjetoDibujable.h"
+#include "ODTextura.h"
+
 #include "../grafica/textura/Textura24.h"
 #include "../matematica/Matematica.h"
 
-class Cielo: public ObjetoDibujable {
+class Cielo: public ODTextura {
 public:
 	Cielo( string nombreTextura, float radio );
 	virtual ~Cielo();
+
+protected:
+	virtual void generarCoordPtos();
+	virtual void generarIndice();
+	virtual void generarCoodText();
 
 private:
 	void displayList();
@@ -25,11 +31,15 @@ private:
 	void generarFigura ( float *ptos, unsigned int *vertIndice );
 	void generarCoordText ( float *coordText, unsigned int cantFila, unsigned int cantColum );
 
-	float radio;
-	float fiMax;
-	float titaMax;
-	float deltaFi;
-	float deltaTita;
+	unsigned int cantPtosX;
+	unsigned int cantPtosY;
+
+	float RADIO;
+
+	static const float FI_MAX;
+	static const float TITA_MAX;
+	static const float DELTA_FI;
+	static const float DELTA_TITA;
 };
 
 #endif /* CIELO_H_ */

@@ -8,7 +8,7 @@
 #ifndef AGUA_H_
 #define AGUA_H_
 
-#include "ObjetoDibujable.h"
+#include "../ConstantesObjeto.h"
 #include "../grafica/textura/Textura24.h"
 #include "../matematica/Matematica.h"
 
@@ -19,7 +19,7 @@
 #define INC 10.0
 #define INC_REDUCIR 10.0
 
-class Agua: public ObjetoDibujable {
+class Agua {
 public:
 	Agua( string nombreTextura, float radio );
 	virtual void dibujar();
@@ -37,11 +37,13 @@ private:
 	const float getIncAnguloZ() const;
 
 	float angulo;
-	float radio;
+	float RADIO;
 
 	static const float ANG_XY_MAX;
 	static const float COORD_CENTRO_TEXTURA;
 	static const float GRADO_AGUA_AGITADA;
+
+	Textura *textura;
 
 };
 

@@ -12,7 +12,6 @@
 #include "../grafica/FuncOpenGL.h"
 
 #include "../ConstantesObjeto.h"
-using namespace std;
 
 class ObjetoDibujable {
 public:
@@ -26,7 +25,6 @@ protected:
 
 private:
 	GLuint idDisplayList;
-
 };
 
 #endif /* OBJETODIBUJABLE_H_ */

@@ -12,10 +12,13 @@ const float Agua::ANG_XY_MAX = 360.0;
 const float Agua::COORD_CENTRO_TEXTURA = 0.5;
 const float Agua::GRADO_AGUA_AGITADA = 0.75;
 
-Agua::Agua( string nombreTextura, float radio ):ObjetoDibujable ( new Textura24(nombreTextura) )
+Agua::Agua( string nombreTextura, float radio )
 {
 	this->angulo = 0.0;
-	this->radio = radio;
+
+	this->RADIO = radio;
+	this->textura = new Textura24(nombreTextura);
+
 }
 
 void Agua::incrementarAngulo()
@@ -53,7 +56,7 @@ void Agua::dibujar()
 		glTexCoordPointer(CteObjeto::CANT_COORD_TEXTURA, GL_FLOAT, 0, coordText);
 
 			Textura::habilitar();
-			this->getTextura()->usar();
+			this->textura->usar();
 			glColor3f(1.0, 1.0, 1.0);
 			glDrawElements (GL_TRIANGLE_STRIP/*GL_LINE_STRIP*/, cantRef, GL_UNSIGNED_INT, vertIndice);
 			Textura::deshabilitar();
@@ -76,7 +79,7 @@ void Agua::generarPtos ( float *ptos )
 
 	anguloZ = angulo;
 
-	for ( radio = 0.0; radio <= this->radio; radio+= this->getIncRadio() )
+	for ( radio = 0.0; radio <= this->RADIO; radio+= this->getIncRadio() )
 	{
 		for ( anguloXY = 0.0 ; anguloXY <= ANG_XY_MAX; anguloXY += this->getIncAnguloXY() )
 		{
@@ -116,21 +119,20 @@ void Agua::generarCoordText ( float *coordText, unsigned int cantPtos )
 	float radio, anguloXY, radioCentrado;
 	unsigned int posPto = 0;
 
-	for ( radio = 0.0; radio <= this->radio; radio+= this->getIncRadio() )
+	for ( radio = 0.0; radio <= this->RADIO; radio+= this->getIncRadio() )
 	{
-		radioCentrado = radio / ( this->radio * 2 ); // para q el radio qde entre 0.0 y 0.5
+		radioCentrado = radio / ( this->RADIO * 2 ); // para q el radio qde entre 0.0 y 0.5
 		for ( anguloXY = 0.0 ; anguloXY <= ANG_XY_MAX; anguloXY += this->getIncAnguloXY() )
 		{
-			coordText[posPto    ] = radioCentrado * Matematica::cosHex ( anguloXY ) + COORD_CENTRO_TEXTURA; // para q las coordenadas de la textura esten entre 0 y 1
-			coordText[posPto + 1] = radioCentrado * Matematica::sinHex ( anguloXY ) + COORD_CENTRO_TEXTURA;
-			posPto += CteObjeto::CANT_COORD_TEXTURA;
+			coordText[posPto++] = radioCentrado * Matematica::cosHex ( anguloXY ) + COORD_CENTRO_TEXTURA; // para q las coordenadas de la textura esten entre 0 y 1
+			coordText[posPto++] = radioCentrado * Matematica::sinHex ( anguloXY ) + COORD_CENTRO_TEXTURA;
 		}
 	}
 }
 
 const float Agua::getIncRadio() const
 {
-	return 	this->radio / PASO_RADIO;
+	return 	this->RADIO / PASO_RADIO;
 }
 
 const float Agua::getIncAnguloXY() const

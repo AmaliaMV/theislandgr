@@ -7,7 +7,7 @@
 
 #include "ODTextura.h"
 
-ODTextura::ODTextura( Textura *textura )
+ODTextura::ODTextura( Textura *textura ): ObjetoDibujable()
 {
 	this->textura = textura;
 }
