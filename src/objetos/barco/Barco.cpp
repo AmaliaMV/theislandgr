@@ -12,14 +12,16 @@ Barco::Barco():ObjetoDibujable()
 //	baranda = new Baranda ();
 //	mastil = new Palo("texturas/madera_roble.bmp", 35, 0.85, 0.45);
 
+//	canon = new Canon( "texturas/aluminio_pulido3.bmp", "canon3.pto" );
 
-
-
-	partesBarco = new Baupres("texturas/pisoBarco.bmp", "baupres.pto", new TBaupres(),
+	partesBarco =
+			new BarandaEntera( "texturas/madera4.bmp", 5.0, 2 * CteBarco::RADIO_Y, new EstrategiaTransformacion(),
+			new Baupres("texturas/pisoBarco.bmp", "baupres.pto", new TBaupres(),
 			crearMastilSecundario( -8.0,
 			crearMastilSecundario( 8.0,
-			crearMastilPpal( new BarcoBasico ( new EstrategiaTransformacion(), "texturas/madera4.bmp",
-					"texturas/pisoBarco.bmp" )))));
+			crearPaloMayor(
+					new BarcoBasico ( new EstrategiaTransformacion(), "texturas/madera4.bmp", "texturas/pisoBarco.bmp" )
+			)))));
 
 
 	this->compilarDisplayList();
@@ -29,9 +31,9 @@ void Barco::displayList() const
 {
 	partesBarco->dibujarComponente();
 //	glPushMatrix();
-//			glRotatef(-45, 1.0, 0.0, 0.0);
-//			glScalef(20,20,20);
-//	baupres->dibujar();
+//			glRotatef(45, 0.0, 1.0, 0.0);
+//			glScalef(80, 80, 70);
+//	canon->dibujar();
 //	glPopMatrix();
 //	glPushMatrix();
 //		glTranslatef(0.0, -15.0, 0.0);
@@ -47,14 +49,12 @@ void Barco::displayList() const
 
 Barco::~Barco()
 {
-//	delete baranda;
-//	delete mastil;
 //	delete vela;
 	delete partesBarco;
-	delete baupres;
+//	delete canon;
 }
 
-ComponenteBarco* Barco::crearMastilPpal( ComponenteBarco *parteBarco)
+ComponenteBarco* Barco::crearPaloMayor( ComponenteBarco *parteBarco)
 {
 	return 	new Vela ( "texturas/tela_gris.bmp", CteBarco::LARGO_VELA_PPAL, CteBarco::ALTO_VELA_PPAL, 0.08,
 				"texturas/madera_baranda.bmp", 0.50, new TVelaPrincipal( CteBarco::LARGO_VELA_PPAL/2.0, 20.0 ),
