@@ -26,7 +26,7 @@ Baupres::Baupres( string nombreText, string nombreArchPtos,
 
 Baupres::~Baupres()
 {
-	delete ptos;
+	delete ptosCtrl;
 }
 
 void Baupres::generarCoordPtos()

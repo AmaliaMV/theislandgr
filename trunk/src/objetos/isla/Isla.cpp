@@ -68,6 +68,7 @@ Isla::~Isla()
 	delete arena;
 	delete pasto;
 	delete playaBorde;
+	delete palmera;
 }
 
 void Isla::levantarCurva( string nombreArchPtoCtrl )
