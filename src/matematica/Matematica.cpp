@@ -40,3 +40,11 @@ unsigned int Matematica::factorial(unsigned int n)
 
 	return fact;
 }
+
+double Matematica::modulo( double numero )
+{
+	if ( numero < 0 )
+		return -numero;
+
+	return numero;
+}

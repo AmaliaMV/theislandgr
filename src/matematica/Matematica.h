@@ -22,7 +22,9 @@ public:
 	static double cosRad(double anguloRad);
 	static double sinRad(double anguloRad);
 
-	static unsigned int factorial( unsigned int i );
+	static unsigned int factorial( unsigned int n );
+
+	static double modulo( double numero );
 
 	virtual ~Matematica();
 
