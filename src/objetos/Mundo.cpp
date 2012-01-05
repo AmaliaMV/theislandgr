@@ -17,6 +17,7 @@ Mundo::Mundo(string nombreArchivoNivel)
 	isla = new Isla ( admin );
 	agua = new Agua( admin->getNombreArchivo( AGUA ), 44.0 );
 	cielo = new Cielo ( admin->getNombreArchivo( CIELO), 40.0);
+	barco = new Barco();
 
 	delete admin;
 }
@@ -35,9 +36,19 @@ void Mundo::dibujar()
 		glTranslatef(0.0, 0.0, 1.5);
 		isla->dibujar();
 	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(10.0, 10.0, 2.5);
+		glScalef(0.25, 0.25, 0.25);
+		barco->dibujar();
+	glPopMatrix();
+
 }
 
 Mundo::~Mundo()
 {
 	delete agua;
+	delete cielo;
+	delete barco;
+	delete isla;
 }

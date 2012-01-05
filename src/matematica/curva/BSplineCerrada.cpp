@@ -27,7 +27,7 @@ void BSplineCerrada::cerrarCurva()
 	{
 		v = ctrlPtos->getPto( ptoNumero );
 		ctrlPtos->agregarPto( v );
-		delete v;
+		delete []v;
 	}
 }
 

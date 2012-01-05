@@ -11,6 +11,7 @@
 #include "Agua.h"
 #include "Cielo.h"
 #include "isla/Isla.h"
+#include "barco/Barco.h"
 
 #define DIRECTORIO_DE_TEXTURAS texturas
 
@@ -30,6 +31,7 @@ private:
 	Agua *agua;
 	Cielo *cielo;
 	Isla *isla;
+	Barco *barco;
 
 	static const float RADIO_MUNDO;
 	static const float RADIO_AGUA;

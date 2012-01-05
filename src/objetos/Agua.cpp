@@ -70,7 +70,10 @@ void Agua::dibujar()
 
 }
 
-Agua::~Agua() { }
+Agua::~Agua()
+{
+	delete this->textura;
+}
 
 void Agua::generarPtos ( float *ptos )
 {
