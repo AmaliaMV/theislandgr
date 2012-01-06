@@ -62,3 +62,8 @@ void LadoCilindroConTextura::generarCoodText()
 		this->text[indice++] = 1.0;
 	}
 }
+
+float LadoCilindroConTextura::getAltura() const
+{
+	return this->ALTURA;
+}

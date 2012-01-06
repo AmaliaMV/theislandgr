@@ -17,6 +17,8 @@ public:
 	LadoCilindroConTextura(string nombreTextura, float radio, float altura);
 	virtual ~LadoCilindroConTextura();
 
+	float getAltura() const;
+
 protected:
 	void generarCoordPtos();
 	void generarIndice();

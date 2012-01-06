@@ -7,21 +7,28 @@
 
 #include "Barco.h"
 
+const float Barco::ANG_CANON_MAX = 20.0;
+const float Barco::ANG_CANON_MIN = -20.0;
+const float Barco::DELTA_ANG = 2.0; //encuenta disminuye o aumenta el ang cada vez q se inc o dec el angulo
+
+const float Barco::ALTO_CAJA = 3.5;
+const float Barco::LARGO_CAJA = 3.0;
+
 Barco::Barco():ObjetoDibujable()
 {
-//	baranda = new Baranda ();
-//	mastil = new Palo("texturas/madera_roble.bmp", 35, 0.85, 0.45);
+	this->anguloCanon = 0.0;
 
-//	canon = new Canon( "texturas/aluminio_pulido3.bmp", "canon3.pto" );
+	canon = new Canon( "texturas/aluminio_pulido3.bmp", "canon3.pto" );
 
 	partesBarco =
+			new CajaCanon ( "texturas/madera_nogal.bmp", ALTO_CAJA, 3.5, LARGO_CAJA, tCajaCanon = new TCajaCanon( ALTO_CAJA, LARGO_CAJA ),
 			new BarandaEntera( "texturas/madera4.bmp", 5.0, 2 * CteBarco::RADIO_Y, new EstrategiaTransformacion(),
 			new Baupres("texturas/pisoBarco.bmp", "baupres.pto", new TBaupres(),
 			crearMastilSecundario( -8.0,
 			crearMastilSecundario( 8.0,
 			crearPaloMayor(
 					new BarcoBasico ( new EstrategiaTransformacion(), "texturas/madera4.bmp", "texturas/pisoBarco.bmp" )
-			)))));
+			))))));
 
 
 	this->compilarDisplayList();
@@ -31,9 +38,8 @@ void Barco::displayList() const
 {
 	partesBarco->dibujarComponente();
 //	glPushMatrix();
-//			glRotatef(45, 0.0, 1.0, 0.0);
-//			glScalef(80, 80, 70);
-//	canon->dibujar();
+//		glRotatef(-90, 0.0, 1.0, 0.0);
+//		prisma->dibujar();
 //	glPopMatrix();
 //	glPushMatrix();
 //		glTranslatef(0.0, -15.0, 0.0);
@@ -49,9 +55,8 @@ void Barco::displayList() const
 
 Barco::~Barco()
 {
-//	delete vela;
 	delete partesBarco;
-//	delete canon;
+	delete canon;
 }
 
 ComponenteBarco* Barco::crearPaloMayor( ComponenteBarco *parteBarco)
@@ -76,4 +81,32 @@ ComponenteBarco* Barco::crearMastilSecundario( float desplazamiento,  Componente
 			new Palo ( "texturas/madera_roble.bmp", CteBarco::ALTURA_PALO_SEC, 0.75, 0.35,
 				new TMastilSecundario( desplazamiento ), parteBarco
 			)));
+}
+
+void Barco::incAngulo()
+{
+	if ( anguloCanon < ANG_CANON_MAX )
+		anguloCanon+= DELTA_ANG;
+}
+void Barco::decAngulo()
+{
+	if ( anguloCanon > ANG_CANON_MIN )
+		anguloCanon-= DELTA_ANG;
+}
+
+void Barco::dibujar()
+{
+	ObjetoDibujable::dibujar();
+
+
+//
+	glPushMatrix();
+			tCajaCanon->ejecutar();
+			glRotatef(-90.0 + this->anguloCanon , 0.0, 1.0, 0.0);
+			glScalef(7, 7, 10);
+			glTranslatef(0.0, 0.0, 0.05);
+			canon->dibujar();
+	glPopMatrix();
+
+
 }

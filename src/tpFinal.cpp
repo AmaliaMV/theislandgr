@@ -295,9 +295,12 @@ void keyboard (unsigned char key, int x, int y)
 		  glutPostRedisplay();
 		  break;
 
-	  case 'n': //anterior
+	  case 'n':
+//		  barco->decAngulo();
 		  break;
-	  case 'm': //siguiente
+
+	  case 'm':
+//		  barco->incAngulo();
 		  break;
      default:
          break;
