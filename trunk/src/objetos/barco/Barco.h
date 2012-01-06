@@ -23,26 +23,44 @@
 #include "mirador/Mirador.h"
 #include "mirador/TMirador.h"
 
-//#include "canon/Canon.h"
+#include "canon/Canon.h"
+#include "canon/CajaCanon.h"
+#include "canon/TCajaCanon.h"
+
 #include "barcoBasico/BarcoBasico.h"
 
 #include "baranda/BarandaEntera.h"
 
+#include "../geometricos/PrismaConTextura.h"
+
 class Barco: public ObjetoDibujable {
 public:
 	Barco();
+	void dibujar();
 	virtual ~Barco();
+	void incAngulo();
+	void decAngulo();
 
 protected:
 	virtual void displayList() const;
 
 private:
+	TCajaCanon *tCajaCanon;
 	ComponenteBarco *partesBarco;
 
-//	Canon *canon;
+	Canon *canon;
+	LadoPrismaConTextura *prisma;
 	ComponenteBarco* crearPaloMayor( ComponenteBarco *parteBarco);
 	ComponenteBarco* crearMastilSecundario( float desplazamiento, ComponenteBarco *parteBarco );
 
+	float anguloCanon;
+
+	static const float ANG_CANON_MAX;
+	static const float ANG_CANON_MIN;
+	static const float DELTA_ANG;
+
+	static const float ALTO_CAJA;
+	static const float LARGO_CAJA;
 };
 
 #endif /* BARCO_H_ */

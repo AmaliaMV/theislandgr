@@ -48,13 +48,13 @@ void Isla::displayList() const
 		glTranslatef(0.0,0.0, - playaBorde->getAlturaMax());
 		playaBorde->dibujar();
 	glPopMatrix();
-	glPopMatrix();
-		glTranslatef(0.0,0.0, supBorde->getAlturaMax());
-		palmera->dibujar();
-//		glTranslatef(5.0,0.0, 0.0);
+//	glPopMatrix();
+//		glTranslatef(0.0,0.0, supBorde->getAlturaMax());
 //		palmera->dibujar();
-
-	glPopMatrix();
+////		glTranslatef(5.0,0.0, 0.0);
+////		palmera->dibujar();
+//
+//	glPopMatrix();
 
 	glPopMatrix();
 
