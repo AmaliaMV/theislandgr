@@ -28,13 +28,19 @@ public:
 
 private:
 
+	void incAnguloBarco();
+
 	Agua *agua;
 	Cielo *cielo;
 	Isla *isla;
 	Barco *barco;
 
+	float anguloBarco;
+
 	static const float RADIO_MUNDO;
 	static const float RADIO_AGUA;
+	static const float RADIO_NAVEGACION;
+	static const float DELTA_ANGULO;
 };
 
 #endif /* MUNDO_H_ */

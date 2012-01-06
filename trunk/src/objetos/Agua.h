@@ -8,6 +8,8 @@
 #ifndef AGUA_H_
 #define AGUA_H_
 
+#include "ConstantesMundo.h"
+
 #include "../ConstantesObjeto.h"
 #include "../grafica/textura/Textura24.h"
 #include "../matematica/Matematica.h"
