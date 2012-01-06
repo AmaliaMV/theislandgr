@@ -1,0 +1,14 @@
+/*
+ * ConstanteMundo.cpp
+ *
+ *  Created on: 06/01/2012
+ *      Author: amalia
+ */
+
+#include "ConstantesMundo.h"
+
+CteMundo::CteMundo() {}
+
+CteMundo::~CteMundo() {}
+
+const float CteMundo::NIVEL_AGUA = 0.5;

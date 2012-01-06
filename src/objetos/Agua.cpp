@@ -88,7 +88,7 @@ void Agua::generarPtos ( float *ptos )
 		{
 			ptos[posPto    ] = radio * Matematica::cosHex ( anguloXY );
 			ptos[posPto + 1] = radio * Matematica::sinHex ( anguloXY );
-			ptos[posPto + 2] = 0.5 * Matematica::cosHex( anguloZ ) ; // -0.5 <= z<= 0.5
+			ptos[posPto + 2] = CteMundo::NIVEL_AGUA * Matematica::cosHex( anguloZ ) ; // -0.5 <= z<= 0.5
 
 			posPto += CteObjeto::CANT_COORD_PTO;
 		}
