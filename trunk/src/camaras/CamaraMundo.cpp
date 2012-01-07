@@ -10,7 +10,7 @@
 CamaraMundo::CamaraMundo():Camara( 0.0, 45.0 )
 {
 	this->distancia = 20;
-	this->setTitaMax( ANGULO_MAX_TITA );
+	this->setAngVMax( ANGULO_MAX_TITA );
 }
 
 CamaraMundo::~CamaraMundo() { }
@@ -19,8 +19,8 @@ void CamaraMundo::setEye()
 {
 	float x, y, z;
 
-	x = distancia * Matematica::cosHex ( this->getFi() ) * Matematica::sinHex ( this->getTita() );
-	y = distancia * Matematica::sinHex ( this->getFi() ) * Matematica::sinHex ( this->getTita() );
+	x = distancia * Matematica::cosHex ( this->getAngH() ) * Matematica::sinHex ( this->getTita() );
+	y = distancia * Matematica::sinHex ( this->getAngH() ) * Matematica::sinHex ( this->getTita() );
 	z = distancia * Matematica::cosHex ( this->getTita() ) + 5;
 
 	this->setCoordEye( x, y, z );

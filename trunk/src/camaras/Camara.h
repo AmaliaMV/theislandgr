@@ -11,7 +11,7 @@
 using namespace std;
 class Camara {
 public:
-	Camara ( float fiInit, float titaInit );
+	Camara ( float angHInit, float angVInit );
 	virtual ~Camara ();
 
 	virtual void setEye()= 0;
@@ -21,25 +21,25 @@ public:
 	float* getAt () const;
 	float* getUp () const;
 
-	void incFi( float num);
-	void incTita ( float num );
+	void incAngH( float num);
+	void incAngV ( float num );
 
 protected:
 
-	float getFi() const;
+	float getAngH() const;
 	float getTita() const;
 
 	void setCoordEye ( float x, float y, float z );
 	void setCoordAt ( float x, float y, float z);
 
-	void setTitaMax( float TitaMax );
-	void setTitaMin( float TitaMax );
+	void setAngVMax( float angVMax );
+	void setAngVMin( float angVMax );
 
 private:
-	float fi;
-	float tita;
-	float titaMax;
-	float titaMin;
+	float angH;
+	float angV;
+	float angVMax;
+	float angVMin;
 	float *eye;
 	float *at;
 	float *up;
@@ -52,13 +52,13 @@ private:
 	 * extremos el valor del mismo, no podra seguir incrementando o
 	 * disminuyendo su valor.
 	 */
-	void validarAnguloTita ( float max, float min );
+	void validarAngV ( float max, float min );
 	/*
 	 * verifica que el angulo sea mayor o igual al minimo valor que puede
 	 * tomar y menor o igual al maximo valor admisible. De estar en su valor
 	 * maximo, tomara su valor minimo, analogo con el valor minimo.
 	 */
-	void validarAnguloFi ( float max, float min );
+	void validarAngH ( float max, float min );
 };
 
 #endif /* CAMARA_H_ */

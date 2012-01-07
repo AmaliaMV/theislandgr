@@ -7,7 +7,7 @@
 
 #include "Camara.h"
 
-Camara::Camara( float fiInit, float titaInit )
+Camara::Camara( float angHInit, float angVInit )
 {
 	this->eye = new float [3];
 	this->at = new float [3];
@@ -17,11 +17,11 @@ Camara::Camara( float fiInit, float titaInit )
 	this->up[1]=0.0;
 	this->up[2]=1.0;
 
-	this->fi = fiInit;
-	this->tita = titaInit;
+	this->angH = angHInit;
+	this->angV = angVInit;
 
-	this->titaMax = 170;
-	this->titaMin = 1;
+	this->angVMax = 170;
+	this->angVMin = 1;
 }
 
 float* Camara::getEye () const
@@ -33,31 +33,31 @@ float* Camara::getAt () const
 float* Camara::getUp () const
 { return this->up; }
 
-void Camara::incFi ( float num )
+void Camara::incAngH ( float num )
 {
-	this->fi += num;
+	this->angH += num;
 
-	this->validarAnguloFi( 360.0, -360.0 );
+	this->validarAngH( 360.0, -360.0 );
 }
 
-void Camara::incTita ( float num )
+void Camara::incAngV ( float num )
 {
-	this->tita += num;
+	this->angV += num;
 
-	this->validarAnguloTita( this->titaMax, this->titaMin );
+	this->validarAngV( this->angVMax, this->angVMin );
 }
 
-float Camara::getFi() const
-{ return this->fi; }
+float Camara::getAngH() const
+{ return this->angH; }
 
 float Camara::getTita() const
-{ return this->tita; }
+{ return this->angV; }
 
-void Camara::setTitaMax( float titaMax)
-{ this->titaMax = titaMax; }
+void Camara::setAngVMax( float angVMax)
+{ this->angVMax = angVMax; }
 
-void Camara::setTitaMin( float titaMin)
-{ this->titaMax = titaMin; }
+void Camara::setAngVMin( float angVMin)
+{ this->angVMax = angVMin; }
 
 void Camara::setCoordEye ( float x, float y, float z )
 { this->setCoord( x, y, z, this->eye ); }
@@ -79,18 +79,18 @@ void Camara::setCoord ( float x, float y, float z, float *objeto )
 	objeto[2] = z;
 }
 
-void Camara::validarAnguloTita ( float max, float min )
+void Camara::validarAngV ( float max, float min )
 {
-	if ( tita < min )
-		tita = min;
-	else if ( tita > max )
-		tita = max;
+	if ( angV < min )
+		angV = min;
+	else if ( angV > max )
+		angV = max;
 }
-void Camara::validarAnguloFi ( float max, float min )
+void Camara::validarAngH ( float max, float min )
 {
-	if ( fi < min )
-		fi = max;
-	else if ( fi > max )
-		fi = min;
+	if ( angH < min )
+		angH = max;
+	else if ( angH > max )
+		angH = min;
 }
 
