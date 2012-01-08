@@ -7,7 +7,7 @@
 
 #include "Camara.h"
 
-Camara::Camara( float angHInit, float angVInit )
+Camara::Camara( float angHInit, float angVInit, float distancia )
 {
 	this->eye = new float [3];
 	this->at = new float [3];
@@ -19,6 +19,10 @@ Camara::Camara( float angHInit, float angVInit )
 
 	this->angH = angHInit;
 	this->angV = angVInit;
+
+	this->distancia = distancia;
+	this->distMin = 5.0;
+	this->distMax = 50.0;
 
 	this->angVMax = 170;
 	this->angVMin = 1;
@@ -50,10 +54,13 @@ void Camara::incAngV ( float num )
 float Camara::getAngH() const
 { return this->angH; }
 
-float Camara::getTita() const
+float Camara::getAngV() const
 { return this->angV; }
 
-void Camara::setAngVMax( float angVMax)
+float Camara::getDist() const
+{ return this->distancia; }
+
+void Camara::setAngVMax( float angVMax )
 { this->angVMax = angVMax; }
 
 void Camara::setAngVMin( float angVMin)
@@ -94,3 +101,24 @@ void Camara::validarAngH ( float max, float min )
 		angH = min;
 }
 
+void Camara::alejarCamara() {}
+
+void Camara::acercarCamara(){}
+
+void Camara::setDistMax ( float distMax )
+{ this->distMax = distMax; }
+
+void Camara::setDistMin ( float distMin )
+{ this->distMin = distMin; }
+
+void Camara::aumentarDist ( float aumento )
+{
+	if ( this->distancia + aumento < this->distMax )
+		this->distancia += aumento;
+}
+
+void Camara::disminuirDist ( float disminucion )
+{
+	if ( this->distancia - disminucion > this->distMin )
+		this->distancia -= disminucion;
+}

@@ -7,10 +7,10 @@
 
 #include "CamaraMundo.h"
 
-CamaraMundo::CamaraMundo():Camara( 0.0, 45.0 )
+CamaraMundo::CamaraMundo():Camara( 0.0, 45.0, 20.0 )
 {
-	this->distancia = 20;
 	this->setAngVMax( ANGULO_MAX_TITA );
+	this->setDistMax( CteMundo::RADIO_MUNDO - 5.0 );
 }
 
 CamaraMundo::~CamaraMundo() { }
@@ -19,9 +19,9 @@ void CamaraMundo::setEye()
 {
 	float x, y, z;
 
-	x = distancia * Matematica::cosHex ( this->getAngH() ) * Matematica::sinHex ( this->getTita() );
-	y = distancia * Matematica::sinHex ( this->getAngH() ) * Matematica::sinHex ( this->getTita() );
-	z = distancia * Matematica::cosHex ( this->getTita() ) + 5;
+	x = this->getDist() * Matematica::cosHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
+	y = this->getDist() * Matematica::sinHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
+	z = this->getDist() * Matematica::cosHex ( this->getAngV() ) + 5;
 
 	this->setCoordEye( x, y, z );
 }
@@ -32,17 +32,17 @@ void CamaraMundo::setAt ()
 
 	x =  0.0;
 	y =  0.0;
-	z = distancia/3;
+	z = this->getDist()/3;
 
 
 	this->setCoordAt( x, y, z );
 }
 
-void  CamaraMundo::alejar()
+void  CamaraMundo::alejarCamara()
 {
-	this->distancia++;
+	this->aumentarDist(1.0);
 }
-void  CamaraMundo::acercar()
+void  CamaraMundo::acercarCamara()
 {
-	this->distancia--;
+	this->disminuirDist(1.0);
 }

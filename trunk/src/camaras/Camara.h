@@ -7,11 +7,10 @@
 
 #ifndef CAMARA_H_
 #define CAMARA_H_
-#include <iostream>
-using namespace std;
+
 class Camara {
 public:
-	Camara ( float angHInit, float angVInit );
+	Camara ( float angHInit, float angVInit, float distancia );
 	virtual ~Camara ();
 
 	virtual void setEye()= 0;
@@ -24,16 +23,25 @@ public:
 	void incAngH( float num);
 	void incAngV ( float num );
 
-protected:
+	virtual void alejarCamara();
+	virtual void acercarCamara();
 
+protected:
 	float getAngH() const;
-	float getTita() const;
+	float getAngV() const;
+	float getDist() const;
 
 	void setCoordEye ( float x, float y, float z );
 	void setCoordAt ( float x, float y, float z);
 
 	void setAngVMax( float angVMax );
-	void setAngVMin( float angVMax );
+	void setAngVMin( float angVMin );
+
+	void setDistMax ( float distMax );
+	void setDistMin ( float distMin );
+
+	void aumentarDist ( float aumento );
+	void disminuirDist ( float disminucion );
 
 private:
 	float angH;
@@ -43,6 +51,9 @@ private:
 	float *eye;
 	float *at;
 	float *up;
+	float distancia;
+	float distMin;
+	float distMax;
 
 
 	void setCoord ( float x, float y, float z, float *objeto );
