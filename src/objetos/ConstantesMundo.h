@@ -13,6 +13,8 @@ public:
 	virtual ~CteMundo();
 
 	static const float NIVEL_AGUA;
+	static const float RADIO_NAVEGACION;
+	static const float DELTA_ANGULO;
 
 private:
 	CteMundo();
