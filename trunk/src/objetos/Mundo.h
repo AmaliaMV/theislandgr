@@ -12,6 +12,7 @@
 #include "Cielo.h"
 #include "isla/Isla.h"
 #include "barco/Barco.h"
+#include "TBarco.h"
 
 #define DIRECTORIO_DE_TEXTURAS texturas
 
@@ -24,6 +25,7 @@ public:
 	Mundo( string nombreArchivoNivel );
 	void dibujar();
 	void actualizar();
+	TBarco* getTBarco() const;
 	virtual ~Mundo();
 
 private:
@@ -35,12 +37,11 @@ private:
 	Isla *isla;
 	Barco *barco;
 
-	float anguloBarco;
+	TBarco *posBarco;
 
 	static const float RADIO_MUNDO;
 	static const float RADIO_AGUA;
-	static const float RADIO_NAVEGACION;
-	static const float DELTA_ANGULO;
+
 };
 
 #endif /* MUNDO_H_ */
