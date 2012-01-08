@@ -24,15 +24,14 @@ void Mouse::alMoverPresionandoBoton( int xMouse, int yMouse )
 	this->actualizarCooredenadas( actual );
 
 	if ( this->seMovioHaciaDerecha() == true )
-		camara->incFi( sensibilidad );
+		camara->incAngH( sensibilidad );
 	else if ( this->seMovioHaciaIzquierda() == true )
-		camara->incFi( -sensibilidad );
+		camara->incAngH( -sensibilidad );
 
 	if ( this->seMovioHaciaArriba() == true )
-		camara->incTita( -sensibilidad );
+		camara->incAngV( -sensibilidad );
 	else if ( this->seMovioHaciaAbajo() == true )
-		camara->incTita( sensibilidad );
-
+		camara->incAngV( sensibilidad );
 }
 
 void Mouse::alMover ( int xMouse, int yMouse )

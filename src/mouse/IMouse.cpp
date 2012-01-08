@@ -46,7 +46,7 @@ bool IMouse::seMovioHaciaIzquierda() const
 
 bool IMouse::seMovioHaciaArriba() const
 {
-	const int deltaY = this->actual->getxMouse() - this->anterior->getxMouse();
+	const int deltaY = this->actual->getyMouse() - this->anterior->getyMouse();
 
 	if (deltaY < 0)
 		return true;
@@ -55,7 +55,7 @@ bool IMouse::seMovioHaciaArriba() const
 
 bool IMouse::seMovioHaciaAbajo() const
 {
-	const int deltaY = this->actual->getxMouse() - this->anterior->getxMouse();
+	const int deltaY = this->actual->getyMouse() - this->anterior->getyMouse();
 
 	if (deltaY > 0)
 		return true;
