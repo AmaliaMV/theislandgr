@@ -19,8 +19,8 @@ class Canon: public ODTextura {
 public:
 	Canon( string nombreText, string nombreArchPtos );
 	float getAngulo() const;
-	void incAngulo();
-	void decAngulo();
+	void incAngV();
+	void decAngV();
 	virtual ~Canon();
 
 protected:

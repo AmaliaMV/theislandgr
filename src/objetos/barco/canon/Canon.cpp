@@ -34,12 +34,12 @@ Canon::~Canon()
 	delete ptosCtrl;
 }
 
-void Canon::incAngulo()
+void Canon::incAngV()
 {
 	if ( angulo < ANG_CANON_MAX )
 		angulo+= DELTA_ANG;
 }
-void Canon::decAngulo()
+void Canon::decAngV()
 {
 	if ( angulo > ANG_CANON_MIN )
 		angulo-= DELTA_ANG;
