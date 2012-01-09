@@ -8,8 +8,8 @@
 #ifndef TMIRADOR_H_
 #define TMIRADOR_H_
 
-#include "../EstrategiaTransformacion.h"
-#include "../ConstantesBarco.h"
+#include "EstrategiaTransformacion.h"
+#include "ConstantesBarco.h"
 
 class TMirador: public EstrategiaTransformacion{
 public:

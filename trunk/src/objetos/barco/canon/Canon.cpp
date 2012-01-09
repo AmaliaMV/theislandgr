@@ -7,9 +7,15 @@
 
 #include "Canon.h"
 
+const float Canon::ANG_CANON_MAX = 20.0;
+const float Canon::ANG_CANON_MIN = -20.0;
+const float Canon::DELTA_ANG = 2.0; //encuenta disminuye o aumenta el ang cada vez q se inc o dec el angulo
+
 Canon::Canon( string nombreText, string nombreArchPtos )
 	:ODTextura( new Textura24(nombreText) )
 {
+	angulo = 0.0;
+
 	ptosCtrl = new PuntosControl();
 	ArchivoPtosControl::cagarPtosControl( ptosCtrl, nombreArchPtos );
 
@@ -26,6 +32,22 @@ Canon::Canon( string nombreText, string nombreArchPtos )
 Canon::~Canon()
 {
 	delete ptosCtrl;
+}
+
+void Canon::incAngulo()
+{
+	if ( angulo < ANG_CANON_MAX )
+		angulo+= DELTA_ANG;
+}
+void Canon::decAngulo()
+{
+	if ( angulo > ANG_CANON_MIN )
+		angulo-= DELTA_ANG;
+}
+
+float Canon::getAngulo() const
+{
+	return this->angulo;
 }
 
 void Canon::generarCoordPtos()

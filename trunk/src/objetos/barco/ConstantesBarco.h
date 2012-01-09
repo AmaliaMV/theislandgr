@@ -42,6 +42,7 @@ public:
 	static const float LARGO_VELA_CHICA_SEC;
 	static const float ALTO_VELA_CHICA_SEC;
 	static const float ALTURA_PALO_SEC;
+
 };
 
 #endif /* CONSTANTESBARCO_H_ */

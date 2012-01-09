@@ -8,8 +8,8 @@
 #ifndef TVELAPRINCIPAL_H_
 #define TVELAPRINCIPAL_H_
 
-#include "../EstrategiaTransformacion.h"
-#include "../ConstantesBarco.h"
+#include "EstrategiaTransformacion.h"
+#include "ConstantesBarco.h"
 
 class TVelaPrincipal: public EstrategiaTransformacion{
 public:
