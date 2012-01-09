@@ -9,8 +9,7 @@
 #define IMOUSE_H_
 
 #include "Coord2DMouse.h"
-#include <iostream>
-using namespace std;
+
 class IMouse {
 public:
 	IMouse();
