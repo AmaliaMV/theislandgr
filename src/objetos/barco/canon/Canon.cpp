@@ -7,14 +7,18 @@
 
 #include "Canon.h"
 
-const float Canon::ANG_CANON_MAX = 20.0;
-const float Canon::ANG_CANON_MIN = -20.0;
+const float Canon::ANGH_CANON_MAX = 20.0;
+const float Canon::ANGH_CANON_MIN = -20.0;
+const float Canon::ANGV_CANON_MAX = 45.0;
+const float Canon::ANGV_CANON_MIN = -45.0;
+
 const float Canon::DELTA_ANG = 2.0; //encuenta disminuye o aumenta el ang cada vez q se inc o dec el angulo
 
 Canon::Canon( string nombreText, string nombreArchPtos )
 	:ODTextura( new Textura24(nombreText) )
 {
-	angulo = 0.0;
+	angV = 0.0;
+	angH = 0.0;
 
 	ptosCtrl = new PuntosControl();
 	ArchivoPtosControl::cagarPtosControl( ptosCtrl, nombreArchPtos );
@@ -36,18 +40,35 @@ Canon::~Canon()
 
 void Canon::incAngV()
 {
-	if ( angulo < ANG_CANON_MAX )
-		angulo+= DELTA_ANG;
+	if ( angV < ANGH_CANON_MAX )
+		angV+= DELTA_ANG;
 }
 void Canon::decAngV()
 {
-	if ( angulo > ANG_CANON_MIN )
-		angulo-= DELTA_ANG;
+	if ( angV > ANGH_CANON_MIN )
+		angV-= DELTA_ANG;
 }
 
-float Canon::getAngulo() const
+void Canon::derecha()
 {
-	return this->angulo;
+	if ( angH < ANGH_CANON_MAX )
+		angH+= DELTA_ANG;
+
+}
+void Canon::izquierda()
+{
+	if ( angH > ANGH_CANON_MIN )
+		angH-= DELTA_ANG;
+}
+
+float Canon::getAngH() const
+{
+	return this->angH;
+}
+
+float Canon::getAngV() const
+{
+	return this->angV;
 }
 
 void Canon::generarCoordPtos()

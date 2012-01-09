@@ -26,6 +26,7 @@ public:
 	void dibujar();
 	void actualizar();
 	TBarco* getTBarco() const;
+	Barco* getBarco() const;
 	virtual ~Mundo();
 
 private:
@@ -39,9 +40,7 @@ private:
 
 	TBarco *posBarco;
 
-	static const float RADIO_MUNDO;
 	static const float RADIO_AGUA;
-
 };
 
 #endif /* MUNDO_H_ */

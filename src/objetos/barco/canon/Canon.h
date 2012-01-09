@@ -18,9 +18,12 @@
 class Canon: public ODTextura {
 public:
 	Canon( string nombreText, string nombreArchPtos );
-	float getAngulo() const;
+	float getAngV() const;
+	float getAngH() const;
 	void incAngV();
 	void decAngV();
+	void derecha();
+	void izquierda();
 	virtual ~Canon();
 
 protected:
@@ -39,10 +42,13 @@ private:
 	static const unsigned int FI_MAX = 360;
 	static const unsigned int FI_MIN = 0;
 
-	float angulo;
+	float angV;
+	float angH;
 
-	static const float ANG_CANON_MAX;
-	static const float ANG_CANON_MIN;
+	static const float ANGH_CANON_MAX;
+	static const float ANGH_CANON_MIN;
+	static const float ANGV_CANON_MAX;
+	static const float ANGV_CANON_MIN;
 	static const float DELTA_ANG;
 };
 
