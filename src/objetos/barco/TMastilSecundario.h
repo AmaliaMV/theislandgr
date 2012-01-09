@@ -8,7 +8,7 @@
 #ifndef TMASTILSECUNDARIO_H_
 #define TMASTILSECUNDARIO_H_
 
-#include "../EstrategiaTransformacion.h"
+#include "EstrategiaTransformacion.h"
 
 class TMastilSecundario: public EstrategiaTransformacion {
 public:

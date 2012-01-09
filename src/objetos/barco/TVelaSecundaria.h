@@ -8,7 +8,7 @@
 #ifndef TVELASECUNDARIA_H_
 #define TVELASECUNDARIA_H_
 
-#include "../EstrategiaTransformacion.h"
+#include "EstrategiaTransformacion.h"
 
 class TVelaSecundaria: public EstrategiaTransformacion {
 public:

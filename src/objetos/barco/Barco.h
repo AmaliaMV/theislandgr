@@ -13,23 +13,25 @@
 #include "../../grafica/textura/Textura24.h"
 #include "../../matematica/Matematica.h"
 
-#include "mastil/Palo.h"
-#include "mastil/Vela.h"
-#include "mastil/TVelaPrincipal.h"
-#include "mastil/TMastilSecundario.h"
-#include "mastil/TVelaSecundaria.h"
-#include "mastil/Baupres.h"
-#include "mastil/TBaupres.h"
-#include "mirador/Mirador.h"
-#include "mirador/TMirador.h"
-
-#include "canon/Canon.h"
-#include "canon/CajaCanon.h"
-#include "canon/TCajaCanon.h"
-
 #include "barcoBasico/BarcoBasico.h"
 
 #include "baranda/BarandaEntera.h"
+
+#include "mastil/Palo.h"
+#include "mastil/Vela.h"
+#include "mastil/Baupres.h"
+#include "mirador/Mirador.h"
+
+#include "canon/Canon.h"
+#include "canon/CajaCanon.h"
+
+#include "TCanon.h"
+#include "TBaupres.h"
+#include "TMirador.h"
+#include "TCajaCanon.h"
+#include "TVelaPrincipal.h"
+#include "TVelaSecundaria.h"
+#include "TMastilSecundario.h"
 
 #include "../geometricos/PrismaConTextura.h"
 
@@ -40,24 +42,19 @@ public:
 	virtual ~Barco();
 	void incAngulo();
 	void decAngulo();
+	TCanon* getPosCanon() const;
 
 protected:
 	virtual void displayList() const;
 
 private:
-	TCajaCanon *tCajaCanon;
+	TCanon *tCanon;
 	ComponenteBarco *partesBarco;
 
 	Canon *canon;
 	LadoPrismaConTextura *prisma;
 	ComponenteBarco* crearPaloMayor( ComponenteBarco *parteBarco);
 	ComponenteBarco* crearMastilSecundario( float desplazamiento, ComponenteBarco *parteBarco );
-
-	float anguloCanon;
-
-	static const float ANG_CANON_MAX;
-	static const float ANG_CANON_MIN;
-	static const float DELTA_ANG;
 
 	static const float ALTO_CAJA;
 	static const float LARGO_CAJA;

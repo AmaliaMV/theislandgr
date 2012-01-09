@@ -7,7 +7,7 @@
 
 #include "TBaupres.h"
 
-TBaupres::TBaupres() {}
+TBaupres::TBaupres(): EstrategiaTransformacion() {}
 
 TBaupres::~TBaupres() {}
 

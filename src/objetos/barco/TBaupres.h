@@ -8,8 +8,9 @@
 #ifndef TBAUPRES_H_
 #define TBAUPRES_H_
 
-#include "../EstrategiaTransformacion.h"
-#include "../ConstantesBarco.h"
+#include "EstrategiaTransformacion.h"
+#include "ConstantesBarco.h"
+
 class TBaupres: public EstrategiaTransformacion {
 public:
 	TBaupres();

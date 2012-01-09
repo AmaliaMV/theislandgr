@@ -8,8 +8,6 @@
 #ifndef TELAVELA_H_
 #define TELAVELA_H_
 
-#include "TVelaPrincipal.h"
-
 #include "../../ODTextura.h"
 
 #include "../../../grafica/textura/Textura24.h"
