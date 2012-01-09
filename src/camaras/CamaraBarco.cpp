@@ -18,24 +18,24 @@ CamaraBarco::~CamaraBarco() {}
 
 void CamaraBarco::setEye()
 {
-	float x, y, z;
+	float fx, fy, fz;
 
-	this->posBarco->getPosicionBarco( x, y, z);
+	this->posBarco->getTPto( 0.0, 0.0, 0.0, fx, fy, fz);
 
-	x += this->getDist() * Matematica::cosHex ( this->getAngH()+ posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
-	y += this->getDist() * Matematica::sinHex ( this->getAngH()+ posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
-	z += this->getDist() * Matematica::cosHex ( this->getAngV() );
+	fx += this->getDist() * Matematica::cosHex ( this->getAngH()+ posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
+	fy += this->getDist() * Matematica::sinHex ( this->getAngH()+ posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
+	fz += this->getDist() * Matematica::cosHex ( this->getAngV() );
 
-	this->setCoordEye( x, y, z );
+	this->setCoordEye( fx, fy, fz );
 }
 
 void CamaraBarco::setAt ()
 {
-	float x, y, z;
+	float fx, fy, fz;
 
-	this->posBarco->getPosicionBarco( x, y, z);
+	this->posBarco->getTPto( 0.0, 0.0, 0.0, fx, fy, fz);
 
-	this->setCoordAt( x, y, z );
+	this->setCoordAt( fx, fy, fz );
 }
 void CamaraBarco::alejarCamara()
 {
