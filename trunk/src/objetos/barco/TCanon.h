@@ -16,6 +16,7 @@ public:
 	TCanon( const Canon *canon, TCajaCanon *tcaja );
 	void ejecutar();
 	void getTPto ( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const;
+	float getAnguloCanon() const;
 	virtual ~TCanon();
 
 private:

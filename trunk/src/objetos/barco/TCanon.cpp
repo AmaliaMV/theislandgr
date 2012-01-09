@@ -21,7 +21,7 @@ TCanon::TCanon(const Canon *canon, TCajaCanon *tcaja)
 void TCanon::ejecutar()
 {
 	tcaja->ejecutar();
-	glRotatef(-90.0 + this->canon->getAngulo() , 0.0, 1.0, 0.0);
+	glRotatef(-90.0 + this->canon->getAngulo(), 0.0, 1.0, 0.0);
 	glScalef(ESCALADOXY, ESCALADOXY, ESCALADOZ);
 	glTranslatef(0.0, 0.0, TRASLACIONZ);
 }
@@ -50,6 +50,10 @@ void TCanon::getTPto ( const float x, const float y, const float z, float &fx, f
 
 TCanon::~TCanon() {}
 
+float TCanon::getAnguloCanon() const
+{
+	return this->canon->getAngulo();
+}
 #undef TRASLACIONZ
 #undef ESCALADOXY
 #undef ESCALADOZ

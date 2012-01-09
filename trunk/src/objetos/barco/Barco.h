@@ -40,9 +40,8 @@ public:
 	Barco();
 	void dibujar();
 	virtual ~Barco();
-	void incAngulo();
-	void decAngulo();
-	TCanon* getPosCanon() const;
+	Canon* getCanon() const;
+	TCanon* getTCanon() const;
 
 protected:
 	virtual void displayList() const;

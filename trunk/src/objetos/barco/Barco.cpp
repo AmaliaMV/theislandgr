@@ -65,11 +65,8 @@ ComponenteBarco* Barco::crearMastilSecundario( float desplazamiento,  Componente
 			)));
 }
 
-void Barco::incAngulo()
-{ canon->incAngulo(); }
-
-void Barco::decAngulo()
-{ canon->decAngulo(); }
+Canon* Barco::getCanon() const
+{ return this->canon; }
 
 void Barco::dibujar()
 {
@@ -81,5 +78,5 @@ void Barco::dibujar()
 	glPopMatrix();
 }
 
-TCanon* Barco::getPosCanon() const
+TCanon* Barco::getTCanon() const
 { return this->tCanon; }
