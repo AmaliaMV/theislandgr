@@ -21,7 +21,8 @@ public:
 	void ejecutar() const;
 	virtual ~TBarco();
 	void incAngulo();
-	void getPosicionBarco( float &x, float &y, float &z ) const;
+	void getTPto( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const;
+	float getAngulo() const;
 
 private:
 	float angulo;
