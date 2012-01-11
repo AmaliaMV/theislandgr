@@ -6,16 +6,13 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-using namespace std;
+//#include <bullet/btBulletDynamicsCommon.h>
 
-//#include "bullet/btBulletDynamicsCommon.h"
-#include "objetos/Mundo.h"
+#include <iostream>
 #include "funcionesAux.h"
 
 static const string archivoDeConfiguracion = "archivosNivel1";
 
-Mundo *mundo;
 
 // Variables asociadas a única fuente de luz de la escena
 float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -33,13 +30,29 @@ bool edit_panelB = false;
 GLuint dl_handle;
 #define DL_AXIS (dl_handle+0)
 #define DL_GRID (dl_handle+1)
-#define DL_AXIS2D_TOP (dl_handle+2)
-
 
 void dibujarCentral()
 {
+//	cout<<"eye: x: "<< eyeX << " y: "<< eyeY<<" z: "<<eyeZ<<endl;
+//	cout<<"at: x: "<< atX << " y: "<< atY<<" z: "<<atZ<<endl;
 
 	glDisable(GL_LIGHTING);
+		glBegin(GL_LINES);
+
+			glLineWidth(10);
+			glColor3f(1.0, 0.0,1.0);
+			glVertex3f(0.0, 0.0, 0.0);
+			glVertex3f(eyeX/4, eyeY/4, eyeZ/4);
+			glColor3f(1.0, 1.0,0.0);
+			glVertex3f(0.0, 0.0, 0.0);
+			glVertex3f(atX, atY, atZ);
+
+//			glVertex3f(0.0, 0.0, 7.0);
+//			glVertex3f(9, 10, 7);
+		glEnd();
+		glLineWidth(1);
+
+
 		mundo->dibujar();
 	glEnable(GL_LIGHTING);
 }
@@ -74,42 +87,6 @@ void DrawAxis()
 	glEnable(GL_LIGHTING);
 }
 
-void DrawAxis2DTopView()
-{
-	glDisable(GL_LIGHTING);
-	glLineWidth (5.0);
-	glBegin(GL_LINE_LOOP);
-		// X
-		glColor3f(0.0, 0.4, 1.0);
-		glVertex3f(0.0, 0.0, 0.0);
-		glVertex3f(1.0, 0.0, 0.0);
-		glVertex3f(1.0, 1.0, 0.0);
-		glVertex3f(0.0, 1.0, 0.0);
-	glEnd();
-	glLineWidth (1.0);
-
-	glColor3f(0.5f, 0.5f, 1.0f);
-	glBegin(GL_LINES);
-		for (float i = 0.1; i < 1.0; i+=0.1)
-		{
-			glVertex3f(0.0f, i, 0.0f);
-			glVertex3f(1.0f, i, 0.0f);
-			glVertex3f(i, 0.0f, 0.0f);
-			glVertex3f(i, 1.0f, 0.0f);
-		}
-	glEnd();
-	glBegin(GL_QUADS);
-		glColor3f (1.0, 0.95, 0.95);
-		glVertex3f(0.0, 0.0, 0.0);
-		glVertex3f(1.0, 0.0, 0.0);
-		glVertex3f(1.0, 1.0, 0.0);
-		glVertex3f(0.0, 1.0, 0.0);
-	glEnd();
-
-	glEnable(GL_LIGHTING);
-}
-
-
 void DrawXYGrid()
 {
 	int i;
@@ -131,15 +108,7 @@ void Set3DEnv()
 	glViewport (0, 0, (GLsizei) W_WIDTH, (GLsizei) W_HEIGHT);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
-    gluPerspective(60.0, (GLfloat) W_WIDTH/(GLfloat) W_HEIGHT, 0.10, 100.0);
-}
-
-void SetPanelTopEnvA()
-{
-	glViewport (TOP_VIEWA_POSX, TOP_VIEWA_POSY, (GLsizei) TOP_VIEWA_W, (GLsizei) TOP_VIEWA_H);
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-	gluOrtho2D(-0.10, 1.05, -0.10, 1.05);
+    gluPerspective(60.0, (GLfloat) W_WIDTH/(GLfloat) W_HEIGHT, 0.10, 150.0);
 }
 
 void SetPanelTopEnvB()
@@ -152,7 +121,7 @@ void SetPanelTopEnvB()
 
 void init(void)
 {
-	dl_handle = glGenLists(3);
+	dl_handle = glGenLists(2);
 
 	glClearColor (0.02, 0.02, 0.04, 0.0);
     glShadeModel (GL_SMOOTH);
@@ -170,14 +139,21 @@ void init(void)
 	glNewList(DL_GRID, GL_COMPILE);
 		DrawXYGrid();
 	glEndList();
-	glNewList(DL_AXIS2D_TOP, GL_COMPILE);
-		DrawAxis2DTopView();
-	glEndList();
+
 	glColor3f(0.0,0.0,0.0);
 
 	try
 	{
 		mundo = new Mundo( archivoDeConfiguracion );
+
+		adminCamaras = new AdminCamaras();
+
+		adminCamaras->agregarCamara( CAMARA_MUNDO, new CamaraMundo() );
+		adminCamaras->agregarCamara( CAMARA_BARCO, new CamaraBarco(mundo->getTBarco()) );
+		adminCamaras->agregarCamara( CAMARA_CANON, new CamaraCanon(mundo->getTBarco(), mundo->getBarco()->getTCanon()) );
+		adminCamaras->setCamaraActual( CAMARA_MUNDO );
+
+		mCmd = new MCmdJuegos("texturas/menu_comandos.bmp");
 
 	}
 	catch ( EArchivoInexistente *e )
@@ -205,8 +181,6 @@ void display(void)
 	actualizarVista();
 
 
-
-
 	if (view_axis)
 		 glCallList(DL_AXIS);
 
@@ -221,12 +195,13 @@ void display(void)
 	// Panel 2D para la vista superior
 	if (edit_panelA)
 	{
-		SetPanelTopEnvA();
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt (0, 0, 0.5, 0, 0, 0, 0, 1, 0);
-
-		glCallList(DL_AXIS2D_TOP);
+		mCmd->dibujarPanel( W_WIDTH, W_HEIGHT );
+//		SetPanelTopEnvA();
+//		glMatrixMode(GL_MODELVIEW);
+//		glLoadIdentity();
+//		gluLookAt (0, 0, 0.5, 0, 0, 0, 0, 1, 0);
+//
+//		glCallList(DL_AXIS2D_TOP);
 	}
 
 	if (edit_panelB)
@@ -244,7 +219,7 @@ void display(void)
 			glLineWidth (1.0);
 		glEnd();
 
-		glCallList(DL_AXIS2D_TOP);
+//		glCallList(DL_AXIS2D_TOP);
 	}
 	//
 	///////////////////////////////////////////////////
@@ -261,9 +236,18 @@ void reshape (int w, int h)
 
 void keyboard (unsigned char key, int x, int y)
 {
+	cout<<"key: "<<(unsigned int)key<<endl;
+
    switch (key) {
+
+   case 'm':
+	   edit_panelA = !edit_panelA;
+	   break;
+
       case 'q':
     	  delete mundo;
+    	  delete mCmd;
+    	  delete adminCamaras;
 
          exit(0);
          break;
@@ -276,14 +260,16 @@ void keyboard (unsigned char key, int x, int y)
 		  view_axis = !view_axis;
 		  glutPostRedisplay();
 		  break;
-
+	  case '0':
+		  adminCamaras->setCamaraActual( CAMARA_MUNDO );
+		  break;
 	  case '1':
-		  edit_panelA = !edit_panelA;
-		  glutPostRedisplay();
+		  adminCamaras->setCamaraActual( CAMARA_BARCO );
 		  break;
 	  case '2':
-		  edit_panelB = !edit_panelB;
-		  glutPostRedisplay();
+		  adminCamaras->setCamaraActual( CAMARA_CANON );
+//		  edit_panelB = !edit_panelB;
+//		  glutPostRedisplay();
 		  break;
 
 	  case 'k':
@@ -294,14 +280,26 @@ void keyboard (unsigned char key, int x, int y)
 
 		  glutPostRedisplay();
 		  break;
-
+	  case 'z':
+		  adminCamaras->getCamaraActual()->alejarCamara();
+		  break;
+	  case 'x':
+		  adminCamaras->getCamaraActual()->acercarCamara();
+		  break;
+	  case 'c':
+		  mundo->getBarco()->getCanon()->decAngV();
+		  break;
+	  case 'v':
+		  mundo->getBarco()->getCanon()->incAngV();
+		  break;
+	  case 'b':
+		  mundo->getBarco()->getCanon()->izquierda();
+		  break;
 	  case 'n':
-//		  barco->decAngulo();
+		  mundo->getBarco()->getCanon()->derecha();
 		  break;
 
-	  case 'm':
-//		  barco->incAngulo();
-		  break;
+
      default:
          break;
    }

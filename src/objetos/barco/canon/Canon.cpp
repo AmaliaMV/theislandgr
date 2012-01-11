@@ -7,10 +7,10 @@
 
 #include "Canon.h"
 
-const float Canon::ANGH_CANON_MAX = 20.0;
-const float Canon::ANGH_CANON_MIN = -20.0;
-const float Canon::ANGV_CANON_MAX = 45.0;
-const float Canon::ANGV_CANON_MIN = -45.0;
+const float Canon::ANGV_CANON_MAX = 20.0;
+const float Canon::ANGV_CANON_MIN = -20.0;
+const float Canon::ANGH_CANON_MAX = 45.0;
+const float Canon::ANGH_CANON_MIN = -45.0;
 
 const float Canon::DELTA_ANG = 2.0; //encuenta disminuye o aumenta el ang cada vez q se inc o dec el angulo
 
@@ -40,12 +40,12 @@ Canon::~Canon()
 
 void Canon::incAngV()
 {
-	if ( angV < ANGH_CANON_MAX )
+	if ( angV < ANGV_CANON_MAX )
 		angV+= DELTA_ANG;
 }
 void Canon::decAngV()
 {
-	if ( angV > ANGH_CANON_MIN )
+	if ( angV > ANGV_CANON_MIN )
 		angV-= DELTA_ANG;
 }
 

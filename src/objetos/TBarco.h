@@ -23,6 +23,7 @@ public:
 	void incAngulo();
 	void getTPto( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const;
 	float getAngulo() const;
+	float getAlturaBarco() const;
 
 private:
 	float angulo;
