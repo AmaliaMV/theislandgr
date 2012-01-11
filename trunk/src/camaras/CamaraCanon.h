@@ -17,7 +17,8 @@ class CamaraCanon: public Camara {
 public:
 	CamaraCanon(const TBarco *tbarco, const TCanon *tcanon);
 	virtual ~CamaraCanon();
-
+	void alejarCamara();
+		void acercarCamara();
 	void setEye();
 	void setAt();
 

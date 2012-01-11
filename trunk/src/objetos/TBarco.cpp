@@ -29,7 +29,7 @@ void TBarco::incAngulo()
 {
 	if ( angulo > 360.0 )
 		angulo = 0.0;
-	angulo+= CteMundo::DELTA_ANGULO;
+	angulo+= CteMundo::DELTA_ANGULO_BARCO;
 }
 
 void TBarco::getTPto( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const
@@ -56,7 +56,11 @@ void TBarco::getTPto( const float x, const float y, const float z, float &fx, fl
 //	z = 0.25 * (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA) ;
 }
 
-float  TBarco::getAngulo() const
+float TBarco::getAngulo() const
 {
 	return this->angulo;
+}
+float TBarco::getAlturaBarco() const
+{
+	return (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA) *  ESCALADOXYZ;
 }

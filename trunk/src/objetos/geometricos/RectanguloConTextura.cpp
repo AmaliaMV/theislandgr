@@ -40,16 +40,16 @@ void RectanguloConTextura::generarIndice()
 void RectanguloConTextura::generarCoodText()
 {
 	text[0] = 0.0;
-	text[1] = 0.0;
+	text[1] = 1.0;
 
 	text[2] = 0.0;
-	text[3] = 1.0;
+	text[3] = 0.0;
 
 	text[4] = 1.0;
-	text[5] = 0.0;
+	text[5] = 1.0;
 
 	text[6] = 1.0;
-	text[7] = 1.0;
+	text[7] = 0.0;
 }
 
 float RectanguloConTextura::getBase() const

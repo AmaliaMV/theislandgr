@@ -39,22 +39,35 @@ void TCanon::getTPto ( const float x, const float y, const float z, float &fx, f
 	yaux = ESCALADOXY * y;
 	zaux *= ESCALADOZ;
 
-	// rotacion
-	xaux = - Matematica::sinHex(-90.0 + this->canon->getAngV()) * xaux + Matematica::cosHex(-90.0 + this->canon->getAngV()) * zaux;
-	zaux = Matematica::cosHex(-90.0 + this->canon->getAngV()) * xaux + Matematica::sinHex(-90.0 + this->canon->getAngV()) * zaux;
+	// rotacion respecto eje y
+	fx = - Matematica::sinHex(-90.0 + this->canon->getAngV()) * xaux + Matematica::cosHex(-90.0 + this->canon->getAngV()) * zaux;
+	fz =  Matematica::cosHex(-90.0 + this->canon->getAngV()) * xaux + Matematica::sinHex(-90.0 + this->canon->getAngV()) * zaux;
+
+	// rotacion respecto eje z
+
+	xaux =  Matematica::cosHex(this->canon->getAngH()) * fx + Matematica::sinHex(this->canon->getAngH()) * yaux;
+	fy = - Matematica::sinHex(this->canon->getAngH()) * fx + Matematica::cosHex(this->canon->getAngH()) * yaux;
+
 //	z += TRASLACIONZ;
 //	z += (TRASLACIONZ * ESCALADOZ) * Matematica::sinHex( -90.0 + this->canon->getAngulo() )
 //		+ (TRASLACIONZ * ESCALADOZ) * Matematica::cosHex( -90.0 + this->canon->getAngulo() );
+
+	zaux = fz;
+	yaux = fy;
 
 	tcaja->getTPto( xaux, yaux, zaux, fx, fy, fz );
 }
 
 TCanon::~TCanon() {}
 
-float TCanon::getAnguloCanon() const
+const Canon* TCanon::getCanon() const
 {
-	return this->canon->getAngV();
+	return this->canon;
 }
+//float TCanon::getAnguloCanon() const
+//{
+//	return this->canon->getAngV();
+//}
 #undef TRASLACIONZ
 #undef ESCALADOXY
 #undef ESCALADOZ
