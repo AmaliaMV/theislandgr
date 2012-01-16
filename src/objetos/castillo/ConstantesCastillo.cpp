@@ -19,10 +19,10 @@ CteCastillo::~CteCastillo() {}
 const float CteCastillo::SEPARACION = 0.05;
 const unsigned int CteCastillo::ALTURA_CASTILLO = 2;//8;
 const unsigned int CteCastillo::PROFUNDIDAD_CASTILLO = 5;//2;//4;
-const unsigned int CteCastillo::ANCHO_CASTILLO = 2;//5;
+const unsigned int CteCastillo::ANCHO_CASTILLO = 5;//5;
 const unsigned int CteCastillo::CANT_LADRILLOS = /*CANT_LADRILLOS_ADELANTE_X + */CANT_LADRILLOS_ATRAS_X + CANT_LADRILLOS_LADO_YPOS ;//+ CANT_LADRILLOS_LADO_YNEG;
 const float CteCastillo::ALTURA_LADRILLO = 1.0;
-const float CteCastillo::ANCHO_LADRILLO = 3.0;//1.0;//3.0;
+const float CteCastillo::ANCHO_LADRILLO = 1.0;//3.0;
 const float CteCastillo::LARGO_LADRILLO = 1.0;
 //const float CteCastillo::ANCHO_CASTILLO_F = ANCHO_CASTILLO * ANCHO_LADRILLO + (ANCHO_CASTILLO - 1) * SEPARACION;
 /*   ANCHO_CASTILLO * ANCHO_LADRILLO + (ANCHO_CASTILLO - 1) * SEPARACION => unidad = float

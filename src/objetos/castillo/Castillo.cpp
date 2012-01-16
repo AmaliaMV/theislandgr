@@ -10,32 +10,33 @@
 #define FACT_CORRECCION_Z 0.5
 Castillo::Castillo( btDiscreteDynamicsWorld* dynamicsWorld  )
 {
-	bool posY = 0;
+	bool sacarLadrillo = 0;
 	unsigned int num = 0, numLadrillo = 0, cantLadrillosFila;
 	ladrillos = new Ladrillo*[CteCastillo::CANT_LADRILLOS];
-	float posInicial, largoParedEnFloat;
+	float posX, posY, largoParedEnFloat;
 	const float deltaPos = CteCastillo::ANCHO_LADRILLO + CteCastillo::SEPARACION;
-//	cout<<"cant ladrillos supuestos: "<<CteCastillo::CANT_LADRILLOS<<endl;
+	cout<<"cant ladrillos supuestos: "<<CteCastillo::CANT_LADRILLOS<<endl;
 //	cout<<CteCastillo::ANCHO_CASTILLO * CteCastillo::ALTURA_CASTILLO/2<<endl;
 //	cout<<(CteCastillo::ANCHO_CASTILLO-1) * CteCastillo::ALTURA_CASTILLO/2 <<endl;
 //	cout << CteCastillo::ANCHO_CASTILLO * (CteCastillo::ALTURA_CASTILLO % 2)<<endl;
 	for ( unsigned int alto = 0; alto < CteCastillo::ALTURA_CASTILLO; alto ++ )
 	{
+		posX = (CteCastillo::PROFUNDIDAD_CASTILLO * CteCastillo::ANCHO_LADRILLO + ( CteCastillo::PROFUNDIDAD_CASTILLO - 1 ) * CteCastillo::SEPARACION) / 2.0f - CteCastillo::ANCHO_LADRILLO/2.0f;
 
-		cantLadrillosFila = CteCastillo::ANCHO_CASTILLO - posY;
+		cantLadrillosFila = CteCastillo::ANCHO_CASTILLO - sacarLadrillo;
 		largoParedEnFloat = cantLadrillosFila * CteCastillo::ANCHO_LADRILLO + (cantLadrillosFila-1) * CteCastillo::SEPARACION;
-		posInicial = - (largoParedEnFloat/2.0) + (float)(CteCastillo::ANCHO_LADRILLO/2.0);
+		posY = - (largoParedEnFloat/2.0) + (float)(CteCastillo::ANCHO_LADRILLO/2.0);
 
-		for ( numLadrillo = 0; numLadrillo < CteCastillo::ANCHO_CASTILLO; numLadrillo ++, num++ )
+		for ( numLadrillo = 0; numLadrillo < cantLadrillosFila; numLadrillo ++, num++ )
 		{
 			/*ladrillos de adelante*/
 			ladrillos [num] = new Ladrillo( "texturas/piedra4.bmp",
 					CteCastillo::ALTURA_LADRILLO, CteCastillo::ANCHO_LADRILLO, CteCastillo::LARGO_LADRILLO,
-					(float) ((CteCastillo::PROFUNDIDAD_CASTILLO * CteCastillo::ANCHO_LADRILLO) / 2.0) + CteCastillo::SEPARACION,
-					posInicial,
+					posX,
+					posY,
 					alto * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION)+FACT_CORRECCION_Z );
 			ladrillos [num]->agregarseAlMundo(dynamicsWorld);
-			posInicial += CteCastillo::ANCHO_LADRILLO + CteCastillo::SEPARACION;
+			posY += deltaPos;
 		}
 //
 //			cout<<" x= "<< (float) ((CteCastillo::PROFUNDIDAD_CASTILLO * CteCastillo::ANCHO_LADRILLO) / 2.0) + CteCastillo::SEPARACION<<
@@ -53,23 +54,23 @@ Castillo::Castillo( btDiscreteDynamicsWorld* dynamicsWorld  )
 //			numLadrillo++;
 //		}
 
-		cantLadrillosFila = CteCastillo::PROFUNDIDAD_CASTILLO - (1-posY);
+		cantLadrillosFila = CteCastillo::PROFUNDIDAD_CASTILLO - (1-sacarLadrillo);
 		largoParedEnFloat = (float)(cantLadrillosFila * CteCastillo::ANCHO_LADRILLO) + (float)((cantLadrillosFila-1) * CteCastillo::SEPARACION);
-		posInicial = - (largoParedEnFloat/2.0) + (float)(CteCastillo::ANCHO_LADRILLO/2.0);
+		posX = - (largoParedEnFloat/2.0) + (float)(CteCastillo::ANCHO_LADRILLO/2.0);
 		for ( numLadrillo = 0 ; numLadrillo < cantLadrillosFila; numLadrillo ++, num++ )
 		{
 			/*ladrillos del costado y+*/
 			ladrillos [num] = new Ladrillo( "texturas/piedra4.bmp",
 								CteCastillo::ALTURA_LADRILLO, CteCastillo::LARGO_LADRILLO, CteCastillo::ANCHO_LADRILLO,
-								posInicial,
+								posX,
 								(float)(CteCastillo::ANCHO_CASTILLO * CteCastillo::ANCHO_LADRILLO) / 2.0,
 								alto * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z);
 			ladrillos [num]->agregarseAlMundo(dynamicsWorld);
 
-			cout<<" x= "<< posInicial <<
+			cout<<" x= "<< posX <<
 				  " y= "<< (float)(CteCastillo::ANCHO_CASTILLO *  CteCastillo::ANCHO_LADRILLO / 2) <<
 				  " z= "<< alto * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z <<endl;
-			posInicial += deltaPos;
+			posX += deltaPos;
 		}
 //			/*ladrillos del costado y-*/
 //			ladrillos [numLadrillo] = new Ladrillo( "texturas/piedra4.bmp",
@@ -83,7 +84,7 @@ Castillo::Castillo( btDiscreteDynamicsWorld* dynamicsWorld  )
 
 
 
-		posY = !posY;
+		sacarLadrillo = !sacarLadrillo;
 	}
 	cout<<"cant ladrillos de verdad: "<<num<<endl;
 
