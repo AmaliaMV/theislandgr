@@ -6,13 +6,20 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-//#include <bullet/btBulletDynamicsCommon.h>
+
 
 #include <iostream>
 #include "funcionesAux.h"
+#include "objetos/castillo/Castillo.h"
 
 static const string archivoDeConfiguracion = "archivosNivel1";
 
+Castillo* castillo;
+
+// para el motor fisico
+btDiscreteDynamicsWorld* dynamicsWorld;
+btCollisionShape* groundShape;
+btDefaultMotionState* groundMotionState;
 
 // Variables asociadas a única fuente de luz de la escena
 float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -53,13 +60,17 @@ void dibujarCentral()
 		glLineWidth(1);
 
 
-		mundo->dibujar();
+//		mundo->dibujar();
+		castillo->dibujar();
+//		glutSolidCube(1);
 	glEnable(GL_LIGHTING);
 }
 
 void OnIdle (void)
 {
 	mundo->actualizar();
+//    dynamicsWorld->stepSimulation(1/300.f,10);
+	dynamicsWorld->stepSimulation(1./600.);//ms / 1000000.f);
 
 	glutPostRedisplay();
 }
@@ -154,7 +165,6 @@ void init(void)
 		adminCamaras->setCamaraActual( CAMARA_MUNDO );
 
 		mCmd = new MCmdJuegos("texturas/menu_comandos.bmp");
-
 	}
 	catch ( EArchivoInexistente *e )
 	{
@@ -177,9 +187,7 @@ void display(void)
 	glLoadIdentity();
 
 	//seteo el eye y at de la camara actual
-
 	actualizarVista();
-
 
 	if (view_axis)
 		 glCallList(DL_AXIS);
@@ -234,6 +242,105 @@ void reshape (int w, int h)
 	W_HEIGHT = h;
 }
 
+
+
+void initPhysics()
+{
+	// Inicializacion del motor de fisica
+    btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+
+    dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
+    dynamicsWorld->setGravity(btVector3(0,0,-10.0));
+
+	// Definimos plano del suelo - Cuerpo rigido estatico (masa=0)
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),1);// parametros: normal {x,y,z} , espesor o altura
+
+ 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,-1)));
+ 	//los 2 vectores representan la orientacion (x,y,z,w) y traslacion (x,y,z) del objeto suelo,
+ 	// traslacion es (0,-1,0) para compensar el espesor que es 1, asi el lado superior del piso queda en Y=0
+
+     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
+     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+     groundRigidBody->setFriction(1.0);
+     dynamicsWorld->addRigidBody(groundRigidBody);
+
+     castillo = new Castillo(dynamicsWorld);
+
+//	btTransform startTransform;
+//	startTransform.setIdentity();
+//
+//	int cantRows=4;
+//	int cantCols=4;
+//	float separacion=0.05f;
+//
+//	int col=0;	int row=0;	int altura=0;
+//
+//	for (int k=0;k<totalCajas;k++){
+//
+//
+//
+//		// defino la posicion inicial de la caja
+//		float posX=((col-cantCols/2)*(tamanioCaja+separacion));
+//		float posY=(row-cantRows/2)*(tamanioCaja+separacion);
+//		float posZ=altura*(tamanioCaja+separacion);
+//
+//		// aplico transformacion inicial
+//		startTransform.setOrigin(btVector3(btScalar(posX),btScalar(posY),btScalar(posZ)));
+//
+//		btDefaultMotionState* fallMotionState = new btDefaultMotionState(startTransform);
+//		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,cajaShape,fallInertia);
+//
+//		cajasRB[k] = new btRigidBody(fallRigidBodyCI);// creo el cuerpo rigido
+//
+//		cajasRB[k]->setFriction(btScalar(0.1)); // defino factor de friccion
+//		dynamicsWorld->addRigidBody(cajasRB[k]); // agrego la caja a la simulacion
+//
+//		col++;
+//		if (col>cantCols-1)	{col=0;row++;}
+//		if (row>cantRows-1)   {row=0;col=0;altura++;}
+//	}
+//	// Defino Esfera
+//
+//	btCollisionShape* esferaShape = new  btSphereShape(radioEsfera);
+//	mass = 10;
+//	esferaShape->calculateLocalInertia(mass,fallInertia);
+//
+//	startTransform.setIdentity();
+//	startTransform.setOrigin(btVector3(btScalar(posicionEsferaRB[0]),btScalar(posicionEsferaRB[1]),btScalar(posicionEsferaRB[2])));
+//	btDefaultMotionState* esferaMotionState = new btDefaultMotionState(startTransform);
+//
+//	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI2(mass,esferaMotionState,esferaShape,fallInertia);
+//    esferaRB = new btRigidBody(fallRigidBodyCI2);
+//	// lo defino  como Kinetic Rigid Body
+//
+//	esferaRB->setCollisionFlags( esferaRB->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+//	esferaRB->setActivationState(DISABLE_DEACTIVATION);
+//
+//	dynamicsWorld->addRigidBody(esferaRB);
+//
+//
+//	// Defino Cubo
+//
+//	btCollisionShape* cuboShape = new  btBoxShape(btVector3(1.0,1.0,1.0));
+//	mass = 10;
+//	cuboShape->calculateLocalInertia(mass,fallInertia);
+//
+//	startTransform.setIdentity();
+//	startTransform.setOrigin(btVector3(btScalar(posicionCuboRB[0]),btScalar(posicionCuboRB[1]),btScalar(posicionCuboRB[2])));
+//	startTransform.setRotation(btQuaternion(btScalar(0),btScalar(0),btScalar(45)));
+//	btDefaultMotionState* cuboMotionState = new btDefaultMotionState(startTransform);
+//
+//	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,cuboMotionState,cuboShape,fallInertia);
+//    cuboRB = new btRigidBody(fallRigidBodyCI3);
+//	cuboRB->setFriction(0.00);
+//	dynamicsWorld->addRigidBody(cuboRB);
+
+
+ }
+
 void keyboard (unsigned char key, int x, int y)
 {
 	cout<<"key: "<<(unsigned int)key<<endl;
@@ -248,6 +355,7 @@ void keyboard (unsigned char key, int x, int y)
     	  delete mundo;
     	  delete mCmd;
     	  delete adminCamaras;
+    	  delete castillo;
 
          exit(0);
          break;
@@ -260,18 +368,26 @@ void keyboard (unsigned char key, int x, int y)
 		  view_axis = !view_axis;
 		  glutPostRedisplay();
 		  break;
-	  case '0':
+	  case '1':
 		  adminCamaras->setCamaraActual( CAMARA_MUNDO );
 		  break;
-	  case '1':
+	  case '2':
 		  adminCamaras->setCamaraActual( CAMARA_BARCO );
 		  break;
-	  case '2':
+	  case '3':
 		  adminCamaras->setCamaraActual( CAMARA_CANON );
 //		  edit_panelB = !edit_panelB;
 //		  glutPostRedisplay();
 		  break;
+	  case 'r':
+		  delete castillo;
+//		  castillo = new Castillo(dynamicsWorld);
+//		  glutPostRedisplay();
 
+		  initPhysics();
+		  glutPostRedisplay();
+
+		  break;
 	  case 'k':
 
 		  glutPostRedisplay();
@@ -315,6 +431,8 @@ int main(int argc, char** argv)
    glutCreateWindow (argv[0]);
   // glutFullScreen();
    init ();
+   initPhysics();
+
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
