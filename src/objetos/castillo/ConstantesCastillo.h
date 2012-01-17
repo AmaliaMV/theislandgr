@@ -16,6 +16,7 @@ public:
 	static const unsigned int PROFUNDIDAD_CASTILLO;		// unidad = cant de ladrillos
 	static const unsigned int ANCHO_CASTILLO; 			// unidad = cant de ladrillos
 	static const unsigned int CANT_LADRILLOS;
+	static const unsigned int CANT_LARILLOS_CASTILLO;
 	static const float ALTURA_LADRILLO;
 	static const float ANCHO_LADRILLO;
 	static const float LARGO_LADRILLO;
