@@ -17,6 +17,10 @@ public:
 	virtual ~Castillo();
 
 private:
+	void dibujarTorre( unsigned int &indice );
+	void dibujarMuros( unsigned int &indice );
+	void agregarLadrillosAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
+
 	Ladrillo** ladrillos;
 };
 
