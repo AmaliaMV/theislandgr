@@ -17,7 +17,7 @@
 class Ladrillo: public PrismaConTextura
 {
 public:
-	Ladrillo( string nombreTextura, float alto, float ancho, float largo, float posX, float posY, float posZ );
+	Ladrillo( string nombreTextura, float longZ, float longY, float longX, float posX, float posY, float posZ );
 	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
 	void dibujar() const;
 	virtual ~Ladrillo();
