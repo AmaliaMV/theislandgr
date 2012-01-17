@@ -19,6 +19,13 @@ public:
 	static const float ALTURA_LADRILLO;
 	static const float ANCHO_LADRILLO;
 	static const float LARGO_LADRILLO;
+	static const unsigned int CANT_LADRILLOS_TORRE;
+	static const float ALTURA_LADRILLO_TORRE;
+	static const float ANCHO_LADRILLO_TORRE;
+	static const float LARGO_LADRILLO_TORRE;
+	static const unsigned int CANT_LADRILLOS_LADOS_TORRE;
+	static const unsigned int CANT_LADOS_TORRE;
+	static const unsigned int ALTURA_TORRE;
 
 	virtual ~CteCastillo();
 

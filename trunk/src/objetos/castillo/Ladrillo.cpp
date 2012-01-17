@@ -7,24 +7,23 @@
 
 #include "Ladrillo.h"
 
-Ladrillo::Ladrillo( string nombreTextura, float alto, float ancho, float largo, float posX, float posY, float posZ )
-	: PrismaConTextura( nombreTextura, alto, ancho, largo )
+Ladrillo::Ladrillo( string nombreTextura, float longZ, float longY, float longX, float posX, float posY, float posZ )
+	: PrismaConTextura( nombreTextura, longZ, longY, longX )
 {
-	btCollisionShape* cajaShape = new  btBoxShape( btVector3( largo / 2.0, ancho / 2.0 , alto / 2.0 ));
-	btScalar mass = 1;
+	btCollisionShape* cajaShape = new  btBoxShape( btVector3( longX / 2.0, longY / 2.0 , longZ / 2.0 ));
+	btScalar mass = 1.0;
 	btVector3 fallInertia(0,0,0);
 	cajaShape->calculateLocalInertia( mass, fallInertia );
 
 	btTransform startTransform;
 	startTransform.setIdentity();
-//	// aplico transformacion inicial
+	// aplico transformacion inicial
 	startTransform.setOrigin(btVector3(btScalar(posX),btScalar(posY),btScalar(posZ)));
-//
+
 	btDefaultMotionState* fallMotionState = new btDefaultMotionState(startTransform);
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,cajaShape,fallInertia);
 
 	ladrillo = new btRigidBody(fallRigidBodyCI);// creo el cuerpo rigido
-//
 	ladrillo->setFriction(btScalar(0.1)); // defino factor de friccion
 }
 
