@@ -6,20 +6,17 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-
-
 #include <iostream>
 #include "funcionesAux.h"
 #include "objetos/castillo/Castillo.h"
 
+#include "fisica/Fisica.h"
+
+Fisica *fisica;
+
+
 static const string archivoDeConfiguracion = "archivosNivel1";
-
 Castillo* castillo;
-
-// para el motor fisico
-btDiscreteDynamicsWorld* dynamicsWorld;
-btCollisionShape* groundShape;
-btDefaultMotionState* groundMotionState;
 
 // Variables asociadas a única fuente de luz de la escena
 float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -70,7 +67,7 @@ void OnIdle (void)
 {
 	mundo->actualizar();
 //    dynamicsWorld->stepSimulation(1/300.f,10);
-	dynamicsWorld->stepSimulation(1./600.);//ms / 1000000.f);
+	fisica->getMundoFisico()->stepSimulation(1./60.);//ms / 1000000.f);
 
 	glutPostRedisplay();
 }
@@ -246,28 +243,8 @@ void reshape (int w, int h)
 
 void initPhysics()
 {
-	// Inicializacion del motor de fisica
-    btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
-    dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
-    dynamicsWorld->setGravity(btVector3(0,0,-10.0));
-
-	// Definimos plano del suelo - Cuerpo rigido estatico (masa=0)
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),1);// parametros: normal {x,y,z} , espesor o altura
-
- 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,-1)));
- 	//los 2 vectores representan la orientacion (x,y,z,w) y traslacion (x,y,z) del objeto suelo,
- 	// traslacion es (0,-1,0) para compensar el espesor que es 1, asi el lado superior del piso queda en Y=0
-
-     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
-     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-     groundRigidBody->setFriction(1.0);
-     dynamicsWorld->addRigidBody(groundRigidBody);
-
-     castillo = new Castillo(dynamicsWorld);
+	fisica = new Fisica();
+	castillo = new Castillo( fisica );
 
 //	btTransform startTransform;
 //	startTransform.setIdentity();
@@ -356,7 +333,7 @@ void keyboard (unsigned char key, int x, int y)
     	  delete mCmd;
     	  delete adminCamaras;
     	  delete castillo;
-
+    	  delete fisica;
          exit(0);
          break;
 	  case 'g':
@@ -384,7 +361,7 @@ void keyboard (unsigned char key, int x, int y)
 //		  castillo = new Castillo(dynamicsWorld);
 //		  glutPostRedisplay();
 
-		  initPhysics();
+		  fisica->reiniciar();
 		  glutPostRedisplay();
 
 		  break;

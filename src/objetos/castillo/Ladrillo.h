@@ -8,16 +8,16 @@
 #ifndef LADRILLO_H_
 #define LADRILLO_H_
 
-#include <btBulletDynamicsCommon.h>
-
 #include "ConstantesCastillo.h"
 
 #include "../geometricos/PrismaConTextura.h"
 
+#include "../../fisica/Fisica.h"
+
 class Ladrillo: public PrismaConTextura
 {
 public:
-	Ladrillo( string nombreTextura, float longZ, float longY, float longX, float posX, float posY, float posZ );
+	Ladrillo( string nombreTextura, btBoxShape* shape, float posX, float posY, float posZ );
 	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
 	void dibujar() const;
 	virtual ~Ladrillo();

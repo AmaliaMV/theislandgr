@@ -27,6 +27,9 @@ public:
 	static const unsigned int CANT_LADRILLOS_LADOS_TORRE;
 	static const unsigned int CANT_LADOS_TORRE;
 	static const unsigned int ALTURA_TORRE;
+	static const unsigned int ANCHO_PUERTA;
+	static const unsigned int ALTURA_PUERTA;
+	static const float PROFUNDIDAD_PUERTA;
 
 	virtual ~CteCastillo();
 
