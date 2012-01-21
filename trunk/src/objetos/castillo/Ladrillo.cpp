@@ -12,6 +12,8 @@ Ladrillo::Ladrillo( string nombreTextura, btBoxShape* shape, float posX, float p
 			shape->getHalfExtentsWithMargin().getY()*2,
 			shape->getHalfExtentsWithMargin().getX()*2)
 {
+	//cout<<"X: "<<shape->getHalfExtentsWithMargin().getX()*2<<" y: "<<shape->getHalfExtentsWithMargin().getY()*2<<" z: "<<shape->getHalfExtentsWithMargin().getZ()*2<<endl;
+	
 	btScalar mass = 1.0;
 	btVector3 fallInertia(0,0,0);
 	shape->calculateLocalInertia( mass, fallInertia );
