@@ -132,18 +132,23 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica )
 			posInicialCteY = longLadoX/2.0f - CteCastillo::LARGO_LADRILLO/2.0f,
 			posInicialY = longLadoX/2.0f - CteCastillo::ANCHO_LADRILLO/2.0f,
 			cantLadrillosAntesPuerta = ( CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) / 2 - 1 /*ult ladrillo long variable-> shapeX1*/ ;
+	const float inicioX1 = posInicialY - deltaPos*cantLadrillosAntesPuerta + CteCastillo::ANCHO_LADRILLO/2.0f /*porque las posiciones son relativas al centro de la figura.*/,
+			finX1 = CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION,
+			inicioX2 = -posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 1 /*desperdicio, 1 por el lado derecho de la puerta*/ ) + CteCastillo::ANCHO_LADRILLO / 2.0f,
+			finX2 = CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION;
+
 //			mitadLongLadoXPuerta = (CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) * CteCastillo::ANCHO_LADRILLO / 2.0f + CteCastillo::SEPARACION * 2 /*L | L | x, x = puerta o L*/;
 
 
 	/* creo los collision shape para la torre */
-	btBoxShape* shapeX = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0,CteCastillo::ANCHO_LADRILLO/2.0,CteCastillo::ALTURA_LADRILLO/2.0));
-	btBoxShape* shapeY = new  btBoxShape(btVector3(CteCastillo::ANCHO_LADRILLO/2.0,CteCastillo::LARGO_LADRILLO/2.0,CteCastillo::ALTURA_LADRILLO/2.0));
-	btBoxShape* shapePuerta = new  btBoxShape(btVector3(CteCastillo::PROFUNDIDAD_PUERTA/2.0,CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0,CteCastillo::ALTURA_PUERTA * CteCastillo::ALTURA_LADRILLO/2.0));
-	btBoxShape* shapeX1 = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0,(posInicialY - deltaPos*cantLadrillosAntesPuerta - ( CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION)) /2.0,CteCastillo::ALTURA_LADRILLO/2.0));
-	btBoxShape* shapeX2 = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0, ( -posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ ) - CteCastillo::SEPARACION - (CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION)) /2.0, CteCastillo::ALTURA_LADRILLO/2.0));
+	btBoxShape* shapeX = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0, CteCastillo::ANCHO_LADRILLO/2.0, CteCastillo::ALTURA_LADRILLO/2.0));
+	btBoxShape* shapeY = new  btBoxShape(btVector3(CteCastillo::ANCHO_LADRILLO/2.0, CteCastillo::LARGO_LADRILLO/2.0, CteCastillo::ALTURA_LADRILLO/2.0));
+	btBoxShape* shapePuerta = new  btBoxShape(btVector3(CteCastillo::PROFUNDIDAD_PUERTA/2.0, CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0, CteCastillo::ALTURA_PUERTA * CteCastillo::ALTURA_LADRILLO/2.0));
+	btBoxShape* shapeX1 = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0, ( inicioX1 - finX1) /2.0, CteCastillo::ALTURA_LADRILLO/2.0));
+	btBoxShape* shapeX2 = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0, ( inicioX2 - finX2 )/2.0, CteCastillo::ALTURA_LADRILLO/2.0));
 
-cout<<"tam ladri 1: "<<(posInicialY - deltaPos*cantLadrillosAntesPuerta - ( CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION))<<endl;
-cout<<"tam ladri 2: "<< ( -posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ ) - CteCastillo::SEPARACION - (CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION)) <<endl;
+cout<<"tam ladri 1: "<<inicioX1 - finX1<<endl;
+cout<<"tam ladri 2: "<<inicioX2 - finX2<<endl;
 
 cout<<"posicion inicial: "<< posInicialY<<endl;
 cout<<"delta posicionY : "<< deltaPos<<endl;
@@ -169,8 +174,9 @@ cout<<"delta posicionY : "<< deltaPos<<endl;
 			posY += deltaPos * reves; cout<<"cant ladrillos x+ "<<num-1<<endl;
 		}
 cout<<"pos antes puerta: "<<posY<<endl;
-
-		ladrillos [indice + num++] = new Ladrillo( "texturas/cielo1.bmp", shapeX2,
+		posY = - ( inicioX1 + finX1 ) / 2.0f /*para sacar la posicion media*/* reves;
+cout<<"pos antes puerta: "<<posY<<endl;
+		ladrillos [indice + num++] = new Ladrillo( "texturas/cielo1.bmp", shapeX1,
 					posX,
 					posY,
 					altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
@@ -178,15 +184,16 @@ cout<<"pos antes puerta: "<<posY<<endl;
 		//puerta
 
 		//posY += deltaPos * ( CteCastillo::ANCHO_PUERTA + cantLadrillosAntesPuerta + 1 /*por desperdicio*/  ) * reves;
-		posY = ( CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO / 2 + CteCastillo::SEPARACION ) * reves;
+		//posY = ( CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO / 2 + CteCastillo::SEPARACION ) * reves;
+		posY = ( inicioX2 + finX2 ) / 2.0f /*para sacar la posicion media*/* reves;
 cout<<"pos despues puerta: "<<posY<<endl;
-		ladrillos [indice + num++] = new Ladrillo( "texturas/maderaBaranda.bmp", shapeX1,
+		ladrillos [indice + num++] = new Ladrillo( "texturas/maderaBaranda.bmp", shapeX2,
 					//posY - CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO / 2
 					posX,
 					posY,
 					altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
-		posY = -posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ );
-
+		posY = (-posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ )) * reves;
+cout<<"pos despues puerta: "<<posY<<endl;
 		for ( unsigned int lado = 0; lado < ( CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) / 2 - 1 /*ult ladrillo long variable*/; lado++ )
 		{
 			ladrillos [indice + num++] = new Ladrillo( "texturas/tex2.bmp", shapeX,

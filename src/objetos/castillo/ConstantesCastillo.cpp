@@ -19,7 +19,7 @@ CteCastillo::~CteCastillo() {}
 const float CteCastillo::SEPARACION = 0.05;
 
 // para el castillo
-const unsigned int CteCastillo::ALTURA_CASTILLO = 2;//2;//8;
+const unsigned int CteCastillo::ALTURA_CASTILLO = 8;//2;//8;
 const unsigned int CteCastillo::PROFUNDIDAD_CASTILLO = 3;//5;//2;//4;
 const unsigned int CteCastillo::ANCHO_CASTILLO = 6;//5; //debe ser par
 const float CteCastillo::ALTURA_LADRILLO = 1.0;
