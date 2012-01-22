@@ -65,7 +65,7 @@ void dibujarCentral()
 
 void OnIdle (void)
 {
-	mundo->actualizar();
+//	mundo->actualizar();
 //    dynamicsWorld->stepSimulation(1/300.f,10);
 	fisica->getMundoFisico()->stepSimulation(1./60.);//ms / 1000000.f);
 
@@ -152,13 +152,13 @@ void init(void)
 
 	try
 	{
-		mundo = new Mundo( archivoDeConfiguracion );
+	//	mundo = new Mundo( archivoDeConfiguracion );
 
 		adminCamaras = new AdminCamaras();
 
 		adminCamaras->agregarCamara( CAMARA_MUNDO, new CamaraMundo() );
-		adminCamaras->agregarCamara( CAMARA_BARCO, new CamaraBarco(mundo->getTBarco()) );
-		adminCamaras->agregarCamara( CAMARA_CANON, new CamaraCanon(mundo->getTBarco(), mundo->getBarco()->getTCanon()) );
+	//	adminCamaras->agregarCamara( CAMARA_BARCO, new CamaraBarco(mundo->getTBarco()) );
+	//	adminCamaras->agregarCamara( CAMARA_CANON, new CamaraCanon(mundo->getTBarco(), mundo->getBarco()->getTCanon()) );
 		adminCamaras->setCamaraActual( CAMARA_MUNDO );
 
 		mCmd = new MCmdJuegos("texturas/menu_comandos.bmp");
@@ -244,7 +244,16 @@ void reshape (int w, int h)
 void initPhysics()
 {
 	fisica = new Fisica();
-	castillo = new Castillo( fisica );
+	try
+	{
+		castillo = new Castillo( fisica );
+	}
+	catch ( EArchivoInexistente *e )
+	{
+		cout<< e->what() <<endl;
+		exit(1);
+	}
+	
 
 //	btTransform startTransform;
 //	startTransform.setIdentity();
@@ -329,7 +338,7 @@ void keyboard (unsigned char key, int x, int y)
 	   break;
 
       case 'q':
-    	  delete mundo;
+//    	  delete mundo;
     	  delete mCmd;
     	  delete adminCamaras;
     	  delete castillo;
@@ -362,6 +371,16 @@ void keyboard (unsigned char key, int x, int y)
 //		  glutPostRedisplay();
 
 		  fisica->reiniciar();
+		try
+		{
+			castillo = new Castillo( fisica );
+		}
+		catch ( EArchivoInexistente *e )
+		{
+			cout<< e->what() <<endl;
+			exit(1);
+		}
+
 		  glutPostRedisplay();
 
 		  break;
@@ -380,16 +399,16 @@ void keyboard (unsigned char key, int x, int y)
 		  adminCamaras->getCamaraActual()->acercarCamara();
 		  break;
 	  case 'c':
-		  mundo->getBarco()->getCanon()->decAngV();
+//		  mundo->getBarco()->getCanon()->decAngV();
 		  break;
 	  case 'v':
-		  mundo->getBarco()->getCanon()->incAngV();
+//		  mundo->getBarco()->getCanon()->incAngV();
 		  break;
 	  case 'b':
-		  mundo->getBarco()->getCanon()->izquierda();
+//		  mundo->getBarco()->getCanon()->izquierda();
 		  break;
 	  case 'n':
-		  mundo->getBarco()->getCanon()->derecha();
+//		  mundo->getBarco()->getCanon()->derecha();
 		  break;
 
 
@@ -409,7 +428,6 @@ int main(int argc, char** argv)
   // glutFullScreen();
    init ();
    initPhysics();
-
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
