@@ -22,7 +22,8 @@
 
 class RectanguloConTextura: public ODTextura {
 public:
-	RectanguloConTextura( string nombreTextura, float base, float altura );
+	RectanguloConTextura( string nombreTextura, float base, float altura, Coord_text *coord_text = new Coord_text() );
+	RectanguloConTextura( Textura *textura, float base, float altura, Coord_text *coord_text = new Coord_text() );
 	virtual ~RectanguloConTextura();
 
 	float getBase() const;
@@ -35,6 +36,7 @@ private:
 
 	float ALTURA;
 	float BASE;
+	Coord_text *coord_text;
 };
 
 #endif /* RECTANGULOCONTEXTURA_H_ */

@@ -10,14 +10,15 @@
 
 #include "ConstantesCastillo.h"
 
-#include "../geometricos/PrismaConTextura.h"
+#include "../geometricos/PrismaConTexturaCuad.h"
 
 #include "../../fisica/CuerpoFisicoRigido.h"
 
-class Ladrillo: public PrismaConTextura, public CuerpoFisicoRigido
+class Ladrillo: public PrismaConTexturaCuad, public CuerpoFisicoRigido
 {
 public:
-	Ladrillo( string nombreTextura, btBoxShape* shape, float posX, float posY, float posZ );
+	Ladrillo( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ,
+			Coord_text* coord_text = new Coord_text() );
 	void dibujar() const;
 	virtual ~Ladrillo();
 

@@ -17,6 +17,4 @@ const char* EOpenGL::what() const throw()
 	return mensaje.c_str();
 }
 
-EOpenGL::~EOpenGL() throw() {
-	// TODO Auto-generated destructor stub
-}
+EOpenGL::~EOpenGL() throw() {}
