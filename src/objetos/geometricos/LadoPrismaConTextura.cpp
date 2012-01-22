@@ -3,13 +3,6 @@
  *
  *  Created on: 06/01/2012
  *      Author: amalia
- *
- *
- *	  largo  ancho  largo  ancho
- *   4 - - 5 - - 6 - - 7
- *   |     |     |     |		altura
- *   |     |     |     |
- *   0 - - 1 - - 2 - - 3
  */
 
 #include "LadoPrismaConTextura.h"

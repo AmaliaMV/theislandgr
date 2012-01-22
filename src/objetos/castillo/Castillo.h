@@ -8,9 +8,10 @@
 #ifndef CASTILLO_H_
 #define CASTILLO_H_
 
-#include "../../fisica/Fisica.h"
+#include "../../fisica/CuerpoFisicoRigido.h"
 
 #include "Ladrillo.h"
+#include "Puerta.h"
 
 class Castillo {
 public:
@@ -21,9 +22,9 @@ public:
 private:
 	void dibujarTorre( unsigned int &indice, Fisica *fisica );
 	void dibujarMuros( unsigned int &indice, Fisica *fisica );
-	void agregarLadrillosAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
+	void agregarCuerposAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
 
-	Ladrillo** ladrillos;
+	CuerpoFisicoRigido** cuerpos;
 };
 
 #endif /* CASTILLO_H_ */
