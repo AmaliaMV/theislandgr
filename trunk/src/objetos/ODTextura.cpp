@@ -7,14 +7,15 @@
 
 #include "ODTextura.h"
 
-ODTextura::ODTextura( Textura *textura ): ObjetoDibujable()
+ODTextura::ODTextura( Textura *textura, bool compartida ): ObjetoDibujable()
 {
 	this->textura = textura;
+	this->compartida = compartida;
 }
 
 ODTextura::~ODTextura()
 {
-	if ( this->textura != NULL )
+	if ( compartida == false )
 		delete this->textura;
 }
 

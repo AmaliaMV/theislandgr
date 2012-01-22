@@ -22,11 +22,6 @@ void FuncOpenGL::liberarIdDisplayList( GLuint id )
 	glDeleteLists( id, 1 );
 }
 
-FuncOpenGL::FuncOpenGL() {
-	// TODO Auto-generated constructor stub
+FuncOpenGL::FuncOpenGL() {}
 
-}
-
-FuncOpenGL::~FuncOpenGL() {
-	// TODO Auto-generated destructor stub
-}
+FuncOpenGL::~FuncOpenGL() {}

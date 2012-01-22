@@ -7,16 +7,29 @@
 
 #include "RectanguloConTextura.h"
 
-RectanguloConTextura::RectanguloConTextura( string nombreTextura, float base, float altura )
+RectanguloConTextura::RectanguloConTextura( string nombreTextura, float base, float altura, Coord_text *coord_text )
 	:ODTextura (new Textura24(nombreTextura) )
 {
 	this->BASE = base;
 	this->ALTURA = altura;
+	this->coord_text = coord_text;
 
 	this->init(4, 4, GL_TRIANGLE_STRIP);
 }
 
-RectanguloConTextura::~RectanguloConTextura() {}
+RectanguloConTextura::RectanguloConTextura( Textura* textura, float base, float altura, Coord_text *coord_text )
+	:ODTextura ( textura, true )
+{
+	this->BASE = base;
+	this->ALTURA = altura;
+	this->coord_text = coord_text;
+
+	this->init(4, 4, GL_TRIANGLE_STRIP);
+}
+RectanguloConTextura::~RectanguloConTextura()
+{
+	delete this->coord_text;
+}
 
 void RectanguloConTextura::generarCoordPtos()
 {
@@ -39,17 +52,17 @@ void RectanguloConTextura::generarIndice()
 
 void RectanguloConTextura::generarCoodText()
 {
-	text[0] = 0.0;
-	text[1] = 1.0;
+	text[0] = this->coord_text->xmin;
+	text[1] = this->coord_text->ymax;
 
-	text[2] = 0.0;
-	text[3] = 0.0;
+	text[2] = this->coord_text->xmin;
+	text[3] = this->coord_text->ymin;
 
-	text[4] = 1.0;
-	text[5] = 1.0;
+	text[4] = this->coord_text->xmax;
+	text[5] = this->coord_text->ymax;
 
-	text[6] = 1.0;
-	text[7] = 0.0;
+	text[6] = this->coord_text->xmax;
+	text[7] = this->coord_text->ymin;
 }
 
 float RectanguloConTextura::getBase() const

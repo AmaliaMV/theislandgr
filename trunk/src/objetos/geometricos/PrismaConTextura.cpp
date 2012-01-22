@@ -11,7 +11,7 @@ PrismaConTextura::PrismaConTextura( string nombreTextura, float altura, float an
 	:ObjetoDibujable()
 {
 	this->lado = new LadoPrismaConTextura( nombreTextura, altura, ancho, largo );
-	this->cara = new RectanguloConTextura ( nombreTextura, ancho, largo);
+	this->cara = new RectanguloConTextura ( nombreTextura, ancho, largo );
 
 	this->compilarDisplayList();
 }

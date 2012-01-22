@@ -23,7 +23,7 @@ using namespace std;
 
 class ODTextura: public ObjetoDibujable {
 public:
-	ODTextura( Textura *textura ); /* Textura = del objeto */
+	ODTextura( Textura *textura, bool compartida = false ); /* Textura = del objeto */
 	virtual ~ODTextura();
 
 protected:
@@ -48,6 +48,7 @@ private:
 	unsigned int tamIndice;
 	unsigned int cantPtos;
 	GLenum mode;
+	bool compartida;
 };
 
 #endif /* ODTEXTURA_H_ */

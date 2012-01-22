@@ -12,10 +12,11 @@
 Castillo::Castillo( Fisica* fisica )
 {
 	cuerpos = new CuerpoFisicoRigido*[CteCastillo::CANT_LADRILLOS];
+	textura = new Textura24("texturas/piedra4.bmp");
 	cout<<"castillo "<< CteCastillo::CANT_LADRILLOS<<endl;
 	unsigned int num = 0;
-//	this->dibujarTorre(num, fisica);
-	this->dibujarMuros(num, fisica);
+	this->dibujarTorre(num, fisica, textura);
+//	this->dibujarMuros(num, fisica, textura);
 	this->agregarCuerposAlModelo( fisica->getMundoFisico() );
 }
 
@@ -25,6 +26,7 @@ Castillo::~Castillo()
 		delete cuerpos [numLadrillo];
 
 	delete []cuerpos;
+	delete textura;
 
 }
 
@@ -41,14 +43,14 @@ void Castillo::agregarCuerposAlModelo( btDiscreteDynamicsWorld* dynamicsWorld )
 		cuerpos [num]->agregarseAlMundo(dynamicsWorld);
 }
 
-void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica )
+void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, Textura* textura)
 {
 	/* creo los collision shape para la torre */
 	btBoxShape* shapeX = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO_TORRE/2.0,CteCastillo::ANCHO_LADRILLO_TORRE/2.0,CteCastillo::ALTURA_LADRILLO_TORRE/2.0));
 	btBoxShape* shapeY = new  btBoxShape(btVector3(CteCastillo::ANCHO_LADRILLO_TORRE/2.0,CteCastillo::LARGO_LADRILLO_TORRE/2.0,CteCastillo::ALTURA_LADRILLO_TORRE/2.0));
 
 	/* dibujo la torre */
-	int reves = 1;/* esto es para ir poniendo los ladrillos en forma intercalda*/
+	int reves = 1;		// esto es para ir poniendo los ladrillos en forma intercalda
 	unsigned int num = 0, altura = 0;
 	float posX, posY;
 	const float longLado = CteCastillo::ANCHO_LADRILLO_TORRE * CteCastillo::CANT_LADRILLOS_LADOS_TORRE + CteCastillo::LARGO_LADRILLO_TORRE + CteCastillo::SEPARACION * CteCastillo::CANT_LADRILLOS_LADOS_TORRE,
@@ -57,57 +59,79 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica )
 			posInicial = longLado/2.0f - CteCastillo::ANCHO_LADRILLO_TORRE/2.0f,
 			deltaZ = CteCastillo::ALTURA_LADRILLO_TORRE; //+ CteCastillo::SEPARACION/4; comentado porq salta
 
+	/* para la textura */
+	float inicio_textH, inicio_textV = 0.0;
+	const float long_textH = CteCastillo::ANCHO_LADRILLO_TORRE * CteCastillo::CANT_LADRILLOS_LADOS_TORRE,
+			long_textV = CteCastillo::ALTURA_TORRE * CteCastillo::ALTURA_LADRILLO_TORRE ;
+
 	for ( ; num < CteCastillo::CANT_LADRILLOS_TORRE; altura++ )
-	{ cout<<"factz: "<<altura * (CteCastillo::ALTURA_LADRILLO_TORRE + CteCastillo::SEPARACION) + FACT_CORRECCION_TORRE_Z<<endl;
+	{
 		/* parte x+ */
+		inicio_textH = 0.0;
 		posX = posInicialCte;
 		posY = -posInicial * reves;
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tex2.bmp", shapeX,
-						posX,
-						posY,
-						altura * deltaZ + FACT_CORRECCION_TORRE_Z );
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
+						altura * deltaZ + FACT_CORRECCION_TORRE_Z,
+						new Coord_text( inicio_textH / long_textH,
+									  ( inicio_textH + CteCastillo::ANCHO_LADRILLO_TORRE ) / long_textH,
+								        inicio_textV / long_textV,
+								      ( inicio_textV + CteCastillo::ALTURA_LADRILLO_TORRE ) / long_textV ) );
 			posY += deltaPos * reves;
+			inicio_textH += CteCastillo::ANCHO_LADRILLO_TORRE;
 		}
 
 		/* parte y+ */
+		inicio_textH = 0.0;
 		posX = posInicial  * reves;
 		posY = posInicialCte;
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/madera4.bmp", shapeY,
-						posX,
-						posY,
-						altura * deltaZ + FACT_CORRECCION_TORRE_Z );
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
+						altura * deltaZ + FACT_CORRECCION_TORRE_Z,
+						new Coord_text( inicio_textH / long_textH,
+									  ( inicio_textH + CteCastillo::ANCHO_LADRILLO_TORRE ) / long_textH,
+								        inicio_textV / long_textV,
+								      ( inicio_textV + CteCastillo::ALTURA_LADRILLO_TORRE ) / long_textV ) );
 			posX -= deltaPos * reves;
+			inicio_textH += CteCastillo::ANCHO_LADRILLO_TORRE;
 		}
 
 		/* parte x- */
+		inicio_textH = 0.0;
 		posX = -posInicialCte;
 		posY = posInicial * reves;
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/arena.bmp", shapeX,
-						posX,
-						posY,
-						altura * deltaZ + FACT_CORRECCION_TORRE_Z );
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX,	posY,
+						altura * deltaZ + FACT_CORRECCION_TORRE_Z,
+						new Coord_text( inicio_textH / long_textH,
+									  ( inicio_textH + CteCastillo::ANCHO_LADRILLO_TORRE ) / long_textH,
+								        inicio_textV / long_textV,
+							          ( inicio_textV + CteCastillo::ALTURA_LADRILLO_TORRE )/ long_textV ) );
 			posY -= deltaPos * reves;
+			inicio_textH += CteCastillo::ANCHO_LADRILLO_TORRE;
 		}
 
 		/* parte y- */
+		inicio_textH = 0.0;
 		posX = -posInicial * reves;
 		posY = -posInicialCte;
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tela_gris.bmp", shapeY,
-						posX,
-						posY,
-						altura * deltaZ + FACT_CORRECCION_TORRE_Z );
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
+						altura * deltaZ + FACT_CORRECCION_TORRE_Z,
+						new Coord_text( inicio_textH / long_textH,
+									  ( inicio_textH + CteCastillo::ANCHO_LADRILLO_TORRE ) / long_textH,
+								        inicio_textV / long_textV,
+								      ( inicio_textV + CteCastillo::ALTURA_LADRILLO_TORRE )/ long_textV ) );
 			posX += deltaPos * reves;
+			inicio_textH += CteCastillo::ANCHO_LADRILLO_TORRE;
 		}
 
 		reves *= -1;
+		inicio_textV += CteCastillo::ALTURA_LADRILLO_TORRE;
 	}
 
 	indice+= CteCastillo::CANT_LADRILLOS_TORRE;
@@ -115,11 +139,11 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica )
 	/* agrego los collision shape al mundo */
 	fisica->addCollisionShape( shapeX );
 	fisica->addCollisionShape( shapeY );
-
 }
 
-void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica )
+void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, Textura* textura )
 {
+	/* ctes para dibujar */
 	int reves = 1;/* esto es para ir poniendo los ladrillos en forma intercalda*/
 	unsigned int num = 1, altura = 0;
 	float posX, posY;
@@ -136,8 +160,10 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica )
 			inicioX2 = -posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 1 /*desperdicio, 1 por el lado derecho de la puerta*/ ) + CteCastillo::ANCHO_LADRILLO / 2.0f,
 			finX2 = CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO/2.0f + CteCastillo::SEPARACION;
 
-//			mitadLongLadoXPuerta = (CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) * CteCastillo::ANCHO_LADRILLO / 2.0f + CteCastillo::SEPARACION * 2 /*L | L | x, x = puerta o L*/;
-
+	/* para la textura */
+//	const float delta_textH = 1.0 / (2 * longLadoX + 2 * longLadoY),
+//			delta_textV = 1.0 / (CteCastillo::ALTURA_CASTILLO * CteCastillo::ALTURA_LADRILLO);
+//	float inicio_textH = 0.0, inicio_textV = 0.0;
 
 	/* creo los collision shape para la torre */
 	btBoxShape* shapeX = new  btBoxShape(btVector3(CteCastillo::LARGO_LADRILLO/2.0, CteCastillo::ANCHO_LADRILLO/2.0, CteCastillo::ALTURA_LADRILLO/2.0));
@@ -159,46 +185,35 @@ cout<<"delta posicionY : "<< deltaPos<<endl;
 				0.0,
 				shapePuerta->getHalfExtentsWithMargin().getZ() );
 
-	//for ( ; num < CteCastillo::CANT_LARILLOS_CASTILLO; altura++ )
-	for ( ; altura < CteCastillo::ALTURA_CASTILLO - 1; altura++ ) //DEPENDE DE LA PUERTA CORREGIR!
+	for ( ; altura < CteCastillo::ALTURA_PUERTA; altura++ )
 	{
 		/* parte x+ */
 		posX = posInicialCteX;
 		posY = -posInicialY * reves;
 		for ( unsigned int lado = 0; lado < cantLadrillosAntesPuerta; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tex2.bmp", shapeX,
-						posX,
-						posY,
-						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
+						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z
+						);
 			posY += deltaPos * reves; cout<<"cant ladrillos x+ "<<num-1<<endl;
 		}
 cout<<"pos antes puerta: "<<posY<<endl;
 		posY = - ( inicioX1 + finX1 ) / 2.0f /*para sacar la posicion media*/* reves;
 cout<<"pos antes puerta: "<<posY<<endl;
-		cuerpos [indice + num++] = new Ladrillo( "texturas/cielo1.bmp", shapeX1,
-					posX,
-					posY,
+		cuerpos [indice + num++] = new Ladrillo( textura, shapeX1, posX, posY,
 					altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 
 		//puerta
 
-		//posY += deltaPos * ( CteCastillo::ANCHO_PUERTA + cantLadrillosAntesPuerta + 1 /*por desperdicio*/  ) * reves;
-		//posY = ( CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO / 2 + CteCastillo::SEPARACION ) * reves;
 		posY = ( inicioX2 + finX2 ) / 2.0f /*para sacar la posicion media*/* reves;
 cout<<"pos despues puerta: "<<posY<<endl;
-		cuerpos [indice + num++] = new Ladrillo( "texturas/madera_baranda.bmp", shapeX2,
-					//posY - CteCastillo::ANCHO_PUERTA * CteCastillo::ANCHO_LADRILLO / 2
-					posX,
-					posY,
+		cuerpos [indice + num++] = new Ladrillo( textura, shapeX2, posX, posY,
 					altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 		posY = (-posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ )) * reves;
 cout<<"pos despues puerta: "<<posY<<endl;
 		for ( unsigned int lado = 0; lado < ( CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) / 2 - 1 /*ult ladrillo long variable*/; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tex2.bmp", shapeX,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posY += deltaPos * reves; cout<<"cant ladrillos x+ (continuacion)"<<num-1<<endl;
 		}
@@ -209,9 +224,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = posInicialCteY;
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/madera4.bmp", shapeY,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posX -= deltaPos * reves; cout<<"cant ladrillos y+ "<<num-1<<endl;
 		}
@@ -221,9 +234,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = posInicialY * reves;
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/arena.bmp", shapeX,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posY -= deltaPos * reves; cout<<"cant ladrillos x- "<<num-1<<endl;
 		}
@@ -233,9 +244,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = -posInicialCteY;
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tela_gris.bmp", shapeY,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posX += deltaPos * reves; cout<<"cant ladrillos y+ "<<num-1<<endl;
 		}
@@ -245,14 +254,14 @@ cout<<"pos despues puerta: "<<posY<<endl;
 	cout<<"....num por ahora: "<<num<<endl;
 	}
 
+	/*para la ultima fila del techo del castillo*/
+
 		/* parte x+ */
 		posX = posInicialCteX;
 		posY = -posInicialY * reves;
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tex2.bmp", shapeX,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posY += deltaPos * reves; cout<<"cant ladrillos x+ "<<num-1<<endl;
 		}
@@ -262,9 +271,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = posInicialCteY;
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/madera4.bmp", shapeY,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posX -= deltaPos * reves; cout<<"cant ladrillos y+ "<<num-1<<endl;
 		}
@@ -274,9 +281,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = posInicialY * reves;
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/arena.bmp", shapeX,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeX, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posY -= deltaPos * reves; cout<<"cant ladrillos x- "<<num-1<<endl;
 		}
@@ -286,9 +291,7 @@ cout<<"pos despues puerta: "<<posY<<endl;
 		posY = -posInicialCteY;
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
-			cuerpos [indice + num++] = new Ladrillo( "texturas/tela_gris.bmp", shapeY,
-						posX,
-						posY,
+			cuerpos [indice + num++] = new Ladrillo( textura, shapeY, posX, posY,
 						altura * (CteCastillo::ALTURA_LADRILLO + CteCastillo::SEPARACION) + FACT_CORRECCION_Z );
 			posX += deltaPos * reves; cout<<"cant ladrillos y+ "<<num-1<<endl;
 		}
