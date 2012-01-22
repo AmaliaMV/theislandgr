@@ -4,7 +4,7 @@
  *  Created on: 06/01/2012
  *      Author: amalia
  *
- *      ancho
+ *      base
  *      2 -- 3
  *      |    |    alto
  *      |    |

@@ -12,19 +12,17 @@
 
 #include "../geometricos/PrismaConTextura.h"
 
-#include "../../fisica/Fisica.h"
+#include "../../fisica/CuerpoFisicoRigido.h"
 
-class Ladrillo: public PrismaConTextura
+class Ladrillo: public PrismaConTextura, public CuerpoFisicoRigido
 {
 public:
 	Ladrillo( string nombreTextura, btBoxShape* shape, float posX, float posY, float posZ );
-	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
 	void dibujar() const;
 	virtual ~Ladrillo();
 
 private:
-
-	btRigidBody* ladrillo;
+	static const float MASA_PUERTA;
 };
 
 #endif /* LADRILLO_H_ */
