@@ -9,19 +9,18 @@
 
 const float Ladrillo::MASA_PUERTA = 1.0;
 Ladrillo::Ladrillo( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ,
-		Coord_text* coord_text)
+		Coord_text* coord_textXPos, Coord_text* coord_textXNeg, Coord_text* coord_textYPos,
+		Coord_text* coord_textYNeg )
 	:PrismaConTexturaCuad( textura, shape->getHalfExtentsWithMargin().getZ()*2,
 			shape->getHalfExtentsWithMargin().getY()*2,
-			shape->getHalfExtentsWithMargin().getX()*2, coord_text ),
+			shape->getHalfExtentsWithMargin().getX()*2, coord_textXPos, coord_textXNeg,
+			coord_textYPos, coord_textYNeg ),
 	 CuerpoFisicoRigido( shape, posX, posY, posZ, MASA_PUERTA)
 {
 
 }
 
-Ladrillo::~Ladrillo()
-{
-
-}
+Ladrillo::~Ladrillo(){}
 
 void Ladrillo::dibujar() const
 {

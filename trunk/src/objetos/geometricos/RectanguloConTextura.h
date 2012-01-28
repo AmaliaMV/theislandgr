@@ -10,7 +10,19 @@
  *      |    |
  *      0 -- 1
  *
- *      dibuja un rectangulo en el plano XY
+ * referencia:
+ *
+ *     0 ----y+
+ *     |
+ *	   |
+ *	   x+
+ *
+ *	   textura si el dibujo es:
+ *
+ *	   o.....i
+ *	   /	?
+ *	   /	? qda en el mismo sentido en el plano especificado anteriormnt
+ *
  */
 
 #ifndef RECTANGULOCONTEXTURA_H_
