@@ -38,9 +38,9 @@ const unsigned int CteCastillo::ALTURA_TORRE = 10;
 const unsigned int CteCastillo::CANT_LADRILLOS_LADOS_TORRE = 2;
 const unsigned int CteCastillo::CANT_LADOS_TORRE = 4; /*porq es cuadrada*/
 const unsigned int CteCastillo::CANT_LADRILLOS_TORRE = CANT_LADOS_TORRE * CANT_LADRILLOS_LADOS_TORRE * ALTURA_TORRE ;
-const float CteCastillo::ALTURA_LADRILLO_TORRE = 0.5;//1.0;
-const float CteCastillo::ANCHO_LADRILLO_TORRE = 1.0;//2.0;
-const float CteCastillo::LARGO_LADRILLO_TORRE = 0.5;//1.0;
+const float CteCastillo::ALTURA_LADRILLO_TORRE = 0.5;
+const float CteCastillo::ANCHO_LADRILLO_TORRE = 1.0;
+const float CteCastillo::LARGO_LADRILLO_TORRE = 0.5;
 
 const unsigned int CteCastillo::CANT_LADRILLOS = /*CANT_LARILLOS_CASTILLO;*/ + CANT_LADRILLOS_TORRE;// /*CANT_LADRILLOS_ADELANTE_X + */CANT_LADRILLOS_ATRAS_X ;//+ CANT_LADRILLOS_LADO_YPOS ;//+ CANT_LADRILLOS_LADO_YNEG;
 

@@ -12,15 +12,17 @@
 
 class PrismaConTexturaCuad: public ObjetoDibujable {
 public:
-	PrismaConTexturaCuad( Textura* textura, float altura, float ancho, float largo, Coord_text *coord_text= new Coord_text() );
+	PrismaConTexturaCuad( Textura* textura, float altura, float ancho, float largo, Coord_text *coord_textXPos, Coord_text *coord_textXNeg, Coord_text *coord_textYPos, Coord_text *coord_textYNeg );
 	virtual ~PrismaConTexturaCuad();
 
 private:
 	void displayList() const;
 
 	RectanguloConTextura *caraZ;
-	RectanguloConTextura *caraY;
-	RectanguloConTextura *caraX;
+	RectanguloConTextura *caraYPos;
+	RectanguloConTextura *caraYNeg;
+	RectanguloConTextura *caraXPos;
+	RectanguloConTextura *caraXNeg;
 };
 
 #endif /* PRISMA_H_ */

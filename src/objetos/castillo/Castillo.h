@@ -10,7 +10,7 @@
 
 #include "../../fisica/CuerpoFisicoRigido.h"
 
-#include "Ladrillo.h"
+#include "BuildLadrillo.h"
 #include "Puerta.h"
 
 class Castillo {

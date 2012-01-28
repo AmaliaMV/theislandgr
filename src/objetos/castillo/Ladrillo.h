@@ -18,7 +18,8 @@ class Ladrillo: public PrismaConTexturaCuad, public CuerpoFisicoRigido
 {
 public:
 	Ladrillo( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ,
-			Coord_text* coord_text = new Coord_text() );
+			Coord_text* coord_textXPos, Coord_text* coord_textXNeg, Coord_text* coord_textYPos,
+			Coord_text* coord_textYNeg );
 	void dibujar() const;
 	virtual ~Ladrillo();
 
