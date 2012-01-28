@@ -30,6 +30,7 @@ public:
 	static const unsigned int ANCHO_PUERTA;
 	static const unsigned int ALTURA_PUERTA;
 	static const float PROFUNDIDAD_PUERTA;
+	static const unsigned int CANT_LADRILLOS_ARRIBA_TORRE;
 
 	virtual ~CteCastillo();
 
