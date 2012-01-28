@@ -13,10 +13,12 @@ Puerta::Puerta( string nomTextPuerta, string nomTextMarco, btBoxShape* shape, fl
 	: ObjetoDibujable(),
 	  CuerpoFisicoRigido( shape, posX, posY, posZ, MASA_PUERTA)
 {
-	this->lado = new LadoPrismaConTextura ( nomTextMarco, shape->getHalfExtentsWithMargin().getX()*2,
-			shape->getHalfExtentsWithMargin().getZ()*2, shape->getHalfExtentsWithMargin().getY()*2 );
-	this->cara = new RectanguloConTextura ( nomTextPuerta, shape->getHalfExtentsWithMargin().getZ()*2,
-			shape->getHalfExtentsWithMargin().getY()*2);
+	this->lado = new LadoPrismaConTextura ( nomTextMarco,
+			shape->getHalfExtentsWithMargin().getX()*2,
+			shape->getHalfExtentsWithMargin().getY()*2,
+			shape->getHalfExtentsWithMargin().getZ()*2);
+	this->cara = new RectanguloConTextura ( nomTextPuerta, shape->getHalfExtentsWithMargin().getY()*2,
+			shape->getHalfExtentsWithMargin().getZ()*2);
 
 	this->compilarDisplayList();
 }
@@ -31,7 +33,6 @@ void Puerta::displayList() const
 {
 	glPushMatrix();
 		glRotatef ( 90, 0.0, 1.0, 0.0 );
-		glRotatef ( 90, 0.0, 0.0, 1.0 );
 		this->lado->dibujar();
 		glPushMatrix();
 			glTranslatef( 0.0, 0.0, this->lado->getAltura()/2);
@@ -42,6 +43,8 @@ void Puerta::displayList() const
 			this->cara->dibujar();
 		glPopMatrix();
 	glPopMatrix();
+
+
 }
 
 void Puerta::dibujar() const

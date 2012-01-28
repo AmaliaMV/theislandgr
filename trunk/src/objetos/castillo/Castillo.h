@@ -20,8 +20,8 @@ public:
 	virtual ~Castillo();
 
 private:
-	void dibujarTorre( unsigned int &indice, Fisica *fisica, Textura* textura );
-	void dibujarMuros( unsigned int &indice, Fisica *fisica, Textura* textura );
+	void dibujarTorre( unsigned int &indice, Fisica *fisica );
+	void dibujarMuros( unsigned int &indice, Fisica *fisica );
 	void agregarCuerposAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
 
 	CuerpoFisicoRigido** cuerpos;
