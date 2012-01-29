@@ -1,22 +1,7 @@
-//============================================================================
-// Name        : tp.cpp
-// Author      : Amalia
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include <iostream>
 #include "funcionesAux.h"
-#include "objetos/castillo/Castillo.h"
-
-#include "fisica/Fisica.h"
-
-Fisica *fisica;
-
 
 static const string archivoDeConfiguracion = "archivosNivel1";
-Castillo* castillo;
 
 // Variables asociadas a única fuente de luz de la escena
 float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -29,7 +14,6 @@ bool view_axis = true;
 bool edit_panelA = false;
 bool edit_panelB = false;
 
-
 // Handle para el control de las Display Lists
 GLuint dl_handle;
 #define DL_AXIS (dl_handle+0)
@@ -41,33 +25,31 @@ void dibujarCentral()
 //	cout<<"at: x: "<< atX << " y: "<< atY<<" z: "<<atZ<<endl;
 
 	glDisable(GL_LIGHTING);
-		glBegin(GL_LINES);
+//		glBegin(GL_LINES);
+//
+//			glLineWidth(10);
+//			glColor3f(1.0, 0.0,1.0);
+//			glVertex3f(0.0, 0.0, 0.0);
+//			glVertex3f(eyeX/4, eyeY/4, eyeZ/4);
+//			glColor3f(1.0, 1.0,0.0);
+//			glVertex3f(0.0, 0.0, 0.0);
+//			glVertex3f(atX, atY, atZ);
+//
+////			glVertex3f(0.0, 0.0, 7.0);
+////			glVertex3f(9, 10, 7);
+//		glEnd();
+//		glLineWidth(1);
 
-			glLineWidth(10);
-			glColor3f(1.0, 0.0,1.0);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(eyeX/4, eyeY/4, eyeZ/4);
-			glColor3f(1.0, 1.0,0.0);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(atX, atY, atZ);
+		mundo->dibujar();
 
-//			glVertex3f(0.0, 0.0, 7.0);
-//			glVertex3f(9, 10, 7);
-		glEnd();
-		glLineWidth(1);
-
-
-//		mundo->dibujar();
-		castillo->dibujar();
-//		glutSolidCube(1);
 	glEnable(GL_LIGHTING);
 }
 
 void OnIdle (void)
 {
-//	mundo->actualizar();
-//    dynamicsWorld->stepSimulation(1/300.f,10);
-	fisica->getMundoFisico()->stepSimulation(1./60.);//ms / 1000000.f);
+	mundo->actualizar();
+////    dynamicsWorld->stepSimulation(1/300.f,10);
+//	fisica->getMundoFisico()->stepSimulation(1./60.);//ms / 1000000.f);
 
 	glutPostRedisplay();
 }
@@ -152,13 +134,13 @@ void init(void)
 
 	try
 	{
-	//	mundo = new Mundo( archivoDeConfiguracion );
+		mundo = new Mundo( archivoDeConfiguracion );
 
 		adminCamaras = new AdminCamaras();
 
 		adminCamaras->agregarCamara( CAMARA_MUNDO, new CamaraMundo() );
-	//	adminCamaras->agregarCamara( CAMARA_BARCO, new CamaraBarco(mundo->getTBarco()) );
-	//	adminCamaras->agregarCamara( CAMARA_CANON, new CamaraCanon(mundo->getTBarco(), mundo->getBarco()->getTCanon()) );
+		adminCamaras->agregarCamara( CAMARA_BARCO, new CamaraBarco(mundo->getTBarco()) );
+		adminCamaras->agregarCamara( CAMARA_CANON, new CamaraCanon(mundo->getTBarco(), mundo->getBarco()->getTCanon()) );
 		adminCamaras->setCamaraActual( CAMARA_MUNDO );
 
 		mCmd = new MCmdJuegos("texturas/menu_comandos.bmp");
@@ -243,51 +225,10 @@ void reshape (int w, int h)
 
 void initPhysics()
 {
-	fisica = new Fisica();
-	try
-	{
-		castillo = new Castillo( fisica );
-	}
-	catch ( EArchivoInexistente *e )
-	{
-		cout<< e->what() <<endl;
-		exit(1);
-	}
-	
-
 //	btTransform startTransform;
 //	startTransform.setIdentity();
 //
-//	int cantRows=4;
-//	int cantCols=4;
-//	float separacion=0.05f;
-//
-//	int col=0;	int row=0;	int altura=0;
-//
-//	for (int k=0;k<totalCajas;k++){
-//
-//
-//
-//		// defino la posicion inicial de la caja
-//		float posX=((col-cantCols/2)*(tamanioCaja+separacion));
-//		float posY=(row-cantRows/2)*(tamanioCaja+separacion);
-//		float posZ=altura*(tamanioCaja+separacion);
-//
-//		// aplico transformacion inicial
-//		startTransform.setOrigin(btVector3(btScalar(posX),btScalar(posY),btScalar(posZ)));
-//
-//		btDefaultMotionState* fallMotionState = new btDefaultMotionState(startTransform);
-//		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,cajaShape,fallInertia);
-//
-//		cajasRB[k] = new btRigidBody(fallRigidBodyCI);// creo el cuerpo rigido
-//
-//		cajasRB[k]->setFriction(btScalar(0.1)); // defino factor de friccion
-//		dynamicsWorld->addRigidBody(cajasRB[k]); // agrego la caja a la simulacion
-//
-//		col++;
-//		if (col>cantCols-1)	{col=0;row++;}
-//		if (row>cantRows-1)   {row=0;col=0;altura++;}
-//	}
+
 //	// Defino Esfera
 //
 //	btCollisionShape* esferaShape = new  btSphereShape(radioEsfera);
@@ -338,11 +279,9 @@ void keyboard (unsigned char key, int x, int y)
 	   break;
 
       case 'q':
-//    	  delete mundo;
+    	  delete mundo;
     	  delete mCmd;
     	  delete adminCamaras;
-    	  delete castillo;
-    	  delete fisica;
          exit(0);
          break;
 	  case 'g':
@@ -366,24 +305,10 @@ void keyboard (unsigned char key, int x, int y)
 //		  glutPostRedisplay();
 		  break;
 	  case 'r':
-		  delete castillo;
-//		  castillo = new Castillo(dynamicsWorld);
-//		  glutPostRedisplay();
-
-		  fisica->reiniciar();
-		try
-		{
-			castillo = new Castillo( fisica );
-		}
-		catch ( EArchivoInexistente *e )
-		{
-			cout<< e->what() <<endl;
-			exit(1);
-		}
-
+		  mundo->reiniciarFisica();
 		  glutPostRedisplay();
-
 		  break;
+
 	  case 'k':
 
 		  glutPostRedisplay();
@@ -398,6 +323,13 @@ void keyboard (unsigned char key, int x, int y)
 	  case 'x':
 		  adminCamaras->getCamaraActual()->acercarCamara();
 		  break;
+	  case 'p':
+		  adminCamaras->getCamaraActual()->subirCamara();
+		  break;
+	  case 'o':
+		  adminCamaras->getCamaraActual()->alejarCamara();
+		  break;
+
 	  case 'c':
 //		  mundo->getBarco()->getCanon()->decAngV();
 		  break;
@@ -427,7 +359,6 @@ int main(int argc, char** argv)
    glutCreateWindow (argv[0]);
   // glutFullScreen();
    init ();
-   initPhysics();
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);

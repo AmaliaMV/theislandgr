@@ -29,6 +29,7 @@ using namespace std;
 class Isla: public ObjetoDibujable {
 public:
 	Isla( AdministradorArchivo *administrador );
+	float getAltura();
 	virtual ~Isla();
 
 protected:

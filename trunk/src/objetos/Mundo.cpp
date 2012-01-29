@@ -11,12 +11,15 @@ const float Mundo::RADIO_AGUA = CteMundo::RADIO_MUNDO+4;
 
 Mundo::Mundo(string nombreArchivoNivel)
 {
+	fisica = new Fisica();
+
 	AdministradorArchivo *admin = new AdministradorArchivo ( nombreArchivoNivel );
 
 	isla = new Isla ( admin );
 	agua = new Agua( admin->getNombreArchivo( AGUA ), RADIO_AGUA);
 	cielo = new Cielo ( admin->getNombreArchivo( CIELO), CteMundo::RADIO_MUNDO);
 	barco = new Barco();
+	castillo = new Castillo(fisica);
 
 	this->posBarco = new TBarco();
 
@@ -27,6 +30,8 @@ void Mundo::actualizar()
 {
 	agua->incrementarAngulo();
 	this->incAnguloBarco();
+
+	fisica->getMundoFisico()->stepSimulation(1/300.f,10);
 }
 
 void Mundo::dibujar()
@@ -51,6 +56,7 @@ void Mundo::dibujar()
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(0.0, 0.0, 1.5);
+		glScalef(2.0, 2.0, 1.5);
 		isla->dibujar();
 	glPopMatrix();
 
@@ -58,6 +64,24 @@ void Mundo::dibujar()
 		this->posBarco->ejecutar();
 		barco->dibujar();
 	glPopMatrix();
+	glPushMatrix();
+		glTranslatef( 0.0, 0.0, isla->getAltura()+1,2);
+		glRotatef(90.0, 0.0, 0.0, 1.0);
+		castillo->dibujar();
+
+	glPopMatrix();
+}
+void Mundo::reiniciarFisica()
+{
+	delete castillo;
+	fisica->reiniciar();
+
+	try	{
+		castillo = new Castillo( fisica );
+	}catch ( EArchivoInexistente *e ){
+		cout<< e->what() <<endl;
+		exit(1);
+	}
 }
 
 Mundo::~Mundo()
@@ -67,6 +91,8 @@ Mundo::~Mundo()
 	delete barco;
 	delete isla;
 	delete posBarco;
+	delete castillo;
+	delete fisica;
 }
 
 void Mundo::incAnguloBarco()

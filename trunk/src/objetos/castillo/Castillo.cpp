@@ -14,7 +14,6 @@ Castillo::Castillo( Fisica* fisica )
 	cuerpos = new CuerpoFisicoRigido*[CteCastillo::CANT_LADRILLOS];
 	textura = new Textura24("texturas/piedra4.bmp");
 
-	cout<<"castillo "<< CteCastillo::CANT_LADRILLOS<<endl;
 	unsigned int num = 0;
 	this->dibujarTorre(num, fisica);
 	this->dibujarMuros(num, fisica);
