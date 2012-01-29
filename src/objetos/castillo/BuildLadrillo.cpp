@@ -12,8 +12,6 @@ BuildLadrillo::BuildLadrillo( float longParedX, float longParedY, float longPare
 	this->longParedX = longParedX;
 	this->longParedY = longParedY;
 	this->longParedZ = longParedZ;
-	cout<<"longParedX: "<<longParedX<<endl;
-	cout<<"longParedY: "<<longParedY<<endl;
 }
 
 BuildLadrillo::~BuildLadrillo(){}
@@ -45,32 +43,19 @@ Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxSh
 	y0 = getCoordTextV( posZ - shape->getHalfExtentsWithMargin().getZ() );
 	yf = getCoordTextV( posZ + shape->getHalfExtentsWithMargin().getZ() );
 
-	cout<<" lo q entro: "<<posY - factorT * shape->getHalfExtentsWithMargin().getY()<<" "<<factorT<<" "<<factorX<<" "<<factorY<<endl;
-	cout<<"t: "<<posY<<" largo: "<<shape->getHalfExtentsWithMargin().getY()<<" x0 "<< x0<<" xf "<<xf<<endl;
-
 	textFrente = new Coord_text( x0, xf, y0, yf );
-//	textFrente = new Coord_text ( xf, x0, yf, y0 );
-//	textFrente = new Coord_text ( yf, y0, xf, x0 );
 
 	/*calculo las coordenadas para el costado del ladrillo, el lado izquierdo*/
 	x0 = getCoordTextH( posY - factorT * (shape->getHalfExtentsWithMargin().getY() + shape->getHalfExtentsWithMargin().getX()*2), factorT, factorX, factorY );
 	xf = getCoordTextH( posY - factorT * shape->getHalfExtentsWithMargin().getY(), factorT, factorX, factorY );
 
-	cout<<"t: "<<posY<<" largo: "<<shape->getHalfExtentsWithMargin().getY()<<" x0 "<< x0<<" xf "<<xf<<endl;
-
 	textCostadoIzq = new Coord_text ( x0, xf, y0, yf );
-//	textCostadoNeg = new Coord_text ( xf, x0, yf, y0 );
-//	textCostadoNeg = new Coord_text ( yf, y0, xf, x0 );
 
 	/*calculo las coordenadas para el costado del ladrillo, el lado derecho*/
 	x0 = getCoordTextH( posY + factorT * shape->getHalfExtentsWithMargin().getY(), factorT, factorX, factorY );
 	xf = getCoordTextH( posY + factorT * (shape->getHalfExtentsWithMargin().getY() + shape->getHalfExtentsWithMargin().getX()*2), factorT, factorX, factorY );
 
-	cout<<"t: "<<posY<<" largo: "<<shape->getHalfExtentsWithMargin().getY()<<" x0 "<< x0<<" xf "<<xf<<endl<<endl;
-
 	textCostadoDer = new Coord_text ( x0, xf, y0, yf );
-//	textCostadoPos = new Coord_text ( xf, x0, yf, y0 );
-//	textCostadoPos = new Coord_text ( yf, y0, xf, x0 );
 
 	if ( posX > 0 )
 		ladrillo = new Ladrillo ( textura, shape, posX, posY, posZ, textFrente, textFrente, textCostadoDer, textCostadoIzq );
@@ -109,25 +94,22 @@ Ladrillo* BuildLadrillo::construirLadrilloParedCostado( Textura* textura, btBoxS
 	xf = getCoordTextH( posX + factorT * shape->getHalfExtentsWithMargin().getX(), factorT, factorX, factorY );
 	y0 = getCoordTextV( posZ - shape->getHalfExtentsWithMargin().getZ() );
 	yf = getCoordTextV( posZ + shape->getHalfExtentsWithMargin().getZ() );
-	cout<<" lo q entro: "<<posX - factorT * shape->getHalfExtentsWithMargin().getX()<<" "<<factorT<<" "<<factorX<<" "<<factorY<<endl;
-	cout<<"t_: "<<posX<<" largo: "<<shape->getHalfExtentsWithMargin().getX()<<" x0 "<< x0<<" xf "<<xf<<endl;
 
 	textFrente = new Coord_text( x0, xf, y0, yf );
-//	textFrente = new Coord_text( xf, x0, yf, y0 );
 
 	/*calculo las coordenadas para el costado del ladrillo, el lado izquierdo*/
 	x0 = getCoordTextH( posX - factorT * (shape->getHalfExtentsWithMargin().getX() + shape->getHalfExtentsWithMargin().getY()*2), factorT, factorX, factorY );
 	xf = getCoordTextH( posX - factorT * shape->getHalfExtentsWithMargin().getX(), factorT, factorX, factorY );
-	cout<<"t_: "<<posX<<" largo: "<<shape->getHalfExtentsWithMargin().getX()<<" x0 "<< x0<<" xf "<<xf<<endl;
+
 	textCostadoIzq = new Coord_text ( x0, xf, y0, yf );
-//	textCostadoNeg = new Coord_text ( xf, x0, yf, x0 );
+
 
 	/*calculo las coordenadas para el costado del ladrillo, el lado derecho*/
 	x0 = getCoordTextH( posX + factorT * shape->getHalfExtentsWithMargin().getX(), factorT, factorX, factorY );
 	xf = getCoordTextH( posX + factorT * (shape->getHalfExtentsWithMargin().getX() + shape->getHalfExtentsWithMargin().getY()*2), factorT, factorX, factorY );
-	cout<<"t_: "<<posX<<" largo: "<<shape->getHalfExtentsWithMargin().getX()<<" x0 "<< x0<<" xf "<<xf<<endl<<endl;
+
 	textCostadoDer = new Coord_text ( x0, xf, y0, yf );
-//	textCostadoPos = new Coord_text ( xf, x0, yf, y0 );
+
 
 	if ( posY > 0 )
 		ladrillo = new Ladrillo ( textura, shape, posX, posY, posZ, textCostadoIzq, textCostadoDer, textFrente, textFrente );

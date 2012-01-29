@@ -13,6 +13,9 @@
 #include "isla/Isla.h"
 #include "barco/Barco.h"
 #include "TBarco.h"
+#include "castillo/Castillo.h"
+
+#include "../fisica/Fisica.h"
 
 #define DIRECTORIO_DE_TEXTURAS texturas
 
@@ -25,6 +28,7 @@ public:
 	Mundo( string nombreArchivoNivel );
 	void dibujar();
 	void actualizar();
+	void reiniciarFisica();
 	TBarco* getTBarco() const;
 	Barco* getBarco() const;
 	virtual ~Mundo();
@@ -37,8 +41,10 @@ private:
 	Cielo *cielo;
 	Isla *isla;
 	Barco *barco;
-
+	Castillo *castillo;
 	TBarco *posBarco;
+
+	Fisica* fisica;
 
 	static const float RADIO_AGUA;
 };

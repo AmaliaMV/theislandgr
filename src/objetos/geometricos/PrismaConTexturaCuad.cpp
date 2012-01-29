@@ -12,9 +12,6 @@ PrismaConTexturaCuad::PrismaConTexturaCuad( Textura* textura, float altura, floa
 		Coord_text *coord_textYPos, Coord_text *coord_textYNeg )
 	:ObjetoDibujable()
 {
-//	cout<<" xmin "<<coord_text->xmin<<" xmax "<<coord_text->xmax<<" ymin "<<coord_text->ymin<<" ymax "<<coord_text->ymax<<endl;
-	cout<<"h = "<<altura<<" a= "<<ancho<<" l= "<<largo<<endl;
-
 	this->caraZ = new RectanguloConTextura ( textura, ancho, largo, new Coord_text(coord_textXPos) ); // le pongo las mimas coorde de text q x :p
 	this->caraXPos = new RectanguloConTextura ( textura, ancho, altura, new Coord_text(coord_textXPos) ); // cambio el orden para q qde bien la textura
 	this->caraXNeg = new RectanguloConTextura ( textura, ancho, altura, new Coord_text(coord_textXNeg) );
