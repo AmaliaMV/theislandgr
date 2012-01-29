@@ -10,20 +10,20 @@
 const float Barco::ALTO_CAJA = 3.5;
 const float Barco::LARGO_CAJA = 3.0;
 
-Barco::Barco():ObjetoDibujable()
+Barco::Barco(AdministradorArchivo *administrador):ObjetoDibujable()
 {
 	TCajaCanon *tcaja;
 
-	canon = new Canon( "texturas/aluminio_pulido3.bmp", "canon3.pto" );
+	canon = new Canon( administrador->getNombreArchivo(CANON_TEXTURA), administrador->getNombreArchivo( CANON_PTOS ) );
 
 	partesBarco =
-			new CajaCanon ( "texturas/madera_nogal.bmp", ALTO_CAJA, 3.5, LARGO_CAJA, tcaja = new TCajaCanon( ALTO_CAJA, LARGO_CAJA ),
-			new BarandaEntera( "texturas/madera4.bmp", 5.0, 2 * CteBarco::RADIO_Y, new EstrategiaTransformacion(),
-			new Baupres("texturas/pisoBarco.bmp", "baupres.pto", new TBaupres(),
-			crearMastilSecundario( -8.0,
-			crearMastilSecundario( 8.0,
-			crearPaloMayor(
-					new BarcoBasico ( new EstrategiaTransformacion(), "texturas/madera4.bmp", "texturas/pisoBarco.bmp" )
+			new CajaCanon ( administrador->getNombreArchivo(CAJA_CANON), ALTO_CAJA, 3.5, LARGO_CAJA, tcaja = new TCajaCanon( ALTO_CAJA, LARGO_CAJA ),
+			new BarandaEntera( administrador->getNombreArchivo(BARANDA_BARCO), 5.0, 2 * CteBarco::RADIO_Y, new EstrategiaTransformacion(),
+			new Baupres( administrador->getNombreArchivo(BAUPRES_TEXTURA), administrador->getNombreArchivo(BAUPRES_PTOS), new TBaupres(),
+			crearMastilSecundario( administrador, -8.0,
+			crearMastilSecundario( administrador, 8.0,
+			crearPaloMayor( administrador,
+					new BarcoBasico ( new EstrategiaTransformacion(), administrador->getNombreArchivo(CASCO_BARCO), administrador->getNombreArchivo(PISO_BARCO))
 			))))));
 
 	tCanon = new TCanon ( canon, tcaja );
@@ -41,26 +41,26 @@ Barco::~Barco()
 	delete tCanon;
 }
 
-ComponenteBarco* Barco::crearPaloMayor( ComponenteBarco *parteBarco)
+ComponenteBarco* Barco::crearPaloMayor(AdministradorArchivo *administrador, ComponenteBarco *parteBarco)
 {
-	return 	new Vela ( "texturas/tela_gris.bmp", CteBarco::LARGO_VELA_PPAL, CteBarco::ALTO_VELA_PPAL, 0.08,
-				"texturas/madera_baranda.bmp", 0.50, new TVelaPrincipal( CteBarco::LARGO_VELA_PPAL/2.0, 20.0 ),
-			new Vela ( "texturas/tela_gris.bmp", CteBarco::LARGO_VELA_CHICA_PPAL, CteBarco::ALTO_VELA_CHICA_PPAL, 0.09,
-				"texturas/madera_baranda.bmp", 0.35, new TVelaPrincipal( CteBarco::LARGO_VELA_CHICA_PPAL/2.0, 35.0 ),
-			new Mirador ( "texturas/madera_baranda.bmp", "texturas/pisoBarco.bmp", "texturas/madera_baranda.bmp", 2.5,
+	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_PPAL, CteBarco::ALTO_VELA_PPAL, 0.08,
+				administrador->getNombreArchivo(PALO_VELA), 0.50, new TVelaPrincipal( CteBarco::LARGO_VELA_PPAL/2.0, 20.0 ),
+			new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_CHICA_PPAL, CteBarco::ALTO_VELA_CHICA_PPAL, 0.09,
+				administrador->getNombreArchivo(PALO_VELA), 0.35, new TVelaPrincipal( CteBarco::LARGO_VELA_CHICA_PPAL/2.0, 35.0 ),
+			new Mirador ( administrador->getNombreArchivo(PALO_VELA), administrador->getNombreArchivo(PISO_BARCO), administrador->getNombreArchivo(PALO_VELA), 2.5,
 				new TMirador( CteBarco::ALTURA_MIRADOR ),
-			new Palo ( "texturas/madera_roble.bmp", CteBarco::ALTURA_PALO_PPAL, 0.85, 0.45,
+			new Palo ( administrador->getNombreArchivo(PALO_BARCO), CteBarco::ALTURA_PALO_PPAL, 0.85, 0.45,
 				new EstrategiaTransformacion(), parteBarco
 			))));
 }
 
-ComponenteBarco* Barco::crearMastilSecundario( float desplazamiento,  ComponenteBarco *parteBarco)
+ComponenteBarco* Barco::crearMastilSecundario(AdministradorArchivo *administrador, float desplazamiento,  ComponenteBarco *parteBarco)
 {
-	return 	new Vela ( "texturas/tela_gris.bmp", CteBarco::LARGO_VELA_SEC, CteBarco::ALTO_VELA_SEC, 0.08,
-				"texturas/madera_baranda.bmp", 0.50, new TVelaSecundaria( CteBarco::LARGO_VELA_SEC/2.0, 18.0, desplazamiento ),
-			new Vela ( "texturas/tela_gris.bmp", CteBarco::LARGO_VELA_CHICA_SEC, CteBarco::ALTO_VELA_CHICA_SEC, 0.09,
-				"texturas/madera_baranda.bmp", 0.35, new TVelaSecundaria( CteBarco::LARGO_VELA_CHICA_SEC/2.0, 31.0, desplazamiento ),
-			new Palo ( "texturas/madera_roble.bmp", CteBarco::ALTURA_PALO_SEC, 0.75, 0.35,
+	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_SEC, CteBarco::ALTO_VELA_SEC, 0.08,
+				administrador->getNombreArchivo(PALO_VELA), 0.50, new TVelaSecundaria( CteBarco::LARGO_VELA_SEC/2.0, 18.0, desplazamiento ),
+			new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_CHICA_SEC, CteBarco::ALTO_VELA_CHICA_SEC, 0.09,
+				administrador->getNombreArchivo(PALO_VELA), 0.35, new TVelaSecundaria( CteBarco::LARGO_VELA_CHICA_SEC/2.0, 31.0, desplazamiento ),
+			new Palo ( administrador->getNombreArchivo(PALO_BARCO), CteBarco::ALTURA_PALO_SEC, 0.75, 0.35,
 				new TMastilSecundario( desplazamiento ), parteBarco
 			)));
 }

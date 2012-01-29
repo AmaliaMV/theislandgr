@@ -29,12 +29,13 @@ public:
 	void dibujar();
 	void actualizar();
 	void reiniciarFisica();
+	void pausar();
+	bool estaPausado() const;
 	TBarco* getTBarco() const;
 	Barco* getBarco() const;
 	virtual ~Mundo();
 
 private:
-
 	void incAnguloBarco();
 
 	Agua *agua;
@@ -45,6 +46,8 @@ private:
 	TBarco *posBarco;
 
 	Fisica* fisica;
+
+	bool pausa;
 
 	static const float RADIO_AGUA;
 };

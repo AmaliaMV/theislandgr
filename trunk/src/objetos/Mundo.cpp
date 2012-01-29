@@ -18,20 +18,24 @@ Mundo::Mundo(string nombreArchivoNivel)
 	isla = new Isla ( admin );
 	agua = new Agua( admin->getNombreArchivo( AGUA ), RADIO_AGUA);
 	cielo = new Cielo ( admin->getNombreArchivo( CIELO), CteMundo::RADIO_MUNDO);
-	barco = new Barco();
+	barco = new Barco( admin );
 	castillo = new Castillo(fisica);
+	delete admin;
 
 	this->posBarco = new TBarco();
 
-	delete admin;
+	pausa = false;
 }
 
 void Mundo::actualizar()
 {
-	agua->incrementarAngulo();
-	this->incAnguloBarco();
+	if ( estaPausado() == false )
+	{
+		agua->incrementarAngulo();
+		this->incAnguloBarco();
 
-	fisica->getMundoFisico()->stepSimulation(1/300.f,10);
+		fisica->getMundoFisico()->stepSimulation(1/300.f,10);
+	}
 }
 
 void Mundo::dibujar()
@@ -65,7 +69,7 @@ void Mundo::dibujar()
 		barco->dibujar();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef( 0.0, 0.0, isla->getAltura()+1,2);
+		glTranslatef( 0.0, 0.0, isla->getAltura()+1.2);
 		glRotatef(90.0, 0.0, 0.0, 1.0);
 		castillo->dibujar();
 
@@ -103,3 +107,9 @@ TBarco* Mundo::getTBarco() const
 
 Barco* Mundo::getBarco() const
 { return this->barco; }
+
+void Mundo::pausar()
+{ this->pausa = !this->pausa; }
+
+bool Mundo::estaPausado() const
+{ return this->pausa; }
