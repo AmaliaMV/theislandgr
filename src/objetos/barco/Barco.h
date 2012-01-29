@@ -35,9 +35,10 @@
 
 #include "../geometricos/PrismaConTextura.h"
 
+#include "../../archivos/adminArchConfig/AdministradorArchivo.h"
 class Barco: public ObjetoDibujable {
 public:
-	Barco();
+	Barco(AdministradorArchivo *administrador);
 	void dibujar();
 	virtual ~Barco();
 	Canon* getCanon() const;
@@ -52,8 +53,8 @@ private:
 
 	Canon *canon;
 	LadoPrismaConTextura *prisma;
-	ComponenteBarco* crearPaloMayor( ComponenteBarco *parteBarco);
-	ComponenteBarco* crearMastilSecundario( float desplazamiento, ComponenteBarco *parteBarco );
+	ComponenteBarco* crearPaloMayor(AdministradorArchivo *administrador, ComponenteBarco *parteBarco);
+	ComponenteBarco* crearMastilSecundario(AdministradorArchivo *administrador, float desplazamiento, ComponenteBarco *parteBarco);
 
 	static const float ALTO_CAJA;
 	static const float LARGO_CAJA;
