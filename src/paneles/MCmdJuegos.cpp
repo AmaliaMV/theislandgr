@@ -7,36 +7,56 @@
 
 #include "MCmdJuegos.h"
 
-MCmdJuegos::MCmdJuegos( string nomTextMenu  )
+MCmdJuegos::MCmdJuegos( string nomTextMenu  ): Panel()
 {
-	TOP_VIEW_POSX = TOP_VIEW_W = TOP_VIEW_POSY = TOP_VIEW_H = 0.0;
 	menu = new RectanguloConTextura ( nomTextMenu, 2.0, 2.0 );
+	anchoImagen = 0.0;
+	altoImagen = 0.0;
+	mostrar = false;
 }
 
 MCmdJuegos::~MCmdJuegos()
 {
 	delete menu;
 }
-void MCmdJuegos::dibujarPanel( float anchoPantalla, float altoPantalla )
+
+void MCmdJuegos::setPanel()
 {
-	TOP_VIEW_POSX = anchoPantalla * 0.10;
-	TOP_VIEW_W = anchoPantalla * 0.80;
-	TOP_VIEW_POSY = altoPantalla * 0.10;
-	TOP_VIEW_H = altoPantalla * 0.80;
+	float TOP_VIEW_POSX = TamanoPantalla::getAncho() * 0.10,
+				TOP_VIEW_W = TamanoPantalla::getAncho() * 0.80,
+				TOP_VIEW_POSY = TamanoPantalla::getAlto() * 0.10,
+				TOP_VIEW_H = TamanoPantalla::getAlto() * 0.80;
 
-	glViewport ( (int) TOP_VIEW_POSX, (int) TOP_VIEW_POSY, (GLsizei) TOP_VIEW_W, (GLsizei) TOP_VIEW_H );
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-	gluOrtho2D( -TOP_VIEW_W / 2, TOP_VIEW_W / 2, -TOP_VIEW_H / 2, TOP_VIEW_H / 2);
+	this->setDimensiones( TOP_VIEW_POSX, TOP_VIEW_POSY, TOP_VIEW_W , TOP_VIEW_H );
+	this->setEscalaReferencia( -TOP_VIEW_W / 2, TOP_VIEW_W / 2, -TOP_VIEW_H / 2, TOP_VIEW_H / 2 );
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	Panel::setPanel();
+
+	anchoImagen = TOP_VIEW_W / 2;
+	altoImagen = TOP_VIEW_H / 2;
+}
+
+void MCmdJuegos::dibujarFondo()
+{
+//	gluLookAt (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
-	glScalef(TOP_VIEW_W / 2, TOP_VIEW_H / 2, 1.0 );
-	menu->dibujar();
+		glScalef( anchoImagen, altoImagen, 1.0 );
+		menu->dibujar();
 	glPopMatrix();
-	glEnable(GL_LIGHTING);
 
+
+	glEnable(GL_LIGHTING);
+}
+
+void MCmdJuegos::dibujar()
+{
+	if ( mostrar == true )
+		Panel::dibujar();
+}
+
+void MCmdJuegos::modificarMostrar()
+{
+	this->mostrar = !this->mostrar;
 }

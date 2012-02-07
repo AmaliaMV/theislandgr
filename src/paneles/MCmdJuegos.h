@@ -8,21 +8,25 @@
 #ifndef MCMDJUEGOS_H_
 #define MCMDJUEGOS_H_
 
+#include "Panel.h"
+
 #include "../objetos/geometricos/RectanguloConTextura.h"
 
-class MCmdJuegos {
+class MCmdJuegos: public Panel {
 public:
 	MCmdJuegos( string nomTextMenu );
-	void dibujarPanel( float anchoPantalla, float altoPantalla );
+	void dibujar();
+	void modificarMostrar();
 	virtual ~MCmdJuegos();
 
 private:
-	float TOP_VIEW_POSX;
-	float TOP_VIEW_W;
-	float TOP_VIEW_POSY;
-	float TOP_VIEW_H;
+	void dibujarFondo();
+	void setPanel();
 
 	RectanguloConTextura* menu;
+	float anchoImagen;
+	float altoImagen;
+	bool mostrar;
 };
 
 #endif /* MCMDJUEGOS_H_ */
