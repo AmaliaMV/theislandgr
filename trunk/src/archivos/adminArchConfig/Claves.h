@@ -8,7 +8,7 @@
 #ifndef CLAVES_H_
 #define CLAVES_H_
 
-#include "../../ClavesValidas.h"
+#include "ClavesValidas.h"
 
 #include <list>
 using namespace std;
