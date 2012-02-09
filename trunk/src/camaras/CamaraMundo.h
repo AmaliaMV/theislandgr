@@ -9,11 +9,11 @@
 #define CAMARAMUNDO_H_
 
 #include "Camara.h"
+#include "ConstantesCamara.h"
 
 #include "../matematica/Matematica.h"
 #include "../objetos/ConstantesMundo.h"
 
-#define ANGULO_MAX_TITA 89
 class CamaraMundo : public Camara {
 public:
 	CamaraMundo();

@@ -10,11 +10,10 @@
 
 #include "Camara.h"
 #include "ConstantesCamara.h"
-#include "../matematica/Matematica.h"
 
+#include "../matematica/Matematica.h"
 #include "../objetos/TBarco.h"
-#include <iostream>
-using namespace std;
+
 class CamaraBarco: public Camara {
 public:
 	CamaraBarco( const TBarco *tbarco );

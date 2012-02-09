@@ -7,7 +7,7 @@
 
 #include "CamaraBarco.h"
 
-CamaraBarco::CamaraBarco( const TBarco *tbarco ): Camara(0.0, 45.0, 10.0)
+CamaraBarco::CamaraBarco( const TBarco *tbarco ): Camara(180.0, 45.0, 10.0)
 {
 	this->setAngVMax( CteCamara::ANGULO_MAX_VERTICAL );
 	this->setDistMax( CteMundo::RADIO_NAVEGACION - 5.0 );

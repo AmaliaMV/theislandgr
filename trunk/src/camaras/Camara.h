@@ -25,6 +25,8 @@ public:
 
 	virtual void alejarCamara();
 	virtual void acercarCamara();
+	virtual void subirCamara();
+	virtual void bajarCamara();
 
 protected:
 	float getAngH() const;
@@ -63,7 +65,7 @@ private:
 	 * extremos el valor del mismo, no podra seguir incrementando o
 	 * disminuyendo su valor.
 	 */
-	void validarAngV ( float max, float min );
+	void validarAngV ();
 	/*
 	 * verifica que el angulo sea mayor o igual al minimo valor que puede
 	 * tomar y menor o igual al maximo valor admisible. De estar en su valor

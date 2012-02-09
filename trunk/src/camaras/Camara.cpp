@@ -48,7 +48,7 @@ void Camara::incAngV ( float num )
 {
 	this->angV += num;
 
-	this->validarAngV( this->angVMax, this->angVMin );
+	this->validarAngV();
 }
 
 float Camara::getAngH() const
@@ -64,7 +64,7 @@ void Camara::setAngVMax( float angVMax )
 { this->angVMax = angVMax; }
 
 void Camara::setAngVMin( float angVMin)
-{ this->angVMax = angVMin; }
+{ this->angVMin = angVMin; }
 
 void Camara::setCoordEye ( float x, float y, float z )
 { this->setCoord( x, y, z, this->eye ); }
@@ -86,12 +86,12 @@ void Camara::setCoord ( float x, float y, float z, float *objeto )
 	objeto[2] = z;
 }
 
-void Camara::validarAngV ( float max, float min )
+void Camara::validarAngV ()
 {
-	if ( angV < min )
-		angV = min;
-	else if ( angV > max )
-		angV = max;
+	if ( angV < this->angVMin )
+		angV = this->angVMin;
+	else if ( angV > this->angVMax )
+		angV = this->angVMax;
 }
 void Camara::validarAngH ( float max, float min )
 {
@@ -103,7 +103,11 @@ void Camara::validarAngH ( float max, float min )
 
 void Camara::alejarCamara() {}
 
-void Camara::acercarCamara(){}
+void Camara::acercarCamara() {}
+
+void Camara::subirCamara() {}
+
+void Camara::bajarCamara() {}
 
 void Camara::setDistMax ( float distMax )
 { this->distMax = distMax; }
