@@ -20,7 +20,7 @@ using namespace std;
 
 enum TIPO_CAMARA
 {
-	CAMARA_MUNDO = 1,
+	CAMARA_MUNDO,
 	CAMARA_BARCO,
 	CAMARA_CANON,
 	CAMARA_CASTILLO
@@ -36,13 +36,10 @@ public:
 	virtual ~AdminCamaras();
 
 private:
-
 	Camara *buscarCamara ( TIPO_CAMARA idCamara );
 
 	Camara* camActual;
 	map<TIPO_CAMARA, Camara* > *camaras;
-
-
 };
 
 #endif /* ADMINCAMARAS_H_ */

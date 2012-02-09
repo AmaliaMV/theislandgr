@@ -30,7 +30,6 @@ void AdminCamaras::agregarCamara ( TIPO_CAMARA idCamara, Camara* camara )
 	}
 
 	camaras->insert(pair<TIPO_CAMARA, Camara*>(idCamara, camara));
-//	camaras[idCamara] = camara;
 }
 
 void AdminCamaras::setCamaraActual ( TIPO_CAMARA idCamara )
