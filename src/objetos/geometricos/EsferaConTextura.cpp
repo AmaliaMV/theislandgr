@@ -15,11 +15,22 @@ const float EsferaConTextura::DELTA_FI = 20;
 EsferaConTextura::EsferaConTextura( string nombreTextura, float radio )
 	:ODTextura( new Textura24(nombreTextura) )
 {
+	this->init( radio );
+}
+
+EsferaConTextura::EsferaConTextura( Textura* textura, float radio )
+	:ODTextura( textura, true )
+{
+	this->init( radio );
+}
+
+void EsferaConTextura::init( float radio )
+{
 	RADIO = radio;
 	cantPtosX = floor(DELTA_TITA) + 1; // el +1 es porq cuento los extremos dos veces, por el <=
 	cantPtosY = floor(DELTA_FI) + 1;
 
-	this->init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
+	ODTextura::init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
 }
 
 EsferaConTextura::~EsferaConTextura() {}

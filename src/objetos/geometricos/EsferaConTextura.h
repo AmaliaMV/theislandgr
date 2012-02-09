@@ -16,12 +16,15 @@
 class EsferaConTextura: public ODTextura {
 public:
 	EsferaConTextura( string nombreTextura, float radio );
+	EsferaConTextura( Textura* textura, float radio );
 	virtual ~EsferaConTextura();
 
 private:
 	virtual void generarCoordPtos();
 	virtual void generarIndice();
 	virtual void generarCoodText();
+
+	void init( float radio );
 
 	float RADIO;
 	float cantPtosX;

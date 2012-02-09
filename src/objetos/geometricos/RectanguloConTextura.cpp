@@ -10,22 +10,24 @@
 RectanguloConTextura::RectanguloConTextura( string nombreTextura, float base, float altura, Coord_text *coord_text )
 	:ODTextura (new Textura24(nombreTextura) )
 {
-	this->BASE = base;
-	this->ALTURA = altura;
-	this->coord_text = coord_text;
-
-	this->init(4, 4, GL_TRIANGLE_STRIP);
+	this->init( base, altura, coord_text);
 }
 
 RectanguloConTextura::RectanguloConTextura( Textura* textura, float base, float altura, Coord_text *coord_text )
 	:ODTextura ( textura, true )
 {
+	this->init( base, altura, coord_text);
+}
+
+void RectanguloConTextura::init( float base, float altura, Coord_text *coord_text )
+{
 	this->BASE = base;
 	this->ALTURA = altura;
 	this->coord_text = coord_text;
 
-	this->init(4, 4, GL_TRIANGLE_STRIP);
+	ODTextura::init(4, 4, GL_TRIANGLE_STRIP);
 }
+
 RectanguloConTextura::~RectanguloConTextura()
 {
 	delete this->coord_text;
