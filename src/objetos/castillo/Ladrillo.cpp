@@ -15,7 +15,7 @@ Ladrillo::Ladrillo( Textura* textura, btBoxShape* shape, float posX, float posY,
 			shape->getHalfExtentsWithMargin().getY()*2,
 			shape->getHalfExtentsWithMargin().getX()*2, coord_textXPos, coord_textXNeg,
 			coord_textYPos, coord_textYNeg ),
-	 CuerpoFisicoRigido( shape, posX, posY, posZ, MASA_PUERTA)
+	 FPrismaRigido( shape, posX, posY, posZ, MASA_PUERTA)
 {
 
 }
@@ -25,7 +25,7 @@ Ladrillo::~Ladrillo(){}
 void Ladrillo::dibujar() const
 {
 	glPushMatrix();
-		CuerpoFisicoRigido::aplicarTransformada();
+		FPrismaRigido::aplicarTransformada();
 		PrismaConTexturaCuad::dibujar();
 	glPopMatrix();
 }

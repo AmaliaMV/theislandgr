@@ -8,7 +8,7 @@
 #ifndef CASTILLO_H_
 #define CASTILLO_H_
 
-#include "../../fisica/CuerpoFisicoRigido.h"
+#include "../../fisica/FPrismaRigido.h"
 
 #include "BuildLadrillo.h"
 #include "Puerta.h"
@@ -24,7 +24,7 @@ private:
 	void dibujarMuros( unsigned int &indice, Fisica *fisica );
 	void agregarCuerposAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
 
-	CuerpoFisicoRigido** cuerpos;
+	FPrismaRigido** cuerpos;
 	Textura24* textura;
 };
 

@@ -11,7 +11,7 @@ const float Puerta::MASA_PUERTA = 4.0;
 
 Puerta::Puerta( string nomTextPuerta, string nomTextMarco, btBoxShape* shape, float posX, float posY, float posZ )
 	: ObjetoDibujable(),
-	  CuerpoFisicoRigido( shape, posX, posY, posZ, MASA_PUERTA)
+	  FPrismaRigido( shape, posX, posY, posZ, MASA_PUERTA)
 {
 	this->lado = new LadoPrismaConTextura ( nomTextMarco,
 			shape->getHalfExtentsWithMargin().getX()*2,
@@ -50,7 +50,7 @@ void Puerta::displayList() const
 void Puerta::dibujar() const
 {
 	glPushMatrix();
-		CuerpoFisicoRigido::aplicarTransformada();
+		FPrismaRigido::aplicarTransformada();
 		ObjetoDibujable::dibujar();
 	glPopMatrix();
 }

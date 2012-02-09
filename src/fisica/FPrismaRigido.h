@@ -5,17 +5,17 @@
  *      Author: amalia
  */
 
-#ifndef CUERPOFISICORIGIDO_H_
-#define CUERPOFISICORIGIDO_H_
+#ifndef FPRISMARIGIDO_H_
+#define FPRISMARIGIDO_H_
 
 #include "../grafica/FuncOpenGL.h"
 
 #include "Fisica.h"
 
-class CuerpoFisicoRigido {
+class FPrismaRigido {
 public:
-	CuerpoFisicoRigido(	btBoxShape* shape, float posX, float posY, float posZ, float masa );
-	virtual ~CuerpoFisicoRigido();
+	FPrismaRigido(	btBoxShape* shape, float posX, float posY, float posZ, float masa );
+	virtual ~FPrismaRigido();
 	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
 	virtual void dibujar() const = 0;
 

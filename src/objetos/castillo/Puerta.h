@@ -8,13 +8,13 @@
 #ifndef PUERTA_H_
 #define PUERTA_H_
 
-#include "../../fisica/CuerpoFisicoRigido.h"
+#include "../../fisica/FPrismaRigido.h"
 
 #include "../ObjetoDibujable.h"
 #include "../geometricos/RectanguloConTextura.h"
 #include "../geometricos/LadoPrismaConTextura.h"
 
-class Puerta: public ObjetoDibujable, public CuerpoFisicoRigido {
+class Puerta: public ObjetoDibujable, public FPrismaRigido {
 public:
 	Puerta( string nomTextPuerta, string nomTextMarco, btBoxShape* shape, float posX, float posY, float posZ );
 	void dibujar() const;
