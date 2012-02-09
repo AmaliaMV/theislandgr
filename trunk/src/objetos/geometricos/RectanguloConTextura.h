@@ -42,6 +42,7 @@ public:
 	float getAltura() const;
 
 private:
+	void init( float base, float altura, Coord_text *coord_text );
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
