@@ -5,9 +5,9 @@
  *      Author: amalia
  */
 
-#include "CuerpoFisicoRigido.h"
+#include "FPrismaRigido.h"
 
-CuerpoFisicoRigido::CuerpoFisicoRigido( btBoxShape* shape, float posX, float posY, float posZ, float masa )
+FPrismaRigido::FPrismaRigido( btBoxShape* shape, float posX, float posY, float posZ, float masa )
 {
 	btVector3 fallInertia(0,0,0);
 	shape->calculateLocalInertia( masa, fallInertia );
@@ -24,18 +24,18 @@ CuerpoFisicoRigido::CuerpoFisicoRigido( btBoxShape* shape, float posX, float pos
 	cuerpo->setFriction(btScalar(0.1)); // defino factor de friccion
 }
 
-CuerpoFisicoRigido::~CuerpoFisicoRigido()
+FPrismaRigido::~FPrismaRigido()
 {
 	delete cuerpo->getMotionState();
 	delete cuerpo;
 }
 
-void CuerpoFisicoRigido::agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld )
+void FPrismaRigido::agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld )
 {
 	dynamicsWorld->addRigidBody(cuerpo); // agrego la caja a la simulacion
 }
 
-void CuerpoFisicoRigido::aplicarTransformada() const
+void FPrismaRigido::aplicarTransformada() const
 {
 	btTransform trans;
 	cuerpo->getMotionState()->getWorldTransform(trans); // obtengo la transformacion de la caja

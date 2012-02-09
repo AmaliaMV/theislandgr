@@ -12,9 +12,9 @@
 
 #include "../geometricos/PrismaConTexturaCuad.h"
 
-#include "../../fisica/CuerpoFisicoRigido.h"
+#include "../../fisica/FPrismaRigido.h"
 
-class Ladrillo: public PrismaConTexturaCuad, public CuerpoFisicoRigido
+class Ladrillo: public PrismaConTexturaCuad, public FPrismaRigido
 {
 public:
 	Ladrillo( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ,

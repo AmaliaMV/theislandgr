@@ -11,7 +11,7 @@
 #define FACT_CORRECCION_Z (CteCastillo::ALTURA_LADRILLO/2.0f)
 Castillo::Castillo( Fisica* fisica )
 {
-	cuerpos = new CuerpoFisicoRigido*[CteCastillo::CANT_LADRILLOS];
+	cuerpos = new FPrismaRigido*[CteCastillo::CANT_LADRILLOS];
 	textura = new Textura24("texturas/piedra4.bmp");
 
 	unsigned int num = 0;
