@@ -16,6 +16,9 @@ public:
 	static const float RADIO_NAVEGACION;
 	static const float DELTA_ANGULO_BARCO;
 	static const float RADIO_MUNDO;
+	static const float RADIO_AGUA;
+
+	static float ALTURA_ISLA;
 
 private:
 	CteMundo();

@@ -9,11 +9,14 @@
 
 const float FEsferaRigida::GRAVEDAD = 10.0;
 const float FEsferaRigida::DELTA_TIEMPO = 0.005;
+const float FEsferaRigida::MODULO_VEL0 = 50.0;
 
-FEsferaRigida::FEsferaRigida( btSphereShape* shape, float posX, float posY, float posZ, float masa )
+FEsferaRigida::FEsferaRigida( btSphereShape* shape, const float posX, const float posY,
+		const float posZ, const float masa, const float angHCanon, const float angVCanon,
+		const float angBarco, const float radio )
 {
 	this->initPosicion( posX, posY, posZ );
-	this->initVelocidad();
+	this->initVelocidad( angHCanon, angVCanon, angBarco, radio );
 	tiempo = 0.0;
 
 	btVector3 fallInertia(0,0,0);
@@ -64,7 +67,7 @@ void FEsferaRigida::actualizar()
 
 	tiempo += DELTA_TIEMPO;
 
-	cout<<"posX: "<<posX<<" posY: "<<posY<<" posZ: "<<posZ<<endl;
+//	cout<<"posX: "<<posX<<" posY: "<<posY<<" posZ: "<<posZ<<endl;
 
 	// actualizo la tranformacion de la esfera en la simulacion
 	btTransform trans;
@@ -78,8 +81,6 @@ void FEsferaRigida::actualizar()
 
 void FEsferaRigida::aplicarTransformada() const
 {
-//	glTranslatef(POSICION_INICIAL[0],POSICION_INICIAL[1],POSICION_INICIAL[2]);
-
 	btTransform trans;
 	cuerpo->getMotionState()->getWorldTransform(trans);
 
@@ -87,7 +88,7 @@ void FEsferaRigida::aplicarTransformada() const
 	glTranslatef(pos.getX(),pos.getY(),pos.getZ());
 }
 
-void FEsferaRigida::initPosicion( float posX, float posY, float posZ )
+void FEsferaRigida::initPosicion( const float posX, const float posY, const float posZ )
 {
 	POSICION_INICIAL = new float [3];
 	POSICION_INICIAL[0] = posX;
@@ -95,10 +96,17 @@ void FEsferaRigida::initPosicion( float posX, float posY, float posZ )
 	POSICION_INICIAL[2] = posZ;
 }
 
-void FEsferaRigida:: initVelocidad()
+void FEsferaRigida:: initVelocidad( const float angHCanon, const float angVCanon, const float angBarco, const float radio )
 {
 	VELOCIDAD_INICIAL = new float [3];
-	VELOCIDAD_INICIAL[0] = 0.00;
-	VELOCIDAD_INICIAL[1] = 8.0;
-	VELOCIDAD_INICIAL[2] = 5.0;
+	float x, y;
+	x = - MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::cosHex( angHCanon );
+	y = - MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::sinHex( angHCanon );
+
+	VELOCIDAD_INICIAL[0] = radio * Matematica::cosHex( angBarco ) + x * Matematica::cosHex( angBarco ) - y * Matematica::sinHex( angBarco );
+	VELOCIDAD_INICIAL[1] = radio * Matematica::sinHex( angBarco ) + y * Matematica::cosHex( angBarco ) + x * Matematica::sinHex( angBarco );
+
+ 	VELOCIDAD_INICIAL[2] = MODULO_VEL0 * Matematica::sinHex( angVCanon );
+
+	cout<<"velx: "<<VELOCIDAD_INICIAL[0]<<" vely: "<<VELOCIDAD_INICIAL[1]<<" velz: "<<VELOCIDAD_INICIAL[2]<<" angV: "<<angVCanon<<" angH: "<<angHCanon<<endl;
 }
