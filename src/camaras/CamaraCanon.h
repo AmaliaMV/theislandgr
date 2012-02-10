@@ -17,14 +17,16 @@ class CamaraCanon: public Camara {
 public:
 	CamaraCanon(const TBarco *tbarco, const TCanon *tcanon);
 	virtual ~CamaraCanon();
-	void alejarCamara();
-		void acercarCamara();
 	void setEye();
 	void setAt();
+	void alejarCamara();
+	void acercarCamara();
 
 private:
 	const TBarco *posBarco;
 	const TCanon *posCanon;
+
+	static const float ALTURA_EYE;
 };
 
 #endif /* CAMARACANON_H_ */

@@ -7,7 +7,9 @@
 
 #include "CamaraCanon.h"
 
-CamaraCanon::CamaraCanon(const TBarco *tbarco, const TCanon *tcanon): Camara ( 0.0, 45.0, 2.0)
+const float CamaraCanon::ALTURA_EYE = 2.0 ;
+
+CamaraCanon::CamaraCanon(const TBarco *tbarco, const TCanon *tcanon): Camara ( 0.0, 45.0, 10.0)
 {
 	posBarco = tbarco;
 	posCanon = tcanon;
@@ -18,46 +20,37 @@ CamaraCanon::~CamaraCanon() {}
 
 void CamaraCanon::setEye()
 {
-	float x, y, z, fx, fy, fz;
+	float x, y, z;
 
-	x = - 2 * CteBarco::RADIO_X / 3;
-	y = 0.0;
-	z = 7.0;
+	x = (CteMundo::RADIO_NAVEGACION - (CteBarco::RADIO_X / this->getDist())) * Matematica::cosHex ( posBarco->getAngulo() );
+	y = (CteMundo::RADIO_NAVEGACION - (CteBarco::RADIO_X / this->getDist())) * Matematica::sinHex ( posBarco->getAngulo() );
+	z = posBarco->getAlturaBarco() + ALTURA_EYE;
 
-	posBarco->getTPto( x, y, z, fx, fy, fz);
-
-/*
-	x += this->getDist() * Matematica::cosHex ( posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
-	y += this->getDist() * Matematica::sinHex ( posBarco->getAngulo() ) * Matematica::sinHex ( this->getAngV() );
-*/
-	//fz += 1.0 /*this->getDist() * Matematica::cosHex ( this->getAngV() )*/ ;
-
-	this->setCoordEye( fx, fy, fz);
-//	cout<<"eye: x: "<< fx << " y: "<< fy<<" z: "<<fz<<endl;
+	this->setCoordEye( x, y, z);
 }
 
 void CamaraCanon::setAt()
 {
-	float x, y, z, fx, fy, fz;
+	float x, y, z, fx, fy;
 
-	x = y = z = 0.0;
+	x = - CteMundo::RADIO_NAVEGACION * Matematica::cosHex ( posCanon->getCanon()->getAngH() ) * Matematica::cosHex ( posCanon->getCanon()->getAngV() );
+	y = - CteMundo::RADIO_NAVEGACION * Matematica::sinHex ( posCanon->getCanon()->getAngH() ) * Matematica::cosHex ( posCanon->getCanon()->getAngV() );
 
-	posCanon->getTPto( x, y, z, fx, fy, fz);
-//	cout<<"at antes del cos x: "<< fx << " y: "<<fy<<" z: "<<fz<<endl;
+	fx = CteMundo::RADIO_NAVEGACION * Matematica::cosHex( posBarco->getAngulo() ) + x * Matematica::cosHex( posBarco->getAngulo() ) - y * Matematica::sinHex( posBarco->getAngulo() );
+	fy = CteMundo::RADIO_NAVEGACION * Matematica::sinHex( posBarco->getAngulo() ) + y * Matematica::cosHex( posBarco->getAngulo() ) + x * Matematica::sinHex( posBarco->getAngulo() );
 
-	fx += CteMundo::RADIO_NAVEGACION */*this->getDist() **/ Matematica::cosHex ( posCanon->getCanon()->getAngH() ) * Matematica::sinHex ( posCanon->getCanon()->getAngV() );
-	fy += CteMundo::RADIO_NAVEGACION */*this->getDist() * */Matematica::sinHex ( posCanon->getCanon()->getAngH() ) * Matematica::sinHex ( posCanon->getCanon()->getAngV() );
-	fz += posBarco->getAlturaBarco() * /*CteMundo::RADIO_NAVEGACION *this->getDist() **/ Matematica::cosHex ( posCanon->getCanon()->getAngV() );
+	z = posBarco->getAlturaBarco() + posCanon->getAltura() + CteMundo::RADIO_NAVEGACION * Matematica::sinHex ( posCanon->getCanon()->getAngV() );
 
-	this->setCoordAt( -fx, -fy, fz);
-	cout<<"at: -x: "<< -fx << " -y: "<<-fy<<" z: "<<fz<<endl;
+	this->setCoordAt( fx, fy, z);
 }
 
-void  CamaraCanon::alejarCamara()
+void CamaraCanon::alejarCamara()
 {
 	this->aumentarDist(1.0);
 }
-void  CamaraCanon::acercarCamara()
+
+void CamaraCanon::acercarCamara()
 {
 	this->disminuirDist(1.0);
 }
+
