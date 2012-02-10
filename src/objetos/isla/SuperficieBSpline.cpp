@@ -16,7 +16,6 @@ SuperficieBSpline::SuperficieBSpline( PuntosControl *ptos, string nombreTextura,
 	this->PASO = paso;
 
 	this->init( cantPtos, this->getCantPtos(), GL_TRIANGLE_FAN );
-
 }
 
 SuperficieBSpline::~SuperficieBSpline()

@@ -7,10 +7,11 @@
 
 #include "CamaraCastillo.h"
 
-CamaraCastillo::CamaraCastillo(): Camara( 90.0, 70.0, 10.0 )
+CamaraCastillo::CamaraCastillo(): Camara( 270.0, 89.0, 10.0 )
 {
-	this->setAngVMax( CteCamara::ANGULO_MAX_VERTICAL );
-	this->setAngVMin( 15.0 );
+	this->setAngVMax( 95.0 );
+	this->setAngVMin( 20.0 );
+
 	this->setDistMax( CteMundo::RADIO_MUNDO - 10.0 );
 }
 
@@ -25,9 +26,9 @@ void CamaraCastillo::setAt ()
 {
 	float x, y, z;
 
-	x = this->getDist() * Matematica::cosHex ( this->getAngH() );
-	y = this->getDist() * Matematica::sinHex ( this->getAngH() );
-	z = this->getDist() * Matematica::cosHex ( this->getAngV() ) + 6.0;
+	x = CteCamara::POS_X_EYE_CAM_CASTILLO + this->getDist() * Matematica::cosHex ( this->getAngH() );
+	y = CteCamara::POS_Y_EYE_CAM_CASTILLO +  this->getDist() * Matematica::sinHex ( this->getAngH() );
+	z = CteMundo::ALTURA_ISLA + this->getDist() * Matematica::cosHex ( this->getAngV() ) + 6.0;
 
 	this->setCoordAt( x, y, z );
 }
