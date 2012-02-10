@@ -7,11 +7,22 @@
 
 #include "Bomba.h"
 
-Bomba::Bomba() {
-	// TODO Auto-generated constructor stub
+const float Bomba::MASA_BOMBA = 10.0;
 
+Bomba::Bomba( Textura* textura, btSphereShape* shape, float posX, float posY, float posZ )
+	:EsferaConTextura( textura, shape->getMargin() ),
+	 FEsferaRigida( shape, posX, posY, posZ, MASA_BOMBA )
+{
 }
 
-Bomba::~Bomba() {
-	// TODO Auto-generated destructor stub
+Bomba::~Bomba()
+{
+}
+
+void Bomba::dibujar() const
+{
+	glPushMatrix();
+		FEsferaRigida::aplicarTransformada();
+		EsferaConTextura::dibujar();
+	glPopMatrix();
 }

@@ -27,6 +27,14 @@ void TCanon::ejecutar()
 	glTranslatef(0.0, 0.0, TRASLACIONZ);
 }
 
+float TCanon::getAltura() const
+{
+	float fx, fy, fz;
+	this->getTPto(0.0, 0.0, 0.0, fx, fy, fz);
+
+	return fz;
+}
+
 void TCanon::getTPto ( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const
 {
 	float xaux, yaux, zaux;
