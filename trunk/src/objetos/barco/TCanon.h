@@ -15,11 +15,13 @@ class TCanon: public EstrategiaTransformacion {
 public:
 	TCanon( const Canon *canon, TCajaCanon *tcaja );
 	void ejecutar();
-	void getTPto ( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const;
 	const Canon* getCanon() const;
+	float getAltura() const;
 	virtual ~TCanon();
 
 private:
+	void getTPto ( const float x, const float y, const float z, float &fx, float &fy, float &fz ) const;
+
 	const Canon *canon;
 	TCajaCanon *tcaja;
 };
