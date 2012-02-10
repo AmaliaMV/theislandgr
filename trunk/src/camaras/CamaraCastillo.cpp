@@ -18,12 +18,6 @@ CamaraCastillo::~CamaraCastillo(){}
 
 void CamaraCastillo::setEye()
 {
-//	float x, y, z;
-//
-//	x = this->getDist() * Matematica::cosHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
-//	y = this->getDist() * Matematica::sinHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
-//	z = this->getDist() * Matematica::cosHex ( this->getAngV() ) + 5;
-
 	this->setCoordEye( CteCamara::POS_X_EYE_CAM_CASTILLO, CteCamara::POS_Y_EYE_CAM_CASTILLO, CteMundo::ALTURA_ISLA + 6.0 );
 }
 
@@ -31,18 +25,9 @@ void CamaraCastillo::setAt ()
 {
 	float x, y, z;
 
-//	x =  0.0;
-//	y =  0.0;
-//	z = this->getDist()/4;
-
-//	x = this->getDist() * Matematica::cosHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
-//	y = this->getDist() * Matematica::sinHex ( this->getAngH() ) * Matematica::sinHex ( this->getAngV() );
-//	z = this->getDist() * Matematica::cosHex ( this->getAngV() ) + 5;
-
-	x = this->getDist() * Matematica::cosHex ( this->getAngH() ) /** Matematica::sinHex ( this->getAngV() )*/;
-	y = this->getDist() * Matematica::sinHex ( this->getAngH() ) /** Matematica::sinHex ( this->getAngV() )*/;
+	x = this->getDist() * Matematica::cosHex ( this->getAngH() );
+	y = this->getDist() * Matematica::sinHex ( this->getAngH() );
 	z = this->getDist() * Matematica::cosHex ( this->getAngV() ) + 6.0;
-
 
 	this->setCoordAt( x, y, z );
 }

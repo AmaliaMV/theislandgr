@@ -23,7 +23,6 @@ public:
 	void setAt ();
 	void alejarCamara();
 	void acercarCamara();
-
 };
 
 #endif /* CAMARACASTILLO_H_ */
