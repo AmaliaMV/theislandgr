@@ -11,14 +11,12 @@
 #include "../grafica/FuncOpenGL.h"
 #include "../matematica/Matematica.h"
 
-#include "Fisica.h"
+#include "CuerpoFisico.h"
 
-class FEsferaRigida {
+class FEsferaRigida:public CuerpoFisico {
 public:
 	FEsferaRigida( btSphereShape* shape, const float posX, const float posY, const float posZ, const float masa, const float angH, const float angV, const float angBarco, const float radio );
 	void actualizar();
-	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
-	virtual void dibujar() const = 0;
 	virtual ~FEsferaRigida();
 
 protected:
@@ -27,8 +25,6 @@ protected:
 private:
 	void initPosicion( const float posX, const float posY, const float posZ );
 	void initVelocidad( const float angHCanon, const float angVCanon, const float angBarco, const float radio );
-
-	btRigidBody* cuerpo;
 
 	float* POSICION_INICIAL;
 	float* VELOCIDAD_INICIAL;

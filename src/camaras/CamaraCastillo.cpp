@@ -7,7 +7,7 @@
 
 #include "CamaraCastillo.h"
 
-CamaraCastillo::CamaraCastillo(): Camara( 270.0, 89.0, 10.0 )
+CamaraCastillo::CamaraCastillo(): Camara( 180.0, 89.0, 10.0 )
 {
 	this->setAngVMax( 95.0 );
 	this->setAngVMin( 20.0 );

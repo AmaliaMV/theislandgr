@@ -29,8 +29,8 @@ public:
 	BuildLadrillo( float longParedX, float longParedY, float longParedZ );
 	virtual ~BuildLadrillo();
 
-	Ladrillo* construirLadrilloParedFrente( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ );
-	Ladrillo* construirLadrilloParedCostado( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ );
+	Ladrillo* construirLadrilloParedFrente( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaY=0 );
+	Ladrillo* construirLadrilloParedCostado( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaY=0 );
 
 private:
 	float longParedX;
