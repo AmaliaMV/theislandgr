@@ -10,20 +10,15 @@
 
 #include "../grafica/FuncOpenGL.h"
 
-#include "Fisica.h"
+#include "CuerpoFisico.h"
 
-class FPrismaRigido {
+class FPrismaRigido: public CuerpoFisico {
 public:
 	FPrismaRigido(	btBoxShape* shape, float posX, float posY, float posZ, float masa );
 	virtual ~FPrismaRigido();
-	void agregarseAlMundo( btDiscreteDynamicsWorld* dynamicsWorld );
-	virtual void dibujar() const = 0;
 
 protected:
 	void aplicarTransformada() const;
-
-private:
-	btRigidBody* cuerpo;
 };
 
 #endif /* PRISMAFISICO_H_ */

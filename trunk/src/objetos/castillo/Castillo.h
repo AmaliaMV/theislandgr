@@ -15,13 +15,13 @@
 
 class Castillo {
 public:
-	Castillo( Fisica* fisica );
+	Castillo( Fisica* fisica, float alturaPiso );
 	void dibujar();
 	virtual ~Castillo();
 
 private:
-	void dibujarTorre( unsigned int &indice, Fisica *fisica );
-	void dibujarMuros( unsigned int &indice, Fisica *fisica );
+	void dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaPiso );
+	void dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaPiso );
 	void agregarCuerposAlModelo( btDiscreteDynamicsWorld* dynamicsWorld );
 
 	FPrismaRigido** cuerpos;

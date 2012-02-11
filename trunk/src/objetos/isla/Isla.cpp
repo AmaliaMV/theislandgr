@@ -88,5 +88,5 @@ void Isla::calcularCentroIsla()
 
 float Isla::getAltura()
 {
-	return supBorde->getAlturaMax() + playaBorde->getAlturaMax();
+	return supBorde->getAlturaMax();
 }

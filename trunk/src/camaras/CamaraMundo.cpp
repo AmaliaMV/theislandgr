@@ -7,7 +7,7 @@
 
 #include "CamaraMundo.h"
 
-CamaraMundo::CamaraMundo():Camara( 90.0, 45.0, 30.0 )
+CamaraMundo::CamaraMundo():Camara( 0.0, 45.0, 38.0 )
 {
 	this->setAngVMax( CteCamara::ANGULO_MAX_VERTICAL );
 	this->setDistMax( CteMundo::RADIO_MUNDO - 5.0 );
