@@ -48,8 +48,6 @@ void init(void)
 	inicializar();
 }
 
-
-
 void display(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -90,7 +88,6 @@ void display(void)
 
 void keyboard (unsigned char key, int x, int y)
 {
-
 	cout<<"key: "<<(unsigned int)key<<endl;
 
 	if ( key == 'q' )
@@ -106,42 +103,11 @@ void keyboard (unsigned char key, int x, int y)
 	adminComandos->ejecutarComando( key );
 
    switch (key) {
-
    case 'm':
 	   mCmd->modificarMostrar();
 	   if ( mundo->estaPausado() == false)
 		   mundo->pausar();
 	   break;
-
-	  case 'r':
-		  mundo->reiniciarFisica();
-		  glutPostRedisplay();
-		  break;
-
-	  case 'z':
-		  adminCamaras->getCamaraActual()->alejarCamara();
-		  break;
-	  case 'x':
-		  adminCamaras->getCamaraActual()->acercarCamara();
-		  break;
-	  case 'u':
-		  adminCamaras->getCamaraActual()->subirCamara();
-		  break;
-	  case 'i':
-		  adminCamaras->getCamaraActual()->bajarCamara();
-		  break;
-	  case 'c':
-		  mundo->getBarco()->getCanon()->decAngV();
-		  break;
-	  case 'v':
-		  mundo->getBarco()->getCanon()->incAngV();
-		  break;
-	  case 'b':
-		  mundo->getBarco()->getCanon()->izquierda();
-		  break;
-	  case 'n':
-		  mundo->getBarco()->getCanon()->derecha();
-		  break;
      default:
          break;
    }

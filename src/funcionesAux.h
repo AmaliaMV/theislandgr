@@ -17,7 +17,14 @@
 #include "comandos/VerCamaraCanon.h"
 #include "comandos/VerCamaraBarco.h"
 #include "comandos/Pausar.h"
+#include "comandos/Reiniciar.h"
 #include "comandos/LanzarBomba.h"
+#include "comandos/MoverCanonAbajo.h"
+#include "comandos/MoverCanonArriba.h"
+#include "comandos/MoverCanonDerecha.h"
+#include "comandos/MoverCanonIzquierda.h"
+#include "comandos/AcercarCamara.h"
+#include "comandos/AlejarCamara.h"
 
 #include "camaras/CamaraMundo.h"
 #include "camaras/CamaraBarco.h"
@@ -65,7 +72,14 @@ void inicializar()
 		adminComandos->agregarComando('2', new VerCamaraBarco(adminCamaras));
 		adminComandos->agregarComando('3', new VerCamaraCanon(adminCamaras));
 		adminComandos->agregarComando('4', new VerCamaraCastillo(adminCamaras));
+		adminComandos->agregarComando('a', new AlejarCamara(adminCamaras));
+		adminComandos->agregarComando('s', new AcercarCamara(adminCamaras));
 		adminComandos->agregarComando('p', new Pausar(mundo));
+		adminComandos->agregarComando('r', new Reiniciar(mundo));
+		adminComandos->agregarComando('y', new MoverCanonArriba(mundo->getBarco()->getCanon()));
+		adminComandos->agregarComando('b', new MoverCanonAbajo(mundo->getBarco()->getCanon()));
+		adminComandos->agregarComando('h', new MoverCanonDerecha(mundo->getBarco()->getCanon()));
+		adminComandos->agregarComando('g', new MoverCanonIzquierda(mundo->getBarco()->getCanon()));
 		adminComandos->agregarComando('j', new LanzarBomba(mundo));
 
 
