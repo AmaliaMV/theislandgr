@@ -14,7 +14,7 @@
 
 class AdminBombas {
 public:
-	AdminBombas( const string nombreTextBomba, Fisica* fisica );
+	AdminBombas( const string nombreTextBomba, Fisica* fisica, const float largoCanon, const float alturaCanon  );
 	void lanzarBomba( const float angVCanon, const float angHCanon, const float angBarco, const float radio );
 	void dibujarBombas() const;
 	void acutalizarBombas() const;

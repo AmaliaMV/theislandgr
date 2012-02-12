@@ -7,10 +7,12 @@
 
 #include "BuildBomba.h"
 
-BuildBomba::BuildBomba( const string nombreTextBomba, Fisica* fisica )
+BuildBomba::BuildBomba( const string nombreTextBomba, Fisica* fisica, const float largoCanon, const float alturaCanon  )
 {
+	this->largoCanon = largoCanon;
+	this->alturaCanon = alturaCanon;
 	this->textura = new Textura24 ( nombreTextBomba );
-	this->shapeBomba = new btSphereShape(0.25);
+	this->shapeBomba = new btSphereShape(0.15);
 	this->fisica = fisica;
 
 	this->fisica->addCollisionShape( this->shapeBomba );
@@ -24,18 +26,17 @@ BuildBomba::~BuildBomba()
 Bomba* BuildBomba::construirBomba( const float angVCanon, const float angHCanon, const float angBarco, const float radio ) const
 {
 	Bomba* bomba;
-	float x, y, z, fx, fy, longCanon = 5, alturaCanon = 3.09;
+	float x, y, z, fx, fy;
 
-	x = - longCanon * Matematica::cosHex ( angHCanon ) * Matematica::cosHex ( angVCanon );
-	y = - longCanon * Matematica::sinHex ( angHCanon ) * Matematica::cosHex ( angVCanon );
+	x = largoCanon * Matematica::cosHex ( angHCanon ) * Matematica::cosHex ( 180-angVCanon ) ;
+	y = largoCanon * Matematica::sinHex ( angHCanon ) * Matematica::cosHex ( 180-angVCanon ) * 0.40 /*fact de correccion por el escalado del barco*/;;
 
 	fx = radio * Matematica::cosHex( angBarco ) + x * Matematica::cosHex( angBarco ) - y * Matematica::sinHex( angBarco );
 	fy = radio * Matematica::sinHex( angBarco ) + y * Matematica::cosHex( angBarco ) + x * Matematica::sinHex( angBarco );
 
-	z = alturaCanon + longCanon * Matematica::sinHex ( angVCanon );
+	z = alturaCanon + largoCanon * Matematica::sinHex ( 180-angVCanon )*0.45/*fact de correccion por el escalado del barco*/;
 
-	cout<<" x: "<<fx<<" y: "<<fy<<" z: "<<z<<endl;
-	bomba = new Bomba( textura, shapeBomba, fx, fy, z, angHCanon, angVCanon, angBarco, radio );
+	bomba = new Bomba( textura, shapeBomba, fx, fy, z, angHCanon, 180-angVCanon, angBarco, radio );
 	bomba->agregarseAlMundo( fisica->getMundoFisico() );
 
 	return bomba;

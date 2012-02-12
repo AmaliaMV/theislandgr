@@ -16,6 +16,7 @@ public:
 	TCanon( const Canon *canon, TCajaCanon *tcaja );
 	void ejecutar();
 	const Canon* getCanon() const;
+	float getLargoCanon() const;
 	float getAltura() const;
 	virtual ~TCanon();
 

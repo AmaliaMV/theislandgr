@@ -72,10 +72,12 @@ const Canon* TCanon::getCanon() const
 {
 	return this->canon;
 }
-//float TCanon::getAnguloCanon() const
-//{
-//	return this->canon->getAngV();
-//}
+
+float TCanon::getLargoCanon() const
+{
+	return ESCALADOZ;
+}
+
 #undef TRASLACIONZ
 #undef ESCALADOXY
 #undef ESCALADOZ
