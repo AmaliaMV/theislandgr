@@ -75,8 +75,8 @@ void FEsferaRigida:: initVelocidad( const float angHCanon, const float angVCanon
 {
 	VELOCIDAD_INICIAL = new float [3];
 	float x, y;
-	x = - MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::cosHex( angHCanon );
-	y = - MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::sinHex( angHCanon );
+	x = MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::cosHex( angHCanon );
+	y = MODULO_VEL0 * Matematica::cosHex( angVCanon ) * Matematica::sinHex( angHCanon );
 
 	VELOCIDAD_INICIAL[0] = radio * Matematica::cosHex( angBarco ) + x * Matematica::cosHex( angBarco ) - y * Matematica::sinHex( angBarco );
 	VELOCIDAD_INICIAL[1] = radio * Matematica::sinHex( angBarco ) + y * Matematica::cosHex( angBarco ) + x * Matematica::sinHex( angBarco );

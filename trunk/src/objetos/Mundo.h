@@ -10,12 +10,14 @@
 
 #include "Agua.h"
 #include "Cielo.h"
+#include "TBarco.h"
 #include "isla/Isla.h"
 #include "barco/Barco.h"
-#include "TBarco.h"
 #include "castillo/Castillo.h"
+#include "bomba/AdminBombas.h"
 
-#include "../fisica/Fisica.h"
+#include "../fisica/PisoFisico.h"
+
 
 #define DIRECTORIO_DE_TEXTURAS texturas
 
@@ -33,6 +35,7 @@ public:
 	bool estaPausado() const;
 	TBarco* getTBarco() const;
 	Barco* getBarco() const;
+	void lanzarBomba();
 	virtual ~Mundo();
 
 private:
@@ -44,12 +47,11 @@ private:
 	Barco *barco;
 	Castillo *castillo;
 	TBarco *posBarco;
-
+	AdminBombas *adminBombas;
+	PisoFisico* piso;
 	Fisica* fisica;
 
 	bool pausa;
-
-	static const float RADIO_AGUA;
 };
 
 #endif /* MUNDO_H_ */

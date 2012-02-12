@@ -9,8 +9,8 @@
 
 const float Canon::ANGV_CANON_MAX = 20.0;
 const float Canon::ANGV_CANON_MIN = -20.0;
-const float Canon::ANGH_CANON_MAX = 45.0;
-const float Canon::ANGH_CANON_MIN = -45.0;
+const float Canon::ANGH_CANON_MAX = 34.0;
+const float Canon::ANGH_CANON_MIN = -34.0;
 
 const float Canon::DELTA_ANG = 2.0; //encuenta disminuye o aumenta el ang cada vez q se inc o dec el angulo
 

@@ -6,25 +6,32 @@
  */
 
 #include "Mundo.h"
-
-const float Mundo::RADIO_AGUA = CteMundo::RADIO_MUNDO+4;
-
+#define ESCALADOZ 1.5
+#define TRASLASIONZ 1.5
 Mundo::Mundo(string nombreArchivoNivel)
 {
-	fisica = new Fisica();
-
 	AdministradorArchivo *admin = new AdministradorArchivo ( nombreArchivoNivel );
 
 	isla = new Isla ( admin );
-	agua = new Agua( admin->getNombreArchivo( AGUA ), RADIO_AGUA);
+	CteMundo::ALTURA_ISLA = isla->getAltura()*ESCALADOZ + TRASLASIONZ;
+	agua = new Agua( admin->getNombreArchivo( AGUA ), CteMundo::RADIO_AGUA);
 	cielo = new Cielo ( admin->getNombreArchivo( CIELO), CteMundo::RADIO_MUNDO);
 	barco = new Barco( admin );
-	castillo = new Castillo(fisica);
+	fisica = new Fisica();
+	btBoxShape *shapePiso = new btBoxShape(btVector3(btScalar(13.),btScalar(13.),0.001));
+	piso = new PisoFisico( shapePiso, btScalar(CteMundo::ALTURA_ISLA));
+	fisica->addCollisionShape( shapePiso );
+	piso->agregarseAlMundo( fisica->getMundoFisico() );
+	castillo = new Castillo(fisica, CteMundo::ALTURA_ISLA);
 	delete admin;
 
 	this->posBarco = new TBarco();
 
 	pausa = false;
+
+
+
+	adminBombas = new AdminBombas( "texturas/bomba.bmp", fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25);
 }
 
 void Mundo::actualizar()
@@ -33,34 +40,25 @@ void Mundo::actualizar()
 	{
 		agua->incrementarAngulo();
 		this->incAnguloBarco();
-
-		fisica->getMundoFisico()->stepSimulation(1/300.f,10);
+		this->adminBombas->acutalizarBombas();
+//		fisica->getMundoFisico()->stepSimulation(1/300.f,10);
+		fisica->getMundoFisico()->stepSimulation(1/30.f,10);
 	}
 }
 
 void Mundo::dibujar()
 {
-	glBegin(GL_LINE_STRIP);
-	glColor3f(1.0,0.0,0.0);
-	glLineWidth(5);
-		glVertex3f(0,0,0);
-		glPushMatrix();
-		this->posBarco->ejecutar();
-		barco->getTCanon()->ejecutar();
-		glVertex3f(5.0,5.0,5.0);
-		glPopMatrix();
-		glVertex3f(10,10,10);
-		glLineWidth(1);
-	glEnd();
-
 	cielo->dibujar();
+	piso->dibujar();
+
 	glPushMatrix();
 		glTranslatef(0.0, 0.0, 0.5); //para q no se vea la junta con el cielo
 		agua->dibujar();
 	glPopMatrix();
+
 	glPushMatrix();
-		glTranslatef(0.0, 0.0, 1.5);
-		glScalef(2.0, 2.0, 1.5);
+		glTranslatef(0.0, 0.0, TRASLASIONZ);
+		glScalef(2.0, 3.0, ESCALADOZ);
 		isla->dibujar();
 	glPopMatrix();
 
@@ -68,12 +66,9 @@ void Mundo::dibujar()
 		this->posBarco->ejecutar();
 		barco->dibujar();
 	glPopMatrix();
-	glPushMatrix();
-		glTranslatef( 0.0, 0.0, isla->getAltura()+1.2);
-		glRotatef(90.0, 0.0, 0.0, 1.0);
-		castillo->dibujar();
 
-	glPopMatrix();
+	castillo->dibujar();
+	adminBombas->dibujarBombas();
 }
 void Mundo::reiniciarFisica()
 {
@@ -81,15 +76,23 @@ void Mundo::reiniciarFisica()
 	fisica->reiniciar();
 
 	try	{
-		castillo = new Castillo( fisica );
+		castillo = new Castillo( fisica, CteMundo::ALTURA_ISLA );
+//admind bombas
+
 	}catch ( EArchivoInexistente *e ){
 		cout<< e->what() <<endl;
 		exit(1);
 	}
 }
 
+void Mundo::lanzarBomba()
+{
+	this->adminBombas->lanzarBomba( this->barco->getCanon()->getAngV(), this->barco->getCanon()->getAngH(), this->posBarco->getAngulo(), CteMundo::RADIO_NAVEGACION);
+}
+
 Mundo::~Mundo()
 {
+	delete piso;
 	delete agua;
 	delete cielo;
 	delete barco;
@@ -113,3 +116,6 @@ void Mundo::pausar()
 
 bool Mundo::estaPausado() const
 { return this->pausa; }
+
+#undef ESCALADOZ
+#undef TRASLASIONZ
