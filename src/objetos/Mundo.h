@@ -11,6 +11,7 @@
 #include "Agua.h"
 #include "Cielo.h"
 #include "TBarco.h"
+#include "Palmera.h"
 #include "isla/Isla.h"
 #include "barco/Barco.h"
 #include "castillo/Castillo.h"
@@ -44,6 +45,7 @@ private:
 	Agua *agua;
 	Cielo *cielo;
 	Isla *isla;
+	Palmera *palmera;
 	Barco *barco;
 	Castillo *castillo;
 	TBarco *posBarco;

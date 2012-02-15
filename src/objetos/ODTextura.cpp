@@ -55,7 +55,7 @@ void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode
 }
 void ODTextura::displayList() const
 {
-	glColor3f (1.0, 1.0, 1.0);
+	glColor3f (1.0, 1.0, 1.0); //esto q vuele
 	Textura::habilitar();
 	this->getTextura()->usar();
 	glDrawElements (this->mode, this->tamIndice, GL_UNSIGNED_INT, this->indice);
@@ -69,4 +69,9 @@ unsigned int ODTextura::getCantPtos() const
 unsigned int ODTextura::getCantTamIndice() const
 {
 	return this->tamIndice;
+}
+
+GLenum ODTextura::getModo() const
+{
+	return this->mode;
 }

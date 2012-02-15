@@ -17,7 +17,6 @@ Isla::Isla( AdministradorArchivo *administrador )
 	supBorde = new BordeIsla( ptos, administrador->getNombreArchivo( SUELO ), cantNivelesHorizontalesIsla );
 	playaBorde = new BordeIsla ( ptos, administrador->getNombreArchivo( ARENA ), cantNivelesHorizontalesPlaya); // es el costado de la isla
 	arena = new SuperficieBSpline ( ptos, administrador->getNombreArchivo( ARENA ), paso);
-	palmera = new Palmera ( administrador->getNombreArchivo( PALMERA ) );
 
 	this->calcularCentroIsla();
 
@@ -28,7 +27,7 @@ void Isla::displayList() const
 {
 	float largoPlaya = 3.0 / 2.0;
 	glDisable(GL_LIGHTING);
-
+	glColor3f(1.0, 1.0, 1.0);
 	glPushMatrix();
 
 	glTranslatef(-xc,-yc, 0.0); // centro de la isla en el centro de coordenadas
@@ -48,13 +47,6 @@ void Isla::displayList() const
 		glTranslatef(0.0,0.0, - playaBorde->getAlturaMax());
 		playaBorde->dibujar();
 	glPopMatrix();
-//	glPopMatrix();
-//		glTranslatef(0.0,0.0, supBorde->getAlturaMax());
-//		palmera->dibujar();
-////		glTranslatef(5.0,0.0, 0.0);
-////		palmera->dibujar();
-//
-//	glPopMatrix();
 
 	glPopMatrix();
 
@@ -68,7 +60,6 @@ Isla::~Isla()
 	delete arena;
 	delete pasto;
 	delete playaBorde;
-	delete palmera;
 }
 
 void Isla::levantarCurva( string nombreArchPtoCtrl )
