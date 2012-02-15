@@ -17,8 +17,6 @@
 #include "BordeIsla.h"
 #include "SuperficieBSpline.h"
 
-#include "../Palmera.h"
-
 #include "../ObjetoDibujable.h"
 
 #include "../../archivos/adminArchPtosCrtl/ArchivoPtosControl.h"
@@ -41,7 +39,6 @@ private:
 	BordeIsla *playaBorde; // es el costado de la isla
 	SuperficieBSpline *pasto;
 	SuperficieBSpline *arena;
-	Palmera *palmera;
 
 	float xc; //coord x del centro de la isla
 	float yc; //coord y del centro de la isla

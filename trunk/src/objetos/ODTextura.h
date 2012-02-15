@@ -38,6 +38,7 @@ protected:
 
 	unsigned int getCantPtos() const;
 	unsigned int getCantTamIndice() const;
+	GLenum getModo() const;
 
 	float *ptos;
 	float *text;
