@@ -24,6 +24,7 @@ protected:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void displayList() const;
 
 private:
 
