@@ -102,6 +102,13 @@ void SuperficieBSpline::generarCoodText()
 	}
 }
 
+void SuperficieBSpline::displayList() const
+{
+	glNormal3f(0.0, 0.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
+	ODTextura::displayList();
+}
+
 unsigned int SuperficieBSpline::getCantPtos() const
 {
 	return this->curva->getCantCurvas() * (CteIsla::PASO_BARRIDO + 1) + 1 ; // el +1 es por el 0.0
