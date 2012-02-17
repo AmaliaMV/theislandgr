@@ -25,6 +25,7 @@
 #include "comandos/MoverCanonIzquierda.h"
 #include "comandos/AcercarCamara.h"
 #include "comandos/AlejarCamara.h"
+#include "comandos/VerMenuComandos.h"
 
 #include "camaras/CamaraMundo.h"
 #include "camaras/CamaraBarco.h"
@@ -45,19 +46,13 @@ AdminComandos *adminComandos;
 IMouse *mouse;
 static const string archivoDeConfiguracion = "archivosNivel1";
 
-float eyeX=0, eyeY=0, eyeZ=0, atX=0, atY=0, atZ=0;
-
-#define TOP_VIEWB_POSX	((int)((float)W_WIDTH*0.60f))
-#define TOP_VIEWB_W		((int)((float)W_WIDTH*0.40f))
-#define TOP_VIEWB_POSY	((int)((float)W_HEIGHT*0.20f))
-#define TOP_VIEWB_H		((int)((float)W_HEIGHT*0.40f))
-
 void inicializar()
 {
 	try
 	{
 		mouse = new Mouse();
 		mundo = new Mundo( archivoDeConfiguracion );
+		mCmd = new MCmdJuegos("texturas/pergamino.bmp");
 
 		adminCamaras = new AdminCamaras();
 
@@ -68,6 +63,7 @@ void inicializar()
 		adminCamaras->setCamaraActual( CAMARA_MUNDO );
 
 		adminComandos = new AdminComandos();
+
 		adminComandos->agregarComando('1', new VerCamaraMundo(adminCamaras));
 		adminComandos->agregarComando('2', new VerCamaraBarco(adminCamaras));
 		adminComandos->agregarComando('3', new VerCamaraCanon(adminCamaras));
@@ -81,9 +77,9 @@ void inicializar()
 		adminComandos->agregarComando('h', new MoverCanonDerecha(mundo->getBarco()->getCanon()));
 		adminComandos->agregarComando('g', new MoverCanonIzquierda(mundo->getBarco()->getCanon()));
 		adminComandos->agregarComando('j', new LanzarBomba(mundo));
+		adminComandos->agregarComando('m', new VerMenuComandos(mCmd, mundo));
 
-
-		mCmd = new MCmdJuegos("texturas/menu_comandos.bmp");
+		mCmd->setDescripcionComando( adminComandos->getDescripcion());
 	}
 
 	catch ( EArchivoInexistente *e )
@@ -121,26 +117,30 @@ void alPresionarBoton ( int button, int state, int xMouse, int yMouse )
 {
 }
 
+void keyboard (unsigned char key, int x, int y)
+{
+	if ( key == 'q' )
+	{
+  	  delete mCmd;
+  	  delete adminCamaras;
+  	  delete mouse;
+  	  delete adminComandos;
+  	  delete mundo;
+      exit(0);
+	}
+
+	adminComandos->ejecutarComando( key );
+}
+
 void dibujar3D()
 {
-	glDisable(GL_LIGHTING);
-		glColor3f(1.0, 1.0, 1.0);
-		mundo->dibujar();
-	glEnable(GL_LIGHTING);
+	mundo->dibujar();
 }
 
 void OnIdle (void)
 {
 	mundo->actualizar();
 	glutPostRedisplay();
-}
-
-void actualizarVista()
-{
-	//seteo la camara actual
-	((Mouse*)mouse)->setCamara(adminCamaras->getCamaraActual()); // esto no deberia hacerse una vez por cambio de camara?
-
-	adminCamaras->actualizarVista();
 }
 
 #endif /* FUNCIONESAUX_H_ */
