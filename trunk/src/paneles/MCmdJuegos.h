@@ -17,9 +17,11 @@ using namespace std;
 
 class MCmdJuegos: public Panel {
 public:
-	MCmdJuegos( const string nomTextMenu, list<string> *descripciones );
+	MCmdJuegos( const string nomTextMenu );
 	void dibujar();
+	void setDescripcionComando( list<string> *descripciones );
 	void modificarMostrar();
+	const bool seVe() const;
 	virtual ~MCmdJuegos();
 
 private:
