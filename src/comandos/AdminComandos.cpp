@@ -30,6 +30,24 @@ void AdminComandos::ejecutarComando( char tecla )
 		comando->ejecutar();
 }
 
+list<string>* AdminComandos::getDescripcion() const
+{
+	list<string>* lista = new list<string>;
+	map<char, Comando* >::iterator it = comandos->begin();
+
+	for (;it != comandos->end(); it++)
+	{
+		string descripcion = "";
+		descripcion += (*it).first;
+		descripcion.append( " - " + (*it).second->getDescripcion());
+
+		lista->push_back( descripcion );
+	}
+
+	return lista;
+}
+
+
 Comando* AdminComandos::buscarComando ( char tecla )
 {
 	map<char, Comando* >::iterator it = comandos->begin();
