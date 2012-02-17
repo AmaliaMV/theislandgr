@@ -7,17 +7,23 @@
 
 #include "MCmdJuegos.h"
 
-MCmdJuegos::MCmdJuegos( string nomTextMenu  ): Panel()
+const float MCmdJuegos::MARGEN_IZQUIERDO = 190.0;
+const float MCmdJuegos::MARGEN_SUPERIOR = 145.0;
+const float MCmdJuegos::SEPARACION_RENGLONES = 38.0;
+
+MCmdJuegos::MCmdJuegos( const string nomTextMenu, list<string> *descripciones ): Panel()
 {
-	menu = new RectanguloConTextura ( nomTextMenu, 2.0, 2.0 );
+	menu = new RectanguloConTextura32 ( nomTextMenu, 2.0, 2.0 );
 	anchoImagen = 0.0;
 	altoImagen = 0.0;
 	mostrar = false;
+	this->descripciones = descripciones;
 }
 
 MCmdJuegos::~MCmdJuegos()
 {
 	delete menu;
+	delete this->descripciones;
 }
 
 void MCmdJuegos::setPanel()
@@ -38,12 +44,35 @@ void MCmdJuegos::setPanel()
 
 void MCmdJuegos::dibujarFondo()
 {
-//	gluLookAt (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	list<string>::iterator it = this->descripciones->begin();
+	float delta = altoImagen - MARGEN_SUPERIOR;
+	unsigned int tam = 0;
 
 	glDisable(GL_LIGHTING);
+
+	//	gluLookAt (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+	glColor3f(0.0, 0.0, 0.0);
+	for (; tam < this->descripciones->size() / 2 + 1; tam++, it++, delta-= SEPARACION_RENGLONES)
+	{
+		glRasterPos2f( -anchoImagen + MARGEN_IZQUIERDO, delta );
+		this->escribir((*it).c_str());
+	}
+
+	delta = altoImagen - MARGEN_SUPERIOR;
+
+	for (; it != this->descripciones->end(); it++, delta-= SEPARACION_RENGLONES)
+	{
+		glRasterPos2f( 40.0 , delta );
+		this->escribir((*it).c_str());
+	}
+
+	glRasterPos2f( 40.0 , delta );
+	this->escribir("q - Salir");
+
 	glPushMatrix();
 		glScalef( anchoImagen, altoImagen, 1.0 );
-		menu->dibujar();
+		menu->dibujar();//fondo
 	glPopMatrix();
 
 
