@@ -30,7 +30,7 @@ void EsferaConTextura::init( float radio )
 	cantPtosX = floor(DELTA_TITA) + 1; // el +1 es porq cuento los extremos dos veces, por el <=
 	cantPtosY = floor(DELTA_FI) + 1;
 
-	ODTextura::init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
+	ODTextura::init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP, true);
 }
 
 EsferaConTextura::~EsferaConTextura() {}
@@ -85,5 +85,22 @@ void EsferaConTextura::generarCoodText()
 	}
 }
 
+void EsferaConTextura::generarNormales()
+{
+	float titaAvance, fiAvance;
+	unsigned int posPto = 0;
 
+	titaAvance = TITA_MAX / DELTA_TITA;
+	fiAvance = FI_MAX / DELTA_FI;
 
+	for (float fi = 0 ; fi <= FI_MAX; fi += fiAvance)
+	{
+		for (float tita = 0 ; tita <= TITA_MAX; tita += titaAvance)
+		{
+			normales[ posPto++ ] = Matematica::cosHex ( tita ) * Matematica::sinHex ( fi );
+			normales[ posPto++ ] = Matematica::sinHex ( tita ) * Matematica::sinHex ( fi );
+			normales[ posPto++ ] = Matematica::cosHex ( fi );
+		}
+	}
+
+}

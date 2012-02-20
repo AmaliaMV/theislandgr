@@ -23,11 +23,7 @@ private:
 	LadoCilindroConTextura* lado;
 	CirculoConTextura* tapa;
 
-	float ALTURA;
-//	float RADIO;
-
 	static const unsigned int PASO = 30;
-
 };
 
 #endif /* CILINDROCONTEXTURA_H_ */

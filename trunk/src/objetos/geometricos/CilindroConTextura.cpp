@@ -12,7 +12,6 @@ CilindroConTextura::CilindroConTextura( string nombreTextura, float radio, float
 {
 	this->lado = new LadoCilindroConTextura( nombreTextura, radio, altura );
 	this->tapa = new CirculoConTextura ( nombreTextura, radio );
-	this->ALTURA = altura;
 
 	this->compilarDisplayList();
 }
@@ -28,7 +27,7 @@ void CilindroConTextura::displayList() const
 	this->lado->dibujar();
 	this->tapa->dibujar();
 	glPushMatrix();
-		glTranslatef( 0.0, 0.0, this->ALTURA );
+		glTranslatef( 0.0, 0.0, this->lado->getAltura() );
 		this->tapa->dibujar();
 	glPopMatrix();
 }

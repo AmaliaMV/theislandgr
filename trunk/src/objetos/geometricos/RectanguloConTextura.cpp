@@ -67,6 +67,12 @@ void RectanguloConTextura::generarCoodText()
 	text[7] = 1.0 - this->coord_text->xmax;
 
 }
+void RectanguloConTextura::displayList() const
+{
+	glColor3f(1.0, 1.0, 1.0);
+	glNormal3f(0.0, 0.0, 1.0);
+	ODTextura::displayList();
+}
 
 float RectanguloConTextura::getBase() const
 {

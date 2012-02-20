@@ -33,5 +33,4 @@ void PrismaConTextura::displayList() const
 		glTranslatef( 0.0, 0.0, -this->lado->getAltura()/2);
 		this->cara->dibujar();
 	glPopMatrix();
-
 }

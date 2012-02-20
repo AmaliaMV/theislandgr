@@ -61,12 +61,10 @@ void RectanguloConTextura32::displayList() const
 {
 	glEnable( GL_BLEND );
 	glDepthMask( GL_FALSE );
-		glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA/*, GL_SRC_ALPHA*/);
+		glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f ( 1.0, 1.0, 1.0, 1.0);
-		Textura::habilitar();
-			this->getTextura()->usar();
-			glDrawElements (this->getModo(), this->getCantTamIndice(), GL_UNSIGNED_INT, indice);
-		Textura::deshabilitar();
+		glNormal3f(0.0, 0.0, 1.0);
+		ODTextura::displayList();
 	glDepthMask( GL_TRUE );
 	glDisable( GL_BLEND );
 }

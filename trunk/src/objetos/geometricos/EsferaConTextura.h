@@ -20,9 +20,10 @@ public:
 	virtual ~EsferaConTextura();
 
 private:
-	virtual void generarCoordPtos();
-	virtual void generarIndice();
-	virtual void generarCoodText();
+	void generarCoordPtos();
+	void generarIndice();
+	void generarCoodText();
+	void generarNormales();
 
 	void init( float radio );
 

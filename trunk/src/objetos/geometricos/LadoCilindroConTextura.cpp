@@ -13,10 +13,28 @@ LadoCilindroConTextura::LadoCilindroConTextura( string nombreTextura, float radi
 	this->RADIO = radio;
 	this->ALTURA = altura;
 
-	this->init( PASO * 2,  PASO * 2 + 2, GL_TRIANGLE_STRIP );
+	this->init( PASO * 2,  PASO * 2 + 2, GL_TRIANGLE_STRIP, true );
 }
 
 LadoCilindroConTextura::~LadoCilindroConTextura() {}
+
+void LadoCilindroConTextura::generarNormales()
+{
+	unsigned int indice = 0;
+	float fi, pasoFi;
+
+	pasoFi = GIRO_COMPLETO / PASO;
+
+	for ( fi = 0; fi < GIRO_COMPLETO; fi += pasoFi )
+	{
+		this->normales[indice++] = Matematica::cosHex( fi );
+		this->normales[indice++] = Matematica::sinHex( fi );
+		this->normales[indice++] = 0.0;
+		this->normales[indice++] = Matematica::cosHex( fi );
+		this->normales[indice++] = Matematica::sinHex( fi );
+		this->normales[indice++] = 0.0;
+	}
+}
 
 void LadoCilindroConTextura::generarCoordPtos()
 {
@@ -63,7 +81,18 @@ void LadoCilindroConTextura::generarCoodText()
 	}
 }
 
+void LadoCilindroConTextura::displayList() const
+{
+	glColor3f(1.0, 1.0, 1.0);
+	ODTextura::displayList();
+}
+
 float LadoCilindroConTextura::getAltura() const
 {
 	return this->ALTURA;
+}
+
+float LadoCilindroConTextura::getRadio() const
+{
+	return this->RADIO;
 }

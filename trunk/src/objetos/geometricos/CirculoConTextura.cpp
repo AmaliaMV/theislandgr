@@ -7,8 +7,8 @@
 
 #include "CirculoConTextura.h"
 
-CirculoConTextura::CirculoConTextura(string nombreTextura, float radio )
-: ODTextura ( new Textura24 ( nombreTextura ) )
+CirculoConTextura::CirculoConTextura( const string nombreTextura, const float radio )
+	: ODTextura ( new Textura24 ( nombreTextura ) )
 {
 	this->RADIO = radio;
 	this->init( PASO + 1, // +1 por el centro
@@ -65,4 +65,11 @@ void CirculoConTextura::generarCoodText()
 		this->text[indice++] = CENTRO + CENTRO * Matematica::cosHex( fi );
 		this->text[indice++] = CENTRO + CENTRO * Matematica::sinHex( fi );
 	}
+}
+
+void CirculoConTextura::displayList() const
+{
+	glNormal3f(0.0, 0.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
+	ODTextura::displayList();
 }
