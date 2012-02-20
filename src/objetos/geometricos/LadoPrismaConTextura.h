@@ -29,6 +29,9 @@ public:
 	float getAncho() const;
 	float getLargo() const;
 
+protected:
+	void displayList() const;
+
 private:
 	void generarCoordPtos();
 	void generarIndice();

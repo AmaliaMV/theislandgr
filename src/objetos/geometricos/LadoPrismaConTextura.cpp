@@ -99,6 +99,12 @@ void LadoPrismaConTextura::generarCoodText()
 	text[pos++] = 1.0;
 }
 
+void LadoPrismaConTextura::displayList() const
+{
+	glColor3f(1.0, 1.0, 1.0);
+	ODTextura::displayList();
+}
+
 float LadoPrismaConTextura::getAltura() const
 {
 	return this->ALTURA;

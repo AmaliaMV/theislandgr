@@ -34,10 +34,12 @@ void PrismaConTexturaCuad::displayList() const
 {
 	glPushMatrix();
 		glTranslatef( 0.0, 0.0, this->caraYPos->getAltura()/2);
+		glNormal3f(0.0, 0.0, 1.0);
 		this->caraZ->dibujar();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef( 0.0, 0.0, -this->caraYPos->getAltura()/2);
+		glNormal3f(0.0, 0.0, -1.0);
 		this->caraZ->dibujar();
 	glPopMatrix();
 	glPushMatrix();

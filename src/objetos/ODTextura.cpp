@@ -24,7 +24,7 @@ const Textura* ODTextura::getTextura() const
 	return this->textura;
 }
 
-void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode )
+void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode, bool compilarNormales  )
 {
 	this->cantPtos = cantPtos;
 	this->tamIndice = tamIndice;
@@ -40,10 +40,15 @@ void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 		glVertexPointer(CteObjeto::CANT_COORD_PTO, GL_FLOAT, 0, this->ptos);
 		glTexCoordPointer(CteObjeto::CANT_COORD_TEXTURA, GL_FLOAT, 0, this->text);
 
-			this->compilarDisplayList();
+			if ( compilarNormales == true )
+				this->compilarNormales();
+			else
+				this->noCompilarNormales();
+			//func();
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -51,11 +56,26 @@ void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode
 	delete [] this->indice;
 	delete [] this->ptos;
 	delete [] this->text;
-
 }
+
+void ODTextura::compilarNormales()
+{
+	this->normales = new float[ this->cantPtos * CteObjeto::CANT_COORD_NORMAL];
+	this->generarNormales();
+	glEnableClientState(GL_NORMAL_ARRAY);
+		glNormalPointer(GL_FLOAT, 0, this->normales);
+		this->compilarDisplayList();
+	glDisableClientState(GL_NORMAL_ARRAY);
+	delete [] this->normales;
+}
+
+void ODTextura::noCompilarNormales()
+{
+	this->compilarDisplayList();
+}
+
 void ODTextura::displayList() const
 {
-	glColor3f (1.0, 1.0, 1.0); //esto q vuele
 	Textura::habilitar();
 	this->getTextura()->usar();
 	glDrawElements (this->mode, this->tamIndice, GL_UNSIGNED_INT, this->indice);

@@ -14,8 +14,11 @@
 
 class CirculoConTextura: public ODTextura {
 public:
-	CirculoConTextura(string nombreTextura, float radio);
+	CirculoConTextura(const string nombreTextura, const float radio);
 	virtual ~CirculoConTextura();
+
+protected:
+	void displayList() const;
 
 private:
 	void generarCoordPtos();

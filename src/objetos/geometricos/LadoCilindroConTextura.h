@@ -18,13 +18,17 @@ public:
 	virtual ~LadoCilindroConTextura();
 
 	float getAltura() const;
+	float getRadio() const;
 
 protected:
+	void displayList() const;
+
+private:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void generarNormales();
 
-private:
 	float RADIO;
 	float ALTURA;
 

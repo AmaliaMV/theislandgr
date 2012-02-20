@@ -28,11 +28,14 @@ public:
 
 protected:
 	const Textura* getTextura() const;
-	void init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode ); //debe ser llamado por las clases hijas
+	void init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode, bool compilarNormales=false ); //debe ser llamado por las clases hijas
+	void compilarNormales();
+	void noCompilarNormales();
 
 	virtual void generarCoordPtos() = 0;
 	virtual void generarIndice() = 0;
 	virtual void generarCoodText() = 0;
+	virtual void generarNormales(){};
 
 	virtual void displayList() const;
 
@@ -42,6 +45,7 @@ protected:
 
 	float *ptos;
 	float *text;
+	float *normales;
 	unsigned int *indice;
 
 private:
