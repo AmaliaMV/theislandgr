@@ -19,10 +19,14 @@ Cielo::Cielo( string nombreTextura, float radio )
 	cantPtosX = floor(DELTA_TITA) + 1; // el +1 es porq cuento los extremos dos veces, por el <=
 	cantPtosY = floor(DELTA_FI) + 1;
 
-	this->init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
+	this->inicializarLuz();
+	this->init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP, true);
 }
 
-Cielo::~Cielo() {}
+Cielo::~Cielo()
+{
+ 	 this->eliminarLuz();
+}
 
 void Cielo::generarCoordPtos()
 {
@@ -71,4 +75,45 @@ void Cielo::generarCoodText()
 			text[indice + 1] = pasoY * col;
 		}
 	}
+}
+
+void Cielo::generarNormales()
+{
+	float titaAvance, fiAvance;
+	unsigned int posPto = 0;
+
+	titaAvance = TITA_MAX / DELTA_TITA;
+	fiAvance = FI_MAX / DELTA_FI;
+
+	for (float fi = 0 ; fi <= FI_MAX; fi += fiAvance)
+	{
+		for (float tita = 0 ; tita <= TITA_MAX; tita += titaAvance)
+		{
+			normales[ posPto++ ] = Matematica::cosHex ( tita ) * Matematica::sinHex ( fi );
+			normales[ posPto++ ] = Matematica::sinHex ( tita ) * Matematica::sinHex ( fi );
+			normales[ posPto++ ] = Matematica::cosHex ( fi );
+		}
+	}
+}
+
+void Cielo::displayList() const
+{
+	glColor3f(1.0, 1.0, 1.0);
+	this->luz->setPropiedadesMaterial();
+	ODTextura::displayList();
+}
+
+
+void Cielo::inicializarLuz()
+{
+	float *luz = new float[3];
+
+	luz[LUZ_AZUL] = luz[LUZ_VERDE] = luz[LUZ_ROJA] = 1.0;
+	this->luz = new IluminacionMaterial(luz);
+	this->luz->setBrillo(120);
+}
+
+void Cielo::eliminarLuz()
+{
+	delete luz;
 }

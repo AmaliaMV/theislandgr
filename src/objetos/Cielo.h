@@ -11,6 +11,7 @@
 #include "ODTextura.h"
 
 #include "../grafica/textura/Textura24.h"
+#include "../grafica/iluminacion/IluminacionMaterial.h"
 #include "../matematica/Matematica.h"
 
 class Cielo: public ODTextura {
@@ -19,17 +20,13 @@ public:
 	virtual ~Cielo();
 
 protected:
-	virtual void generarCoordPtos();
-	virtual void generarIndice();
-	virtual void generarCoodText();
+	void displayList() const;
 
 private:
-	void displayList();
-
-	void generarPtos ( float *ptos, float titaAvance, float fiAvance );
-	void setIndice ( float indiceMax, unsigned int ptosPorFila, unsigned int *vertIndice );
-	void generarFigura ( float *ptos, unsigned int *vertIndice );
-	void generarCoordText ( float *coordText, unsigned int cantFila, unsigned int cantColum );
+	void generarCoordPtos();
+	void generarIndice();
+	void generarCoodText();
+	void generarNormales();
 
 	unsigned int cantPtosX;
 	unsigned int cantPtosY;
@@ -40,6 +37,10 @@ private:
 	static const float TITA_MAX;
 	static const float DELTA_FI;
 	static const float DELTA_TITA;
+
+	IluminacionMaterial* luz;
+	void inicializarLuz();
+	void eliminarLuz();
 };
 
 #endif /* CIELO_H_ */
