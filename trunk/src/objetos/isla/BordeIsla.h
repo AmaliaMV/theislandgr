@@ -45,11 +45,14 @@ public:
 	virtual ~BordeIsla();
 
 protected:
+	void displayList() const;
+
+private:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void generarNormales();
 
-private:
 	static const float PENDIENTE;
 	static const float ESCALADOxy;
 	static const float ESCALADOz;
@@ -62,6 +65,7 @@ private:
 
 	unsigned int getCantPtos() const;
 	unsigned int getCantReferencias() const;
+
 };
 
 #endif /* BORDEISLA_H_ */
