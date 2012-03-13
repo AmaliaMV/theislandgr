@@ -48,3 +48,20 @@ double Matematica::modulo( double numero )
 
 	return numero;
 }
+
+void Matematica::normalizar3(float v[3])
+{
+	float modulo = sqrt( pow(v[0],2) + pow(v[1],2) + pow(v[2],2) );
+
+	if ( modulo == 0 ) return;
+
+	for (unsigned int i = 0; i < 3; i++ )
+		v[i] = v[i] / modulo;
+}
+
+void Matematica::productoVectorial(const float v[3], const float w[3], float resultado[3])
+{
+	resultado[0] = v[1] * w[2] - v[2] * w[1];
+	resultado[1] = v[2] * w[0] - v[0] * w[2] ;
+	resultado[2] = v[0] * w[1] - v[1] * w[0];
+}
