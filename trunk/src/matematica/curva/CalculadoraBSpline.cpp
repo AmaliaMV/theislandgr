@@ -40,7 +40,7 @@ void CalculadoraBSpline::f_bsplineCentrada05( float *ctrlPtos, float u, float &x
 	x -= CENTRO;
 	y -= CENTRO;
 }
-void CalculadoraBSpline::f1_bspline( float *ptos, float u, float *x, float *y)
+void CalculadoraBSpline::f1_bspline( float *ptos, float u, float &x, float &y)
 {
 	/* es una spline uniforme*/
 
@@ -58,8 +58,8 @@ void CalculadoraBSpline::f1_bspline( float *ptos, float u, float *x, float *y)
 		valorY += b[i] * ptos [i*3 + 1];
 	}
 
-	*x = valorX;
-	*y = valorY;
+	x = valorX;
+	y = valorY;
 }
 
 void CalculadoraBSpline::calcularCentro (PuntosControl *ctrlPtos, float &xc, float &yc, float &zc, int paso)
