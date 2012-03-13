@@ -16,16 +16,16 @@
 
 class IluminacionMaterial {
 public:
-	IluminacionMaterial(float diffuseColor[3]);
+	IluminacionMaterial(const float diffuseColorRed, const float diffuseColorGreen, const float diffuseColorBlue);
 	void setPropiedadesMaterial();
-	void setLuzAmbienteColor(float ambientColor[3]);
-	void setLuzEspecualarColor(float specularColor[3]);
-	void setLuzDifusaColor(float diffuseColor[3]);
-	void setBrillo(float shininess);
+	void setLuzAmbienteColor(const float ambientColorRed, const float ambientColorGreen, const float ambientColorBlue);
+	void setLuzEspecualarColor(const float specularColorRed, const float specularColorGreen, const float specularColorBlue);
+	void setLuzDifusaColor(const float diffuseColorRed, const float diffuseColorGreen, const float diffuseColorBlue);
+	void setBrillo(const float shininess);
 	virtual ~IluminacionMaterial();
 
-//private:
-	void initColor (float color[3], const float valorCte );
+private:
+	void initColor (float color[3], const float red, const float green, const float blue);
 	float *ambientColor;
 	float *specularColor;
 	float *diffuseColor;

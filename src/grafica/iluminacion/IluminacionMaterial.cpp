@@ -7,14 +7,16 @@
 
 #include "IluminacionMaterial.h"
 
-IluminacionMaterial::IluminacionMaterial(float diffuseColor[3])
+IluminacionMaterial::IluminacionMaterial(const float diffuseColorRed, const float diffuseColorGreen, const float diffuseColorBlue)
 {
 	this->ambientColor = new float[3];
-	this->initColor(this->ambientColor, 0.8);
-	this->diffuseColor = diffuseColor;
+	this->diffuseColor = new float[3];
 	this->specularColor = new float[3];
-	this->initColor(this->specularColor, 1.0);
-	this->shininess = 10;
+	this->shininess = 0;
+
+	this->setLuzDifusaColor(diffuseColorRed, diffuseColorGreen, diffuseColorBlue);
+	this->setLuzEspecualarColor(1.0, 1.0, 1.0);
+	this->setLuzAmbienteColor(0.1, 0.1, 0.1);
 }
 
 void IluminacionMaterial::setPropiedadesMaterial()
@@ -25,25 +27,22 @@ void IluminacionMaterial::setPropiedadesMaterial()
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 }
 
-void IluminacionMaterial::setLuzAmbienteColor(float ambientColor[3])
+void IluminacionMaterial::setLuzAmbienteColor(const float ambientColorRed, const float ambientColorGreen, const float ambientColorBlue)
 {
-	delete []this->ambientColor;
-	this->ambientColor = ambientColor;
+	this->initColor(this->ambientColor, ambientColorRed, ambientColorGreen, ambientColorBlue);
 }
 
-void IluminacionMaterial::setLuzEspecualarColor(float specularColor[3])
+void IluminacionMaterial::setLuzEspecualarColor(const float specularColorRed, const float specularColorGreen, const float specularColorBlue)
 {
-	delete []this->specularColor;
-	this->specularColor = specularColor;
+	this->initColor(this->specularColor, specularColorRed, specularColorGreen, specularColorBlue);
 }
 
-void IluminacionMaterial::setLuzDifusaColor(float diffuseColor[3])
+void IluminacionMaterial::setLuzDifusaColor(const float diffuseColorRed, const float diffuseColorGreen, const float diffuseColorBlue)
 {
-	delete []this->diffuseColor;
-	this->diffuseColor = diffuseColor;
+	this->initColor(this->diffuseColor, diffuseColorRed, diffuseColorGreen, diffuseColorBlue);
 }
 
-void IluminacionMaterial::setBrillo(float shininess)
+void IluminacionMaterial::setBrillo(const float shininess)
 {
 	this->shininess = shininess;
 }
@@ -55,8 +54,9 @@ IluminacionMaterial::~IluminacionMaterial()
 	delete []this->specularColor;
 }
 
-void IluminacionMaterial::initColor (float color[3], const float valorCte )
+void IluminacionMaterial::initColor (float color[3], const float red, const float green, const float blue)
 {
-	for ( unsigned int i = 0; i < 3; i++ )
-		color[i] = valorCte;
+	color[LUZ_ROJA] = red;
+	color[LUZ_VERDE] = green;
+	color[LUZ_AZUL] = blue;
 }
