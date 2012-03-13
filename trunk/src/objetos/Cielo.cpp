@@ -20,7 +20,7 @@ Cielo::Cielo( string nombreTextura, float radio )
 	cantPtosY = floor(DELTA_FI) + 1;
 
 	this->inicializarLuz();
-	this->init( cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP, true);
+	this->init(cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
 }
 
 Cielo::~Cielo()
@@ -61,7 +61,7 @@ void Cielo::generarIndice()
 void Cielo::generarCoodText()
 {
 	float pasoX, pasoY;
-	unsigned int indice;
+	unsigned int indice = 0;
 
 	pasoX = 1.0 / cantPtosX;
 	pasoY = 1.0 / cantPtosY;
@@ -70,28 +70,8 @@ void Cielo::generarCoodText()
 	{
 		for (unsigned int fil = 0 ; fil < cantPtosX; fil ++)
 		{
-			indice = fil * CteObjeto::CANT_COORD_TEXTURA + col * cantPtosX * CteObjeto::CANT_COORD_TEXTURA;
-			text[indice] = pasoX * fil;
-			text[indice + 1] = pasoY * col;
-		}
-	}
-}
-
-void Cielo::generarNormales()
-{
-	float titaAvance, fiAvance;
-	unsigned int posPto = 0;
-
-	titaAvance = TITA_MAX / DELTA_TITA;
-	fiAvance = FI_MAX / DELTA_FI;
-
-	for (float fi = 0 ; fi <= FI_MAX; fi += fiAvance)
-	{
-		for (float tita = 0 ; tita <= TITA_MAX; tita += titaAvance)
-		{
-			normales[ posPto++ ] = Matematica::cosHex ( tita ) * Matematica::sinHex ( fi );
-			normales[ posPto++ ] = Matematica::sinHex ( tita ) * Matematica::sinHex ( fi );
-			normales[ posPto++ ] = Matematica::cosHex ( fi );
+			text[indice++] = pasoX * fil;
+			text[indice++] = pasoY * col;
 		}
 	}
 }
@@ -99,6 +79,7 @@ void Cielo::generarNormales()
 void Cielo::displayList() const
 {
 	glColor3f(1.0, 1.0, 1.0);
+	glNormal3f(sqrt(2)/2, 0, sqrt(2)/2);
 	this->luz->setPropiedadesMaterial();
 	ODTextura::displayList();
 }
@@ -106,11 +87,7 @@ void Cielo::displayList() const
 
 void Cielo::inicializarLuz()
 {
-	float *luz = new float[3];
-
-	luz[LUZ_AZUL] = luz[LUZ_VERDE] = luz[LUZ_ROJA] = 1.0;
-	this->luz = new IluminacionMaterial(luz);
-	this->luz->setBrillo(120);
+	this->luz = new IluminacionMaterial(0.8, 0.8, 0.8);
 }
 
 void Cielo::eliminarLuz()

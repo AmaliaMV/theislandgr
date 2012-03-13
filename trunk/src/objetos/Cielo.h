@@ -26,7 +26,6 @@ private:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
-	void generarNormales();
 
 	unsigned int cantPtosX;
 	unsigned int cantPtosY;
