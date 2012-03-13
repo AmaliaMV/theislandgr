@@ -78,7 +78,7 @@ void Cielo::generarCoodText()
 
 void Cielo::displayList() const
 {
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(0.82, 0.96, 0.98);
 	glNormal3f(sqrt(2)/2, 0, sqrt(2)/2);
 	this->luz->setPropiedadesMaterial();
 	ODTextura::displayList();
@@ -88,6 +88,7 @@ void Cielo::displayList() const
 void Cielo::inicializarLuz()
 {
 	this->luz = new IluminacionMaterial(0.8, 0.8, 0.8);
+	this->luz->setBrillo(10);
 }
 
 void Cielo::eliminarLuz()
