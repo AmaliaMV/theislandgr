@@ -21,8 +21,7 @@
 
 #include "../../archivos/adminArchPtosCrtl/ArchivoPtosControl.h"
 #include "../../archivos/adminArchConfig/AdministradorArchivo.h"
-
-using namespace std;
+#include "../../grafica/iluminacion/IluminacionMaterial.h"
 
 class Isla: public ObjetoDibujable {
 public:
@@ -53,6 +52,15 @@ private:
 	*/
 	void levantarCurva( string nombreArchPtoCtrl );
 	void calcularCentroIsla();
+
+	/*
+	 * Para la iluminacion
+	 */
+	IluminacionMaterial* luzPasto;
+	IluminacionMaterial* luzArena;
+
+	void inicializarLuces();
+	void eliminarLuces();
 };
 
 #endif /* ISLA_H_ */

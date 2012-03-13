@@ -10,6 +10,7 @@
 Isla::Isla( AdministradorArchivo *administrador )
 	: ObjetoDibujable()
 {
+	this->inicializarLuces();
 	this->levantarCurva( administrador->getNombreArchivo( MAPA ) );
 
 	/* creamos el borde de la isla*/
@@ -23,25 +24,44 @@ Isla::Isla( AdministradorArchivo *administrador )
 	this->compilarDisplayList();
 }
 
+void Isla::inicializarLuces()
+{
+	this->luzPasto = new IluminacionMaterial(0.0, 0.5, 0.0);
+	this->luzArena = new IluminacionMaterial(0.8, 0.5, 0.0);
+}
+
+void Isla::eliminarLuces()
+{
+	delete this->luzArena;
+	delete this->luzPasto;
+}
+
 void Isla::displayList() const
 {
 	float largoPlaya = 3.0 / 2.0;
-	glDisable(GL_LIGHTING);
+
 	glColor3f(1.0, 1.0, 1.0);
+
 	glPushMatrix();
 
 	glTranslatef(-xc,-yc, 0.0); // centro de la isla en el centro de coordenadas
 
+	this->luzArena->setPropiedadesMaterial();
 	supBorde->dibujar();
+
+	luzPasto->setPropiedadesMaterial();
 	glPushMatrix();
 		glTranslatef(0.0,0.0, supBorde->getAlturaMax());
 		glScalef(supBorde->getEscalado(),supBorde->getEscalado() ,1.0);
 		pasto->dibujar();
 	glPopMatrix();
+
+	luzArena->setPropiedadesMaterial();
 	glPushMatrix();
 		glScalef(largoPlaya*supBorde->getEscalado(),largoPlaya*supBorde->getEscalado() ,1.0);
 		arena->dibujar();
 	glPopMatrix();
+
 	glPushMatrix();
 		glScalef(largoPlaya,largoPlaya,1.0);
 		glTranslatef(0.0,0.0, - playaBorde->getAlturaMax());
@@ -49,8 +69,6 @@ void Isla::displayList() const
 	glPopMatrix();
 
 	glPopMatrix();
-
-	glEnable(GL_LIGHTING);
 }
 
 Isla::~Isla()
@@ -60,6 +78,7 @@ Isla::~Isla()
 	delete arena;
 	delete pasto;
 	delete playaBorde;
+	this->eliminarLuces();
 }
 
 void Isla::levantarCurva( string nombreArchPtoCtrl )
