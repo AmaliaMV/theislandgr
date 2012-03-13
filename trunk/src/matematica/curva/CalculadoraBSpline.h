@@ -18,7 +18,7 @@ class CalculadoraBSpline {
 public:
 	static void f_bspline( float *ctrlPtos, float u, float &x, float &y);
 	static void f_bsplineCentrada05( float *ctrlPtos, float u, float &x, float &y);
-	static void f1_bspline( float *ctrlPtos, float u, float *x, float *y); //retorna la derivada en el pto u
+	static void f1_bspline( float *ctrlPtos, float u, float &x, float &y); //retorna la derivada en el pto u
 	static int cantCurvas( PuntosControl *ptos);
 	static void calcularCentro (PuntosControl *ctrlPtos, float &xc, float &yc, float &zc, int paso);
 	static void calcularExtremos (PuntosControl *ctrlPtos, float &xmin, float &xmax, float &ymin, float &ymax, const int paso);
