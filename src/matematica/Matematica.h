@@ -25,6 +25,9 @@ public:
 	static unsigned int factorial( unsigned int n );
 
 	static double modulo( double numero );
+	static void normalizar3(float v[3]);
+
+	static void productoVectorial(const float v[3], const float w[3], float resultado[3]);
 
 	virtual ~Matematica();
 
