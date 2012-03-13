@@ -15,10 +15,9 @@ const float Agua::GRADO_AGUA_AGITADA = 0.75;
 Agua::Agua( string nombreTextura, float radio )
 {
 	this->angulo = 0.0;
-
 	this->RADIO = radio;
 	this->textura = new Textura24(nombreTextura);
-
+	this->inicializarLuz();
 }
 
 void Agua::incrementarAngulo()
@@ -40,7 +39,7 @@ void Agua::dibujar()
 	 * los ptos del medio, o sea, ptosVerticales-2 , 2 veces cada uno
 	 * despues, un costado lo tengo q referenciar una vez mas por eso el + 1
 	 */
-	const unsigned int cantRef = 2 * ( ptosHorizontales + 1 ) * ( ptosVerticales - 1 );
+	const int cantRef = 2 * ( ptosHorizontales + 1 ) * ( ptosVerticales - 1 );
 
 	ptos = new float [ CteObjeto::CANT_COORD_PTO * cantPtos ];
 	vertIndice = new unsigned int [ cantRef ]; //cant de veces q tengo q hacer referencias a los ptos
@@ -52,14 +51,18 @@ void Agua::dibujar()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 		glVertexPointer(CteObjeto::CANT_COORD_PTO, GL_FLOAT, 0, ptos);
 		glTexCoordPointer(CteObjeto::CANT_COORD_TEXTURA, GL_FLOAT, 0, coordText);
 
 			Textura::habilitar();
 			this->textura->usar();
-			glColor3f(1.0, 1.0, 1.0);
-			glDrawElements (GL_TRIANGLE_STRIP/*GL_LINE_STRIP*/, cantRef, GL_UNSIGNED_INT, vertIndice);
+			this->luz->setPropiedadesMaterial();
+			glColor3f(0.2, 0.63, 0.88);
+			glNormal3f(0.0, 0.0, 1.0);
+			glDrawElements (GL_TRIANGLE_STRIP, cantRef, GL_UNSIGNED_INT, vertIndice);
 			Textura::deshabilitar();
+			glEnable(GL_LIGHTING);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -67,12 +70,12 @@ void Agua::dibujar()
 	delete []ptos;
 	delete []vertIndice;
 	delete []coordText;
-
 }
 
 Agua::~Agua()
 {
 	delete this->textura;
+	this->eliminarLuz();
 }
 
 void Agua::generarPtos ( float *ptos )
@@ -82,7 +85,7 @@ void Agua::generarPtos ( float *ptos )
 
 	anguloZ = angulo;
 
-	for ( radio = 0.0; radio <= this->RADIO; radio+= this->getIncRadio() )
+	for ( radio = 0.0; radio <= this->RADIO; radio+= this->getIncRadio(), anguloZ += this->getIncAnguloZ() )
 	{
 		for ( anguloXY = 0.0 ; anguloXY <= ANG_XY_MAX; anguloXY += this->getIncAnguloXY() )
 		{
@@ -92,8 +95,6 @@ void Agua::generarPtos ( float *ptos )
 
 			posPto += CteObjeto::CANT_COORD_PTO;
 		}
-
-		anguloZ += this->getIncAnguloZ();
 	}
 }
 
@@ -146,4 +147,15 @@ const float Agua::getIncAnguloXY() const
 const float Agua::getIncAnguloZ() const
 {
 	return CANT_CURVA * 360 ;
+}
+
+void Agua::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(0.2, 0.63, 0.88);
+	this->luz->setBrillo(10);
+}
+
+void Agua::eliminarLuz()
+{
+	delete this->luz;
 }
