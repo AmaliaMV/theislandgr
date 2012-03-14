@@ -12,12 +12,11 @@
 
 class BuildBomba {
 public:
-	BuildBomba( const string nombreTextBomba, Fisica* fisica, const float largoCanon, const float alturaCanon  );
+	BuildBomba( Fisica* fisica, const float largoCanon, const float alturaCanon  );
 	Bomba* construirBomba( const float angVCanon, const float angHCanon, const float angBarco, const float radio ) const;
 	virtual ~BuildBomba();
 
 private:
-	Textura* textura;
 	btSphereShape* shapeBomba;
 	Fisica* fisica;
 	float largoCanon;
