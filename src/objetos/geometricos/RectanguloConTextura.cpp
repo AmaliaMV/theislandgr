@@ -70,7 +70,6 @@ void RectanguloConTextura::generarCoodText()
 void RectanguloConTextura::displayList() const
 {
 	glColor3f(1.0, 1.0, 1.0);
-	glNormal3f(0.0, 0.0, 1.0);
 	ODTextura::displayList();
 }
 

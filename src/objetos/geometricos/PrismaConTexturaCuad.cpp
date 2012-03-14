@@ -33,24 +33,26 @@ PrismaConTexturaCuad::~PrismaConTexturaCuad()
 void PrismaConTexturaCuad::displayList() const
 {
 	glPushMatrix();
-		glTranslatef( 0.0, 0.0, this->caraYPos->getAltura()/2);
 		glNormal3f(0.0, 0.0, 1.0);
+		glTranslatef( 0.0, 0.0, this->caraYPos->getAltura()/2);
 		this->caraZ->dibujar();
 	glPopMatrix();
 	glPushMatrix();
-		glTranslatef( 0.0, 0.0, -this->caraYPos->getAltura()/2);
 		glNormal3f(0.0, 0.0, -1.0);
+		glTranslatef( 0.0, 0.0, -this->caraYPos->getAltura()/2);
 		this->caraZ->dibujar();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef( this->caraZ->getAltura()/2, 0.0, 0.0);
 		glRotatef( 90.0, 0.0, 1.0, 0.0 );
+		glNormal3f(0.0, 0.0, 1.0);
 		this->caraXPos->dibujar();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef( -this->caraZ->getAltura()/2, 0.0, 0.0);
 		glScalef( 1.0, -1.0, 1.0 );
 		glRotatef( 90.0, 0.0, 1.0, 0.0 );
+		glNormal3f(0.0, 0.0, -1.0);
 		this->caraXNeg->dibujar();
 	glPopMatrix();
 	glPushMatrix();
@@ -58,12 +60,14 @@ void PrismaConTexturaCuad::displayList() const
 		glScalef( -1.0, 1.0, 1.0 );
 		glRotatef( 90.0, 1.0, 0.0, 0.0 );
 		glRotatef( -90.0, 0.0, 0.0, 1.0 );
+		glNormal3f(0.0, 0.0, -1.0);
 		this->caraYPos->dibujar();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef( 0.0, -this->caraZ->getBase()/2, 0.0);
 		glRotatef( 90.0, 1.0, 0.0, 0.0 );
 		glRotatef( -90.0, 0.0, 0.0, 1.0 );
+		glNormal3f(0.0, 0.0, 1.0);
 		this->caraYNeg->dibujar();
 	glPopMatrix();
 }
