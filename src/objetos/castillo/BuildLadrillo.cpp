@@ -16,7 +16,7 @@ BuildLadrillo::BuildLadrillo( float longParedX, float longParedY, float longPare
 
 BuildLadrillo::~BuildLadrillo(){}
 
-Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaY )
+Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaZ, float desplaY )
 {
 	/* construir ladrillo frente pared => x = cte */
 	float x0, xf, y0, yf, factorX, factorY;
@@ -58,9 +58,9 @@ Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxSh
 	textCostadoDer = new Coord_text ( x0, xf, y0, yf );
 
 	if ( posX > 0 )
-		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ, textFrente, textFrente, textCostadoDer, textCostadoIzq );
+		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ + desplaZ, textFrente, textFrente, textCostadoDer, textCostadoIzq );
 	else
-		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ, textFrente, textFrente, textCostadoIzq, textCostadoDer );
+		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ + desplaZ, textFrente, textFrente, textCostadoIzq, textCostadoDer );
 
 	delete textFrente;
 	delete textCostadoIzq;
@@ -68,7 +68,7 @@ Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxSh
 
 	return ladrillo;
 }
-Ladrillo* BuildLadrillo::construirLadrilloParedCostado( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaY )
+Ladrillo* BuildLadrillo::construirLadrilloParedCostado( Textura* textura, btBoxShape* shape, float posX, float posY, float posZ, float desplaZ, float desplaY )
 {
 	/* construir ladrillo frente pared => y = cte */
 	float x0, xf, y0, yf, factorX, factorY;
@@ -112,9 +112,9 @@ Ladrillo* BuildLadrillo::construirLadrilloParedCostado( Textura* textura, btBoxS
 
 
 	if ( posY > 0 )
-		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ, textCostadoIzq, textCostadoDer, textFrente, textFrente );
+		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ + desplaZ, textCostadoIzq, textCostadoDer, textFrente, textFrente );
 	else
-		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ, textCostadoDer, textCostadoIzq, textFrente, textFrente );
+		ladrillo = new Ladrillo ( textura, shape, posX, posY + desplaY, posZ + desplaZ, textCostadoDer, textCostadoIzq, textFrente, textFrente );
 
 	delete textFrente;
 	delete textCostadoIzq;

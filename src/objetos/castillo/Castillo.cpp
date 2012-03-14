@@ -13,6 +13,7 @@ Castillo::Castillo( Fisica* fisica, float alturaPiso )
 {
 	cuerpos = new FPrismaRigido*[CteCastillo::CANT_LADRILLOS];
 	textura = new Textura24("texturas/piedra4.bmp");
+	this->inicializarLuz();
 
 	unsigned int num = 0;
 	this->dibujarTorre(num, fisica, alturaPiso);
@@ -31,8 +32,9 @@ Castillo::~Castillo()
 
 void Castillo::dibujar()
 {
-unsigned int numLadrillo = 0;
+	unsigned int numLadrillo = 0;
 
+	this->luz->setPropiedadesMaterial();
 	for ( ; numLadrillo < CteCastillo::CANT_LADRILLOS; numLadrillo ++ )
 	{
 			cuerpos [numLadrillo]->dibujar();
@@ -76,7 +78,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 			posY += deltaPos * reves;
 		}
@@ -87,7 +89,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 			posX -= deltaPos * reves;
 		}
@@ -98,7 +100,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 			posY -= deltaPos * reves;
 		}
@@ -109,7 +111,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_LADOS_TORRE; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 			posX += deltaPos * reves;
 		}
@@ -127,7 +129,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_ARRIBA_TORRE; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 		posY += deltaPos * reves * CADA_DOS_LADRILLOS ;
 	}
@@ -138,7 +140,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_ARRIBA_TORRE; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 		posX -= deltaPos * reves * CADA_DOS_LADRILLOS ;
 	}
@@ -149,7 +151,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_ARRIBA_TORRE; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 		posY -= deltaPos * reves * CADA_DOS_LADRILLOS ;
 	}
@@ -160,7 +162,7 @@ void Castillo::dibujarTorre( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::CANT_LADRILLOS_ARRIBA_TORRE; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z + alturaPiso, desplazY );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_TORRE_Z, alturaPiso, desplazY );
 
 		posX += deltaPos * reves * CADA_DOS_LADRILLOS ;
 	}
@@ -218,28 +220,28 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < cantLadrillosAntesPuerta; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 			posY += deltaPos * reves;
 		}
 
 		posY = - ( inicioX1 + finX1 ) / 2.0f /*para sacar la posicion media*/* reves;
 
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX1,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		//puerta
 
 		posY = ( inicioX2 + finX2 ) / 2.0f /*para sacar la posicion media*/* reves;
 
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX2,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		posY = (-posInicialY + deltaPos * (cantLadrillosAntesPuerta + CteCastillo::ANCHO_PUERTA + 2 /*desperdicio, 1 por el lado derecho de la puerta otro 1 por el izquierdo*/ )) * reves;
 
 		for ( unsigned int lado = 0; lado < ( CteCastillo::ANCHO_CASTILLO - CteCastillo::ANCHO_PUERTA) / 2 - 1 /*ult ladrillo long variable*/; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posY += deltaPos * reves;
 		}
@@ -250,7 +252,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posX -= deltaPos * reves;
 		}
@@ -261,7 +263,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posY -= deltaPos * reves;
 		}
@@ -272,7 +274,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posX += deltaPos * reves;
 		}
@@ -289,7 +291,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posY += deltaPos * reves;
 		}
@@ -300,7 +302,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posX -= deltaPos * reves;
 		}
@@ -311,7 +313,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posY -= deltaPos * reves;
 		}
@@ -322,7 +324,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 		for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO; lado++ )
 		{
 			cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-					posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+					posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 			posX += deltaPos * reves;
 		}
@@ -341,7 +343,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO/2; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		posY += deltaPos * reves * CADA_DOS_LADRILLOS;
 	}
@@ -352,7 +354,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO/2; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		posX -= deltaPos * reves * CADA_DOS_LADRILLOS;
 	}
@@ -363,7 +365,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::ANCHO_CASTILLO/2; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedFrente( textura, shapeX,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		posY -= deltaPos * reves * CADA_DOS_LADRILLOS;
 	}
@@ -374,7 +376,7 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 	for ( unsigned int lado = 0; lado < CteCastillo::PROFUNDIDAD_CASTILLO/2; lado++ )
 	{
 		cuerpos [indice + num++] = constructor->construirLadrilloParedCostado( textura, shapeY,
-				posX, posY, altura * deltaZ + FACT_CORRECCION_Z + alturaPiso );
+				posX, posY, altura * deltaZ + FACT_CORRECCION_Z, alturaPiso );
 
 		posX += deltaPos * reves * CADA_DOS_LADRILLOS;
 	}
@@ -386,8 +388,20 @@ void Castillo::dibujarMuros( unsigned int &indice, Fisica *fisica, float alturaP
 	fisica->addCollisionShape( shapeX );
 	fisica->addCollisionShape( shapeY );
 	fisica->addCollisionShape( shapePuerta );
+	fisica->addCollisionShape( shapeX1 );
+	fisica->addCollisionShape( shapeX2 );
 
 	delete constructor;
 }
 
 #undef FACT_CORRECCION_TORRE_Z
+
+void Castillo::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+
+void Castillo::eliminarLuz()
+{
+	delete luz;
+}

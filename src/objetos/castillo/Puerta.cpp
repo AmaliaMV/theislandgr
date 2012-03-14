@@ -36,15 +36,15 @@ void Puerta::displayList() const
 		this->lado->dibujar();
 		glPushMatrix();
 			glTranslatef( 0.0, 0.0, this->lado->getAltura()/2);
+			glNormal3f(0.0, 0.0, 1.0);
 			this->cara->dibujar();
 		glPopMatrix();
 		glPushMatrix();
 			glTranslatef( 0.0, 0.0, -this->lado->getAltura()/2);
+			glNormal3f(0.0, 0.0, -1.0);
 			this->cara->dibujar();
 		glPopMatrix();
 	glPopMatrix();
-
-
 }
 
 void Puerta::dibujar() const
