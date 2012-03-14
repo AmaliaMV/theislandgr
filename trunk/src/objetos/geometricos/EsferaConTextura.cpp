@@ -102,5 +102,4 @@ void EsferaConTextura::generarNormales()
 			normales[ posPto++ ] = Matematica::cosHex ( fi );
 		}
 	}
-
 }
