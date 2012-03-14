@@ -7,11 +7,10 @@
 
 #include "BuildBomba.h"
 
-BuildBomba::BuildBomba( const string nombreTextBomba, Fisica* fisica, const float largoCanon, const float alturaCanon  )
+BuildBomba::BuildBomba( Fisica* fisica, const float largoCanon, const float alturaCanon  )
 {
 	this->largoCanon = largoCanon;
 	this->alturaCanon = alturaCanon;
-	this->textura = new Textura24 ( nombreTextBomba );
 	this->shapeBomba = new btSphereShape(0.15);
 	this->fisica = fisica;
 
@@ -20,7 +19,6 @@ BuildBomba::BuildBomba( const string nombreTextBomba, Fisica* fisica, const floa
 
 BuildBomba::~BuildBomba()
 {
-	delete textura;
 }
 
 Bomba* BuildBomba::construirBomba( const float angVCanon, const float angHCanon, const float angBarco, const float radio ) const
@@ -36,7 +34,7 @@ Bomba* BuildBomba::construirBomba( const float angVCanon, const float angHCanon,
 
 	z = alturaCanon + largoCanon * Matematica::sinHex ( 180-angVCanon )*0.45/*fact de correccion por el escalado del barco*/;
 
-	bomba = new Bomba( textura, shapeBomba, fx, fy, z, angHCanon, 180-angVCanon, angBarco, radio );
+	bomba = new Bomba( shapeBomba, fx, fy, z, angHCanon, 180-angVCanon, angBarco, radio );
 	bomba->agregarseAlMundo( fisica->getMundoFisico() );
 
 	return bomba;

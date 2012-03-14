@@ -8,18 +8,22 @@
 #ifndef BOMBA_H_
 #define BOMBA_H_
 
-#include "../geometricos/EsferaConTextura.h"
-
+#include "../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../fisica/FEsferaRigida.h"
 
-class Bomba: public EsferaConTextura, public FEsferaRigida {
+class Bomba: public FEsferaRigida {
 public:
-	Bomba( Textura* textura, btSphereShape* shape, const float posX, const float posY, const float posZ , const float angHCanon, const float angVCanon, const float angBarco, const float radioDistancia );
+	Bomba( btSphereShape* shape, const float posX, const float posY, const float posZ , const float angHCanon, const float angVCanon, const float angBarco, const float radioDistancia );
 	void dibujar() const;
 	virtual ~Bomba();
 
 private:
 	static const float MASA_BOMBA;
+	float RADIO;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* BOMBA_H_ */

@@ -7,10 +7,10 @@
 
 #include "AdminBombas.h"
 
-AdminBombas::AdminBombas( const string nombreTextBomba, Fisica* fisica, const float largoCanon, const float alturaCanon )
+AdminBombas::AdminBombas( Fisica* fisica, const float largoCanon, const float alturaCanon )
 {
 	bombas = new list<Bomba*>;
-	constructor = new BuildBomba( nombreTextBomba, fisica, largoCanon, alturaCanon );
+	constructor = new BuildBomba( fisica, largoCanon, alturaCanon );
 }
 
 AdminBombas::~AdminBombas()
