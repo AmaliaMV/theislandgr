@@ -7,7 +7,7 @@
 
 #include "BordePisoMirador.h"
 
-BordePisoMirador::BordePisoMirador( string nombreArchivo, float radio, float altura )
+BordePisoMirador::BordePisoMirador( const string nombreArchivo, const float radio, const float altura )
 	: ODTextura ( new Textura24 ( nombreArchivo ) )
 {
 	this->RADIO = radio;

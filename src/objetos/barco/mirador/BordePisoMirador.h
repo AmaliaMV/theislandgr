@@ -14,15 +14,14 @@
 
 class BordePisoMirador: public ODTextura {
 public:
-	BordePisoMirador( string nombreArchivo, float radio, float altura );
+	BordePisoMirador( const string nombreArchivo, const float radio, const float altura );
 	virtual ~BordePisoMirador();
 
-protected:
+private:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
 
-private:
 	float RADIO;
 	float ALTURA;
 
