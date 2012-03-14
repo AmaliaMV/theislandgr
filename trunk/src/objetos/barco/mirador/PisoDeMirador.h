@@ -11,15 +11,19 @@
 #include "BordePisoMirador.h"
 
 #include "../../geometricos/CirculoConTextura.h"
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
 
 class PisoDeMirador: public ObjetoDibujable {
 public:
-	PisoDeMirador(string nombreTexturaBorde, string nombreTexturaPiso, float radio);
+	PisoDeMirador(const string nombreTexturaBorde, const string nombreTexturaPiso, const float radio);
 	virtual ~PisoDeMirador();
 
 private:
 	void displayList() const;
 
+	/*para el dibujo*/
+	void inicializarObjetos(const string nombreTexturaBorde, const string nombreTexturaPiso, const float radio);
+	void eliminarObjetos();
 	float RADIO;
 	float ESPESOR;
 
@@ -27,6 +31,11 @@ private:
 	BordePisoMirador *borde;
 
 	static const unsigned int PASO = 30;
+
+	/*para la iluminacion*/
+	IluminacionMaterial* luz;
+	void inicializarLuces();
+	void eliminarLuces();
 };
 
 #endif /* PISODEMIRADOR_H_ */
