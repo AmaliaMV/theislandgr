@@ -11,6 +11,7 @@
 #include "../../ODTextura.h"
 #include "../DecoradorBarco.h"
 #include "../../../grafica/textura/Textura24.h"
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../../matematica/curva/CalculadoraBezier.h"
 #include "../../../matematica/Matematica.h"
 #include "../../../archivos/adminArchPtosCrtl/ArchivoPtosControl.h"
@@ -22,12 +23,13 @@ public:
 	virtual ~Baupres();
 
 protected:
-	void generarCoordPtos();
-	void generarIndice();
-	void generarCoodText();
 	void dibujar();
 
 private:
+	void generarCoordPtos();
+	void generarIndice();
+	void generarCoodText();
+	void generarNormales();
 
 	PuntosControl *ptosCtrl;
 
@@ -41,6 +43,10 @@ private:
 	static const unsigned int PASO_BAR = 15;
 	static const unsigned int FI_MAX = 360;
 	static const unsigned int FI_MIN = 0;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* BAUPRES_H_ */

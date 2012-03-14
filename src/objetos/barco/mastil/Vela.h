@@ -13,6 +13,8 @@
 #include "../../ODTextura.h"
 #include "../../geometricos/CilindroConTextura.h"
 
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
+
 #include "TelaVela.h"
 
 class Vela: public ObjetoDibujable, public DecoradorBarco {
@@ -33,6 +35,10 @@ private:
 
 	float LARGO;
 	float ALTO;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* VELA_H_ */

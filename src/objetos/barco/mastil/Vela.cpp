@@ -18,6 +18,8 @@ Vela::Vela( string nombreTextVela, float largo, float alto, float factCurvatura,
 	this->ALTO = alto;
 	this->LARGO = largo;
 
+	this->inicializarLuz();
+
 	this->compilarDisplayList();
 }
 
@@ -34,6 +36,7 @@ void Vela::dibujar()
 
 void Vela::displayList() const
 {
+	this->luz->setPropiedadesMaterial();
 	glPushMatrix();
 		glTranslatef( 0.02, 0.0, 0.0 );
 		this->tela->dibujar();
@@ -49,4 +52,13 @@ void Vela::displayList() const
 		glRotatef( 90.0, 1.0, 0.0, 0.0 );
 		this->palito->dibujar();
 	glPopMatrix();
+}
+
+void Vela::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+void Vela::eliminarLuz()
+{
+	delete this->luz;
 }
