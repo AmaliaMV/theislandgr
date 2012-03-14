@@ -8,6 +8,7 @@
 #ifndef CASTILLO_H_
 #define CASTILLO_H_
 
+#include "../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../fisica/FPrismaRigido.h"
 
 #include "BuildLadrillo.h"
@@ -26,6 +27,10 @@ private:
 
 	FPrismaRigido** cuerpos;
 	Textura24* textura;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* CASTILLO_H_ */
