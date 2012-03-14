@@ -13,6 +13,7 @@
 #include "../../ODTextura.h"
 
 #include "../../../grafica/textura/Textura24.h"
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
 
 class Palo: public ODTextura, public DecoradorBarco {
 public:
@@ -22,17 +23,22 @@ public:
 
 protected:
 	void dibujar();
+
+private:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void generarNormales();
 
-private:
 	float ALTURA;
 	float RADIO_SUPERIOR;
 	float RADIO_INFERIOR;
 
 	static const unsigned int PASO = 30;
 
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* PALO_H_ */

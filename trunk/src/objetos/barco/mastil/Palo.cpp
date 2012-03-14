@@ -16,10 +16,14 @@ Palo::Palo( string nombreTextura, float altura, float radioSuperior, float radio
 	this->RADIO_SUPERIOR = radioSuperior;
 	this->RADIO_INFERIOR = radioInferior;
 
-	this->init( PASO * 2, PASO * 2 + 2, GL_TRIANGLE_STRIP );
+	this->inicializarLuz();
+	this->init( PASO * 2, PASO * 2 + 2, GL_TRIANGLE_STRIP, true );
 }
 
-Palo::~Palo() { }
+Palo::~Palo()
+{
+	this->eliminarLuz();
+}
 
 void Palo::generarCoordPtos()
 {
@@ -66,7 +70,35 @@ void Palo::generarCoodText()
 		this->text[indice++] = 1.0 ;
 	}
 }
+
+void Palo::generarNormales()
+{
+	unsigned int indice = 0;
+	float fi, pasoFi;
+
+	pasoFi = GIRO_COMPLETO / PASO;
+
+	for ( fi = 0; fi < GIRO_COMPLETO; fi += pasoFi )
+	{
+		this->normales[indice++] = RADIO_SUPERIOR * Matematica::cosHex( fi );
+		this->normales[indice++] = RADIO_SUPERIOR * Matematica::sinHex( fi );
+		this->normales[indice++] = 0.0;
+		this->normales[indice++] = RADIO_INFERIOR * Matematica::cosHex( fi );
+		this->normales[indice++] = RADIO_INFERIOR * Matematica::sinHex( fi );
+		this->normales[indice++] = 0.0;
+	}
+}
 void Palo::dibujar()
 {
+	this->luz->setPropiedadesMaterial();
 	ODTextura::dibujar();
+}
+
+void Palo::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+void Palo::eliminarLuz()
+{
+	delete luz;
 }
