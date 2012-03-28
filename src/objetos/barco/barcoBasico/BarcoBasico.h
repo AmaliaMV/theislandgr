@@ -27,6 +27,10 @@ protected:
 private:
 	CascoDeBarco *casco;
 	PisoDeBarco *piso;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* BARCOBASICO_H_ */

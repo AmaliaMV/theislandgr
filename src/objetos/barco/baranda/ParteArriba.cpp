@@ -20,7 +20,7 @@ ParteArriba::ParteArriba( string nombreTextura, float altura, float longitud, fl
 	cantPtoH = CANT_PTOS_LONG + 1;
 	cantPtoV = 2;
 
-	this->init( cantPtoH*cantPtoV, cantPtoH*cantPtoV, GL_TRIANGLE_STRIP);
+	this->init( cantPtoH*cantPtoV, cantPtoH*cantPtoV, GL_TRIANGLE_STRIP, true);
 }
 
 ParteArriba::~ParteArriba() {}
@@ -71,5 +71,25 @@ void ParteArriba::generarCoodText()
 
 		text[pos++] = inc / LONGITUD;
 		text[pos++] = Matematica::modulo( Matematica::sinHex( incAng ) );
+	}
+}
+
+void ParteArriba::generarNormales()
+{
+	float incAng;
+	const float pasoAng = ( TITA_MAX - TITA_MIN ) / CANT_PTOS_LONG;
+	unsigned int pos = 0;
+
+	incAng = this->TITA_MIN;
+
+	for ( unsigned int i = 0; i <= CANT_PTOS_LONG; i++, incAng+=pasoAng )
+	{
+		normales[pos++] = Matematica::cosHex( incAng );
+		normales[pos++] = Matematica::sinHex( incAng );
+		normales[pos++] = 0.0;
+
+		normales[pos++] = Matematica::cosHex( incAng );
+		normales[pos++] = Matematica::sinHex( incAng );
+		normales[pos++] = Matematica::modulo( Matematica::sinHex( incAng ) );
 	}
 }

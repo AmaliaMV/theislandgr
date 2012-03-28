@@ -18,6 +18,7 @@ BarandaEntera::BarandaEntera( string nombreTextura, float altura, float longitud
 	this->abajo = new ParteAbajo ( nombreTextura, ALTURA / 2, LONGITUD, INICIO, FIN);
 	this->arriba = new ParteArriba ( nombreTextura, ALTURA / 2, LONGITUD, INICIO, FIN );
 
+	this->inicializarLuz();
 	this->compilarDisplayList();
 }
 
@@ -25,10 +26,12 @@ BarandaEntera::~BarandaEntera()
 {
 	delete this->arriba;
 	delete this->abajo;
+	this->eliminarLuz();
 }
 
 void BarandaEntera::displayList() const
 {
+	this->luz->setPropiedadesMaterial();
 	glPushMatrix();
 		this->abajo->dibujar();
 		glPushMatrix();
@@ -41,4 +44,14 @@ void BarandaEntera::displayList() const
 void BarandaEntera::dibujar()
 {
 	ObjetoDibujable::dibujar();
+}
+
+void BarandaEntera::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+
+void BarandaEntera::eliminarLuz()
+{
+	delete luz;
 }

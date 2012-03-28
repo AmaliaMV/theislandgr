@@ -14,6 +14,7 @@ BarcoBasico::BarcoBasico( EstrategiaTransformacion *transformacion, string textu
 	casco = new CascoDeBarco ( texturaCasco );
 	piso = new PisoDeBarco ( texturaPiso );
 
+	this->inicializarLuz();
 	this->compilarDisplayList();
 }
 
@@ -21,6 +22,7 @@ BarcoBasico::~BarcoBasico()
 {
 	delete casco;
 	delete piso;
+	this->eliminarLuz();
 }
 
 void BarcoBasico::displayList() const
@@ -31,6 +33,16 @@ void BarcoBasico::displayList() const
 
 void BarcoBasico::dibujar()
 {
+	this->luz->setPropiedadesMaterial();
 	ObjetoDibujable::dibujar();
 }
 
+void BarcoBasico::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+
+void BarcoBasico::eliminarLuz()
+{
+	delete this->luz;
+}
