@@ -19,7 +19,7 @@ CascoDeBarco::CascoDeBarco( string nombreTextura ):ODTextura( new Textura24( nom
 
 	this->init( cantPtosX * cantPtosY,
 			(cantPtosY-1) * cantPtosX * 2,
-			GL_TRIANGLE_STRIP );
+			GL_TRIANGLE_STRIP, true );
 }
 
 /* es un elipsoide */
@@ -69,4 +69,22 @@ void CascoDeBarco::generarCoodText()
 	}
 }
 
+void CascoDeBarco::generarNormales()
+{
+	float tita, fi, pasoFi, pasoTita;
+	unsigned int pto = 0;
+
+	pasoFi = ( CteBarco::FI_MAX - CteBarco::FI_MIN ) / cantPasosFi;
+	pasoTita = ( CteBarco::TITA_MAX - CteBarco::TITA_MIN )/ cantPasosTita;
+
+	for ( fi = CteBarco::FI_MIN; fi <= CteBarco::FI_MAX; fi+= pasoFi )
+	{
+		for ( tita = CteBarco::TITA_MIN; tita <= CteBarco::TITA_MAX; tita += pasoTita, pto += CteObjeto::CANT_COORD_PTO )
+		{
+			normales[pto    ] = Matematica::cosHex( fi ) * Matematica::cosHex( tita );
+			normales[pto + 1] = Matematica::cosHex( fi ) * Matematica::sinHex( tita );
+			normales[pto + 2] = Matematica::sinHex( fi );
+		}
+	}
+}
 CascoDeBarco::~CascoDeBarco() { }

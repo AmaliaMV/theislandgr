@@ -8,6 +8,7 @@
 #ifndef BARANDAENTERA_H_
 #define BARANDAENTERA_H_
 
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../ObjetoDibujable.h"
 
 #include "../DecoradorBarco.h"
@@ -36,6 +37,10 @@ private:
 
 	static const int INICIO = -175;
 	static const int FIN = 175;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* BARANDAENTERA_H_ */

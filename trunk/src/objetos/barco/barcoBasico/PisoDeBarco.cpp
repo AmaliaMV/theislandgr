@@ -9,13 +9,25 @@
 
 const unsigned int PisoDeBarco::cantPasosTita = 20;
 
-PisoDeBarco::PisoDeBarco(string nombreTextura)
+PisoDeBarco::PisoDeBarco(const string nombreTextura)
 	:ODTextura( new Textura24( nombreTextura ) )
 {
+	this->inicializarLuces();
 	this->init( cantPasosTita + 2, cantPasosTita + 2, GL_TRIANGLE_FAN);
 }
 
-PisoDeBarco::~PisoDeBarco(){}
+PisoDeBarco::~PisoDeBarco()
+{
+	this->eliminarLuces();
+}
+
+void PisoDeBarco::displayList() const
+{
+	glNormal3f(0.0, 0.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
+	this->luz->setPropiedadesMaterial();
+	ODTextura::displayList();
+}
 
 void PisoDeBarco::generarCoordPtos()
 {
@@ -65,4 +77,15 @@ void PisoDeBarco::generarCoodText()
 		text [pto    ] =  CteBarco::RADIO_X / CteBarco::RADIO_Y * Matematica::cosHex( tita ) + centro;
 		text [pto + 1] =  Matematica::sinHex( tita ) + centro;
 	}
+}
+
+void PisoDeBarco::inicializarLuces()
+{
+	this->luz = new IluminacionMaterial(0.85, 0.56, 0.0);
+	this->luz->setBrillo(18);
+}
+
+void PisoDeBarco::eliminarLuces()
+{
+	delete this->luz;
 }

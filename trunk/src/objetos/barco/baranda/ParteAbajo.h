@@ -22,6 +22,7 @@ protected:
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void generarNormales();
 
 private:
 
