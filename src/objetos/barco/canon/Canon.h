@@ -13,6 +13,7 @@
 #include "../../../matematica/Matematica.h"
 #include "../../../matematica/curva/CalculadoraBezier.h"
 #include "../../../grafica/textura/Textura24.h"
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../../archivos/adminArchPtosCrtl/ArchivoPtosControl.h"
 
 class Canon: public ODTextura {
@@ -27,9 +28,11 @@ public:
 	virtual ~Canon();
 
 protected:
+	void displayList() const;
 	void generarCoordPtos();
 	void generarIndice();
 	void generarCoodText();
+	void generarNormales();
 
 private:
 
@@ -50,6 +53,11 @@ private:
 	static const float ANGV_CANON_MAX;
 	static const float ANGV_CANON_MIN;
 	static const float DELTA_ANG;
+
+	/*iluminacion*/
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* CANON_H_ */

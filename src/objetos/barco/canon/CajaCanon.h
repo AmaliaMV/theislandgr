@@ -13,6 +13,8 @@
 #include "../../geometricos/LadoPrismaConTextura.h"
 #include "../../geometricos/LadoCilindroConTextura.h"
 
+#include "../../../grafica/iluminacion/IluminacionMaterial.h"
+
 class CajaCanon: public ObjetoDibujable, public DecoradorBarco {
 public:
 	CajaCanon( string nombreTextura, float alto, float ancho, float largo,
@@ -27,6 +29,10 @@ private:
 
 	LadoPrismaConTextura *caja;
 	LadoCilindroConTextura *eje;
+
+	void inicializarLuz();
+	void eliminarLuz();
+	IluminacionMaterial* luz;
 };
 
 #endif /* CAJACANON_H_ */

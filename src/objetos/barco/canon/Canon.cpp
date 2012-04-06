@@ -29,13 +29,15 @@ Canon::Canon( string nombreText, string nombreArchPtos )
 	const unsigned int cantPtosV = bezierCubica->cantCurvas(ptosCtrl) * PASO_ROT_Z;
 	delete bezierCubica;
 
-	this->init(cantPtosH * cantPtosV, cantPtosH*(cantPtosV-1)*2, GL_TRIANGLE_STRIP);
+	this->inicializarLuz();
 
+	this->init(cantPtosH * cantPtosV, cantPtosH*(cantPtosV-1)*2, GL_TRIANGLE_STRIP, true);
 }
 
 Canon::~Canon()
 {
 	delete ptosCtrl;
+	this->eliminarLuz();
 }
 
 void Canon::incAngV()
@@ -149,11 +151,50 @@ void Canon::generarCoodText()
 
 			for (fi = FI_MIN; fi <= FI_MAX; fi+=PASO_ROT_FI )
 			{
-				text[pos++] = 1.0-(i*PASO_ROT_Z+(float)k)/PASO_ROT_Z/cantCurvas;
-				text[pos++] = 1.0-fi/FI_MAX;
+				text[pos++] = (1.0-(i*PASO_ROT_Z+(float)k)/PASO_ROT_Z/cantCurvas);
+				text[pos++] = (1.0-fi/FI_MAX)+0.5;
 			}
 		}
 	}
 
 	delete bezierCubica;
+}
+
+void Canon::generarNormales()
+{
+	CalculadoraBezier *bezierCubica = new CalculadoraBezier(GRADO_BEZIER);
+	float fi;
+	unsigned int pos=0;
+	const unsigned int cantCurvas = bezierCubica->cantCurvas(ptosCtrl);
+
+	for (unsigned int i = 0; i < cantCurvas; i++)
+	{
+		for (unsigned int k = 0; k < PASO_ROT_Z; k++)
+		{
+			for (fi = FI_MIN; fi <= FI_MAX; fi+=PASO_ROT_FI )
+			{
+				normales[pos++] = Matematica::cosHex(fi);
+				normales[pos++] = Matematica::sinHex(fi);
+				normales[pos++] = 0.0;
+			}
+		}
+	}
+	delete bezierCubica;
+}
+
+void Canon::displayList() const
+{
+	glColor3f(1.0, 1.0, 1.0);
+	this->luz->setPropiedadesMaterial();
+	ODTextura::displayList();
+}
+
+void Canon::inicializarLuz()
+{
+	this->luz = new IluminacionMaterial(1.0, 1.0, 1.0);
+}
+
+void Canon::eliminarLuz()
+{
+	delete this->luz;
 }
