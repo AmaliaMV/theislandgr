@@ -7,11 +7,13 @@
 
 #include "ParteAbajo.h"
 
-ParteAbajo::ParteAbajo( string nombreTextura, float altura, float longitud, float titaMin, float titaMax )
-	:ODTextura ( new Textura24(nombreTextura) )
+ParteAbajo::ParteAbajo( Textura *textura, float altura, float longitud, float titaMin, float titaMax, float distancia, int afuera )
+	:ODTextura ( textura, true )
 {
 	this->ALTURA = altura;
 	this->LONGITUD = longitud;
+	this->DISTANCIA = distancia;
+	this->AFUERA = afuera;
 
 	this->TITA_MIN = titaMin;
 	this->TITA_MAX = titaMax;
@@ -36,12 +38,12 @@ void ParteAbajo::generarCoordPtos()
 
 	for ( unsigned int i = 0; i <= CANT_PTOS_LONG; i++, tita+=pasoTita )
 	{
-		ptos[pos++] = CteBarco::RADIO_X * Matematica::cosHex( tita );
-		ptos[pos++] = CteBarco::RADIO_Y * Matematica::sinHex( tita );
+		ptos[pos++] = (CteBarco::RADIO_X - DISTANCIA) * Matematica::cosHex( tita );
+		ptos[pos++] = (CteBarco::RADIO_Y - DISTANCIA) * Matematica::sinHex( tita );
 		ptos[pos++] = -0.01;
 
-		ptos[pos++] = CteBarco::RADIO_X * Matematica::cosHex( tita );
-		ptos[pos++] = CteBarco::RADIO_Y * Matematica::sinHex( tita );
+		ptos[pos++] = (CteBarco::RADIO_X - DISTANCIA) * Matematica::cosHex( tita );
+		ptos[pos++] = (CteBarco::RADIO_Y - DISTANCIA) * Matematica::sinHex( tita );
 		ptos[pos++] = ALTURA;
 	}
 }
@@ -84,12 +86,12 @@ void ParteAbajo::generarNormales()
 
 	for ( unsigned int i = 0; i <= CANT_PTOS_LONG; i++, tita+=pasoTita )
 	{
-		normales[pos++] = Matematica::cosHex( tita );
-		normales[pos++] = Matematica::sinHex( tita );
+		normales[pos++] = AFUERA * Matematica::cosHex( tita );
+		normales[pos++] = AFUERA * Matematica::sinHex( tita );
 		normales[pos++] = 0.0;
 
-		normales[pos++] = Matematica::cosHex( tita );
-		normales[pos++] = Matematica::sinHex( tita );
+		normales[pos++] = AFUERA * Matematica::cosHex( tita );
+		normales[pos++] = AFUERA * Matematica::sinHex( tita );
 		normales[pos++] = 0.0;
 	}
 }
