@@ -9,13 +9,12 @@
 #define PARTEARRIBA_H_
 
 #include "../../ODTextura.h"
-#include "../../../grafica/textura/Textura24.h"
 
 #include "../ConstantesBarco.h"
 
 class ParteArriba: public ODTextura {
 public:
-	ParteArriba(  string nombreTextura, float altura, float longitud, float titaMin, float titaMax );
+	ParteArriba(  Textura* tetura, float altura, float longitud, float titaMin, float titaMax, float distancia=0.0, int afuera=1);
 	virtual ~ParteArriba();
 
 protected:
@@ -28,6 +27,8 @@ private:
 
 	float ALTURA;
 	float LONGITUD;
+	float DISTANCIA;
+	int AFUERA;
 
 	float TITA_MIN;
 	float TITA_MAX;

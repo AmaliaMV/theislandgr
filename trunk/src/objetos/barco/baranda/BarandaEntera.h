@@ -8,6 +8,7 @@
 #ifndef BARANDAENTERA_H_
 #define BARANDAENTERA_H_
 
+#include "../../../grafica/textura/Textura24.h"
 #include "../../../grafica/iluminacion/IluminacionMaterial.h"
 #include "../../ObjetoDibujable.h"
 
@@ -29,8 +30,13 @@ private:
 
 	void displayList() const;
 
+	Textura24* textura;
+
 	ParteArriba *arriba;
 	ParteAbajo *abajo;
+	ParteArriba *arribaAdentro; //solo para la iluminacion
+	ParteAbajo *abajoAdentro;
+
 
 	float ALTURA;
 	float LONGITUD;

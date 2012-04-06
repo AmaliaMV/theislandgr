@@ -12,11 +12,15 @@ BarandaEntera::BarandaEntera( string nombreTextura, float altura, float longitud
 	:ObjetoDibujable (),
 	 DecoradorBarco( estrategia, aDecorar )
 {
+	this->textura = new Textura24(nombreTextura);
+
 	this->ALTURA = altura;
 	this->LONGITUD = longitud;
 
-	this->abajo = new ParteAbajo ( nombreTextura, ALTURA / 2, LONGITUD, INICIO, FIN);
-	this->arriba = new ParteArriba ( nombreTextura, ALTURA / 2, LONGITUD, INICIO, FIN );
+	this->abajo = new ParteAbajo ( textura, ALTURA / 2, LONGITUD, INICIO, FIN );
+	this->arriba = new ParteArriba ( textura, ALTURA / 2, LONGITUD, INICIO, FIN );
+	this->abajoAdentro = new ParteAbajo ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.01, -1 );
+	this->arribaAdentro = new ParteArriba ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.01, -1 );
 
 	this->inicializarLuz();
 	this->compilarDisplayList();
@@ -26,6 +30,9 @@ BarandaEntera::~BarandaEntera()
 {
 	delete this->arriba;
 	delete this->abajo;
+	delete this->arribaAdentro;
+	delete this->abajoAdentro;
+	delete this->textura;
 	this->eliminarLuz();
 }
 
@@ -34,9 +41,11 @@ void BarandaEntera::displayList() const
 	this->luz->setPropiedadesMaterial();
 	glPushMatrix();
 		this->abajo->dibujar();
+		this->abajoAdentro->dibujar();
 		glPushMatrix();
 			glTranslatef( 0.0, 0.0, ALTURA / 2);
 			this->arriba->dibujar();
+			this->arribaAdentro->dibujar();
 		glPopMatrix();
 	glPopMatrix();
 }

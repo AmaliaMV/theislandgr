@@ -7,11 +7,13 @@
 
 #include "ParteArriba.h"
 
-ParteArriba::ParteArriba( string nombreTextura, float altura, float longitud, float titaMin, float titaMax )
-	:ODTextura ( new Textura24(nombreTextura) )
+ParteArriba::ParteArriba( Textura* textura, float altura, float longitud, float titaMin, float titaMax, float distancia, int afuera )
+	:ODTextura ( textura, true )
 {
 	this->ALTURA = altura;
 	this->LONGITUD = longitud;
+	this->DISTANCIA = distancia;
+	this->AFUERA = afuera;
 
 	this->TITA_MIN = titaMin;
 	this->TITA_MAX = titaMax;
@@ -35,12 +37,12 @@ void ParteArriba::generarCoordPtos()
 
 	for ( unsigned int i = 0; i <= CANT_PTOS_LONG; i++, incAng+=pasoAng )
 	{
-		ptos[pos++] = CteBarco::RADIO_X * Matematica::cosHex( incAng );
-		ptos[pos++] = CteBarco::RADIO_Y * Matematica::sinHex( incAng );
+		ptos[pos++] = (CteBarco::RADIO_X - DISTANCIA) * Matematica::cosHex( incAng );
+		ptos[pos++] = (CteBarco::RADIO_Y - DISTANCIA) * Matematica::sinHex( incAng );
 		ptos[pos++] = 0;
 
-		ptos[pos++] = CteBarco::RADIO_X * Matematica::cosHex( incAng );
-		ptos[pos++] = CteBarco::RADIO_Y * Matematica::sinHex( incAng );
+		ptos[pos++] = (CteBarco::RADIO_X - DISTANCIA) * Matematica::cosHex( incAng );
+		ptos[pos++] = (CteBarco::RADIO_Y - DISTANCIA) * Matematica::sinHex( incAng );
 		ptos[pos++] = ALTURA * Matematica::modulo( Matematica::sinHex( incAng ) );
 	}
 }
@@ -84,12 +86,12 @@ void ParteArriba::generarNormales()
 
 	for ( unsigned int i = 0; i <= CANT_PTOS_LONG; i++, incAng+=pasoAng )
 	{
-		normales[pos++] = Matematica::cosHex( incAng );
-		normales[pos++] = Matematica::sinHex( incAng );
+		normales[pos++] = AFUERA * Matematica::cosHex( incAng );
+		normales[pos++] = AFUERA * Matematica::sinHex( incAng );
 		normales[pos++] = 0.0;
 
-		normales[pos++] = Matematica::cosHex( incAng );
-		normales[pos++] = Matematica::sinHex( incAng );
-		normales[pos++] = Matematica::modulo( Matematica::sinHex( incAng ) );
+		normales[pos++] = AFUERA * Matematica::cosHex( incAng );
+		normales[pos++] = AFUERA * Matematica::sinHex( incAng );
+		normales[pos++] = 0.0;
 	}
 }
