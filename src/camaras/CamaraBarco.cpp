@@ -10,7 +10,7 @@
 CamaraBarco::CamaraBarco( const TBarco *tbarco ): Camara(180.0, 45.0, 10.0)
 {
 	this->setAngVMax( CteCamara::ANGULO_MAX_VERTICAL );
-	this->setDistMax( CteMundo::RADIO_NAVEGACION - 5.0 );
+	this->setDistMax( CteMundo::RADIO_NAVEGACION - 9.0 );
 	this->posBarco = tbarco;
 }
 

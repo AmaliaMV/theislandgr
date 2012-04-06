@@ -13,6 +13,8 @@ class CteObjeto
 public:
 	static const unsigned int CANT_COORD_PTO = 3;
 	static const unsigned int CANT_COORD_TEXTURA = 2;
-
+	static const unsigned int CANT_COORD_NORMAL = 3;
+private:
+	CteObjeto(){};
 };
 #endif /* CONSTANTESOBJETO_H_ */
