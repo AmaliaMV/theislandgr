@@ -13,7 +13,7 @@ Mundo::Mundo(string nombreArchivoNivel)
 	AdministradorArchivo *admin = new AdministradorArchivo ( nombreArchivoNivel );
 
 	agua = new Agua( admin->getNombreArchivo( AGUA ), CteMundo::RADIO_AGUA);
-	cielo = new Cielo ( admin->getNombreArchivo( CIELO), CteMundo::RADIO_MUNDO);
+	cielo = new Cielo ( admin->getNombreArchivo( CIELO ), CteMundo::RADIO_MUNDO);
 	isla = new Isla ( admin );
 	palmera = new Palmera ( admin->getNombreArchivo( PALMERA ) );
 	CteMundo::ALTURA_ISLA = isla->getAltura()*ESCALADOZ + TRASLASIONZ;
@@ -30,7 +30,7 @@ Mundo::Mundo(string nombreArchivoNivel)
 
 	pausa = false;
 
-	adminBombas = new AdminBombas( "texturas/bomba.bmp", fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25 );
+	adminBombas = new AdminBombas( fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25 );
 }
 
 void Mundo::actualizar()
@@ -41,7 +41,7 @@ void Mundo::actualizar()
 		this->incAnguloBarco();
 		this->adminBombas->acutalizarBombas();
 //		fisica->getMundoFisico()->stepSimulation(1/300.f,10);
-		fisica->getMundoFisico()->stepSimulation(1/30.f,10);
+		fisica->getMundoFisico()->stepSimulation(1/20.f,10);
 	}
 }
 
@@ -92,7 +92,7 @@ void Mundo::reiniciarFisica()
 		fisica->addCollisionShape( shapePiso );
 		piso->agregarseAlMundo( fisica->getMundoFisico() );
 		castillo = new Castillo( fisica, CteMundo::ALTURA_ISLA );
-		adminBombas = new AdminBombas( "texturas/bomba.bmp", fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25 );
+		adminBombas = new AdminBombas( fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25 );
 
 	}catch ( EArchivoInexistente *e ){
 		cout<< e->what() <<endl;
