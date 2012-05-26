@@ -48,24 +48,24 @@ void ODTextura::init( unsigned int cantPtos, unsigned int tamIndice, GLenum mode
 				this->compilarNormales();
 			else
 				this->noCompilarNormales();
-			//func();
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	delete [] this->indice;
-	delete [] this->ptos;
 	delete [] this->text;
+	delete [] this->ptos;
 }
 
 void ODTextura::compilarNormales()
 {
-	this->normales = new float[ this->cantPtos * CteObjeto::CANT_COORD_NORMAL];
+	this->normales = new float[this->cantPtos * CteObjeto::CANT_COORD_NORMAL];
 	this->generarNormales();
 	glEnableClientState(GL_NORMAL_ARRAY);
 		glNormalPointer(GL_FLOAT, 0, this->normales);
 		this->compilarDisplayList();
 	glDisableClientState(GL_NORMAL_ARRAY);
+
 	delete [] this->normales;
 }
 

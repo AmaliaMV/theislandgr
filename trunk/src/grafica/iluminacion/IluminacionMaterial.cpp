@@ -12,11 +12,11 @@ IluminacionMaterial::IluminacionMaterial(const float diffuseColorRed, const floa
 	this->ambientColor = new float[3];
 	this->diffuseColor = new float[3];
 	this->specularColor = new float[3];
-	this->shininess = 0;
+	this->shininess = 128;
 
 	this->setLuzDifusaColor(diffuseColorRed, diffuseColorGreen, diffuseColorBlue);
 	this->setLuzEspecualarColor(1.0, 1.0, 1.0);
-	this->setLuzAmbienteColor(0.1, 0.1, 0.1);
+	this->setLuzAmbienteColor(0.3, 0.3, 0.3);
 }
 
 void IluminacionMaterial::setPropiedadesMaterial()

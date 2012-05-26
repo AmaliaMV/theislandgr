@@ -46,6 +46,13 @@ AdminComandos *adminComandos;
 IMouse *mouse;
 static const string archivoDeConfiguracion = "archivosNivel1";
 
+// Variables asociadas a única fuente de luz de la escena
+float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+float light_position[4] = {150.0f, 0.0, 150.0, 0.0};
+//float light_position[4] = {150.0f, 0.0, 150.0, 1.0};
+//float light_position[4] = {30.0f, 0.0, 30.0, 1.0};
+float light_ambient[4] = {0.3f, 0.3f, 0.3f, 1.0f};//{0.05f, 0.05f, 0.05f, 1.0f};
+
 void inicializar()
 {
 	try
@@ -127,13 +134,19 @@ void keyboard (unsigned char key, int x, int y)
   	  delete adminComandos;
   	  delete mundo;
       exit(0);
-	}
+	} else if ( key == 'z')
+		glEnable(GL_NORMALIZE);
+	else if ( key == 'x')
+		glDisable(GL_NORMALIZE);
 
 	adminComandos->ejecutarComando( key );
 }
 
 void dibujar3D()
 {
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	mundo->dibujar();
 }
 

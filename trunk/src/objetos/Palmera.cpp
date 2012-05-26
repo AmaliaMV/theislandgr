@@ -23,6 +23,7 @@ Palmera::~Palmera()
 
 void Palmera::displayList() const
 {
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 		glTranslatef(0.0, 0.0, ALTURA_PALMERA / 2.0);
 		glRotatef(90.0, 0.0, 1.0, 0.0);
@@ -35,7 +36,7 @@ void Palmera::displayList() const
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		this->imagenPalmera->dibujar();
 	glPopMatrix();
-
+	glEnable(GL_LIGHTING);
 }
 
 //void Palmera::dibujar()
