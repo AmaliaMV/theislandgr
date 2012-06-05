@@ -10,16 +10,18 @@
 
 #include "Comando.h"
 #include "../camaras/AdminCamaras.h"
+#include "../mouse/Mouse.h"
 
 class VerCamaraCastillo: public Comando {
 public:
-	VerCamaraCastillo(AdminCamaras* admin);
+	VerCamaraCastillo(AdminCamaras* admin, Mouse* mouse);
 	void ejecutar();
 	const string getDescripcion() const;
 	virtual ~VerCamaraCastillo();
 
 private:
 	AdminCamaras* admin;
+	Mouse* mouse;
 };
 
 #endif /* VERCAMARACASTILLO_H_ */

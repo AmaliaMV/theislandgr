@@ -1,4 +1,5 @@
 #include <iostream>
+#include <GL/glut.h>
 #include "funcionesAux.h"
 
 // Variables de control
@@ -55,7 +56,7 @@ void Set3DEnv()
 	glViewport (0, 0, (GLsizei) W_WIDTH, (GLsizei) W_HEIGHT);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
-    gluPerspective(60.0, (GLfloat) W_WIDTH/(GLfloat) W_HEIGHT, 0.10, 150.0);
+    gluPerspective(60.0, (GLfloat) W_WIDTH/(GLfloat) W_HEIGHT, 0.10, 300.0);
 }
 
 void init(void)
@@ -65,16 +66,14 @@ void init(void)
 	glClearColor (0.02, 0.02, 0.04, 0.0);
     glShadeModel (GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_NORMALIZE); // para q normalice OpenGL las normales
- //   glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
 
 //    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient);
 
-//    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
-//    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-//    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 	// Generacion de las Display Lists
 	glNewList(DL_AXIS, GL_COMPILE);
@@ -84,10 +83,12 @@ void init(void)
 		DrawXYGrid();
 	glEndList();
 
-    //	glEnable(GL_FOG);
+
+	//con neblina
+//  glEnable(GL_FOG);
 //	float FogCol[3]={0.8f,0.8f,0.8f};
 //	glFogfv(GL_FOG_COLOR,FogCol);
-//	 glFogf(GL_FOG_DENSITY, 0.015);
+//	glFogf(GL_FOG_DENSITY, 0.015);
 //	glFogi(GL_FOG_MODE, GL_EXP);
 
 	inicializar();
@@ -95,9 +96,6 @@ void init(void)
 
 void actualizarVista()
 {
-	//seteo la camara actual
-	((Mouse*)mouse)->setCamara(adminCamaras->getCamaraActual()); // esto no deberia hacerse una vez por cambio de camara?
-
 	adminCamaras->actualizarVista();
 }
 
@@ -108,11 +106,8 @@ void display(void)
 	Set3DEnv();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	actualizarVista(); //seteo el eye y at de la camara actual
-//	glPushMatrix();
-//	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-//	glPopMatrix();
-	// Panel 3D
+
+	actualizarVista();
 	dibujar3D();
 
 	// Paneles 2D
@@ -129,7 +124,7 @@ int main(int argc, char** argv)
    glutInitWindowPosition (0, 0);
 
    glutCreateWindow (argv[0]);
-  // glutFullScreen();
+   glutFullScreen();
    init ();
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
