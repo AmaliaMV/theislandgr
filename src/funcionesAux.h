@@ -43,15 +43,13 @@ Mundo *mundo;
 MCmdJuegos *mCmd;
 AdminCamaras *adminCamaras;
 AdminComandos *adminComandos;
-IMouse *mouse;
+Mouse *mouse;
 static const string archivoDeConfiguracion = "archivosNivel1";
 
 // Variables asociadas a única fuente de luz de la escena
 float light_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 float light_position[4] = {150.0f, 0.0, 150.0, 0.0};
-//float light_position[4] = {150.0f, 0.0, 150.0, 1.0};
-//float light_position[4] = {30.0f, 0.0, 30.0, 1.0};
-float light_ambient[4] = {0.3f, 0.3f, 0.3f, 1.0f};//{0.05f, 0.05f, 0.05f, 1.0f};
+float light_ambient[4] = {0.3f, 0.3f, 0.3f, 1.0f};
 
 void inicializar()
 {
@@ -71,10 +69,10 @@ void inicializar()
 
 		adminComandos = new AdminComandos();
 
-		adminComandos->agregarComando('1', new VerCamaraMundo(adminCamaras));
-		adminComandos->agregarComando('2', new VerCamaraBarco(adminCamaras));
-		adminComandos->agregarComando('3', new VerCamaraCanon(adminCamaras));
-		adminComandos->agregarComando('4', new VerCamaraCastillo(adminCamaras));
+		adminComandos->agregarComando('1', new VerCamaraMundo(adminCamaras, mouse));
+		adminComandos->agregarComando('2', new VerCamaraBarco(adminCamaras, mouse));
+		adminComandos->agregarComando('3', new VerCamaraCanon(adminCamaras, mouse));
+		adminComandos->agregarComando('4', new VerCamaraCastillo(adminCamaras, mouse));
 		adminComandos->agregarComando('a', new AlejarCamara(adminCamaras));
 		adminComandos->agregarComando('s', new AcercarCamara(adminCamaras));
 		adminComandos->agregarComando('p', new Pausar(mundo));
@@ -86,7 +84,9 @@ void inicializar()
 		adminComandos->agregarComando('j', new LanzarBomba(mundo));
 		adminComandos->agregarComando('m', new VerMenuComandos(mCmd, mundo));
 
-		mCmd->setDescripcionComando( adminComandos->getDescripcion());
+		adminComandos->ejecutarComando('1');
+
+		mCmd->setDescripcionComando(adminComandos->getDescripcion());
 	}
 
 	catch ( EArchivoInexistente *e )
@@ -106,7 +106,7 @@ void inicializar()
 	}
 }
 
-void reshape (int w, int h)
+void reshape ( int w, int h )
 {
 	TamanoPantalla::setAlto(h);
 	TamanoPantalla::setAncho(w);
@@ -118,7 +118,7 @@ void alMoverPresionandoBoton ( int xMouse, int yMouse )
 }
 void alMover ( int xMouse, int yMouse )
 {
-	mouse->alMover( xMouse, yMouse);
+	mouse->alMover( xMouse, yMouse );
 }
 void alPresionarBoton ( int button, int state, int xMouse, int yMouse )
 {
@@ -147,6 +147,7 @@ void dibujar3D()
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
 	mundo->dibujar();
 }
 

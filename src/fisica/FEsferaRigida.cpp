@@ -9,7 +9,7 @@
 
 const float FEsferaRigida::GRAVEDAD = 10.0;
 const float FEsferaRigida::DELTA_TIEMPO = 0.005;
-const float FEsferaRigida::MODULO_VEL0 = 50.0;
+const float FEsferaRigida::MODULO_VEL0 = 70.0;
 
 FEsferaRigida::FEsferaRigida( btSphereShape* shape, const float posX, const float posY,
 		const float posZ, const float masa, const float angHCanon, const float angVCanon,
