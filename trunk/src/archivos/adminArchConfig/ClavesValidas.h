@@ -27,7 +27,8 @@ static const string PISO_BARCO = "PISO_BARCO";
 static const string CASCO_BARCO = "CASCO_BARCO";
 static const string BARANDA_BARCO = "BARANDA_BARCO";
 static const string PALO_BARCO = "PALO_BARCO";
-static const string TELA_VELA = "TELA_VELA";
+static const string TELA_VELA_PRINCIPAL = "TELA_VELA_PRINCIPAL";
+static const string TELA_VELA_SECUNDARIA = "TELA_VELA_SECUNDARIA";
 static const string PALO_VELA = "PALO_VELA";
 
 static const string CLAVE_VALIDAS[] =
@@ -48,7 +49,8 @@ static const string CLAVE_VALIDAS[] =
 		CASCO_BARCO,
 		BARANDA_BARCO,
 		PALO_BARCO,
-		TELA_VELA,
+		TELA_VELA_PRINCIPAL,
+		TELA_VELA_SECUNDARIA,
 		PALO_VELA
 };
 
