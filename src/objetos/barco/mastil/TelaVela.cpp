@@ -52,8 +52,6 @@ void TelaVela::generarCoordPtos ()
 			ptos[indice++] = v;
 		}
 	}
-
-//	cout<<"indice: "<<indice<<endl;
 }
 
 void TelaVela::generarIndice ()
@@ -123,16 +121,15 @@ void TelaVela::generarCoodText ()
 	unsigned int indice = 0, nV, nU;
 	double  u, v, incU, incV;
 
-	incU = LARGO / CANT_PTOS_LARGO;
-	incV = ALTO / CANT_PTOS_ALTO;
+	incU = LARGO / (CANT_PTOS_LARGO-1);
+	incV = ALTO / (CANT_PTOS_ALTO-1);
 
 	for (  v = 0, nV = 0; nV < CANT_PTOS_ALTO; v += incV, nV++ )
 	{
 		for ( u = 0, nU = 0; nU < CANT_PTOS_LARGO; u += incU, nU++ )
 		{
-			text[indice++] = u / CANT_PTOS_LARGO;
-			text[indice++] = v / CANT_PTOS_ALTO;
+			text[indice++] = v / ALTO;
+			text[indice++] = u / LARGO;
 		}
 	}
-//	cout<<"indice_t: "<<indice<<endl;
 }

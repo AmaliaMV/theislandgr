@@ -14,5 +14,6 @@ PISO_BARCO = texturas/pisoBarco.bmp
 CASCO_BARCO = texturas/madera4.bmp
 BARANDA_BARCO = texturas/madera4.bmp
 PALO_BARCO = texturas/madera_roble.bmp
-TELA_VELA = texturas/tela_gris.bmp
+TELA_VELA_PRINCIPAL = texturas/tela_pirata.bmp
+TELA_VELA_SECUNDARIA = texturas/tela_vela_sec.bmp
 PALO_VELA = texturas/madera_baranda.bmp

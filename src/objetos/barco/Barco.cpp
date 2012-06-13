@@ -43,9 +43,9 @@ Barco::~Barco()
 
 ComponenteBarco* Barco::crearPaloMayor(AdministradorArchivo *administrador, ComponenteBarco *parteBarco)
 {
-	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_PPAL, CteBarco::ALTO_VELA_PPAL, 0.08,
+	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA_PRINCIPAL), CteBarco::LARGO_VELA_PPAL, CteBarco::ALTO_VELA_PPAL, 0.08,
 				administrador->getNombreArchivo(PALO_VELA), 0.50, new TVelaPrincipal( CteBarco::LARGO_VELA_PPAL/2.0, 20.0 ),
-			new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_CHICA_PPAL, CteBarco::ALTO_VELA_CHICA_PPAL, 0.09,
+			new Vela ( administrador->getNombreArchivo(TELA_VELA_SECUNDARIA), CteBarco::LARGO_VELA_CHICA_PPAL, CteBarco::ALTO_VELA_CHICA_PPAL, 0.09,
 				administrador->getNombreArchivo(PALO_VELA), 0.35, new TVelaPrincipal( CteBarco::LARGO_VELA_CHICA_PPAL/2.0, 35.0 ),
 			new Mirador ( administrador->getNombreArchivo(PALO_VELA), administrador->getNombreArchivo(PISO_BARCO), administrador->getNombreArchivo(PALO_VELA), 2.5,
 				new TMirador( CteBarco::ALTURA_MIRADOR ),
@@ -56,9 +56,9 @@ ComponenteBarco* Barco::crearPaloMayor(AdministradorArchivo *administrador, Comp
 
 ComponenteBarco* Barco::crearMastilSecundario(AdministradorArchivo *administrador, float desplazamiento,  ComponenteBarco *parteBarco)
 {
-	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_SEC, CteBarco::ALTO_VELA_SEC, 0.08,
+	return 	new Vela ( administrador->getNombreArchivo(TELA_VELA_SECUNDARIA), CteBarco::LARGO_VELA_SEC, CteBarco::ALTO_VELA_SEC, 0.08,
 				administrador->getNombreArchivo(PALO_VELA), 0.50, new TVelaSecundaria( CteBarco::LARGO_VELA_SEC/2.0, 18.0, desplazamiento ),
-			new Vela ( administrador->getNombreArchivo(TELA_VELA), CteBarco::LARGO_VELA_CHICA_SEC, CteBarco::ALTO_VELA_CHICA_SEC, 0.09,
+			new Vela ( administrador->getNombreArchivo(TELA_VELA_SECUNDARIA), CteBarco::LARGO_VELA_CHICA_SEC, CteBarco::ALTO_VELA_CHICA_SEC, 0.09,
 				administrador->getNombreArchivo(PALO_VELA), 0.35, new TVelaSecundaria( CteBarco::LARGO_VELA_CHICA_SEC/2.0, 31.0, desplazamiento ),
 			new Palo ( administrador->getNombreArchivo(PALO_BARCO), CteBarco::ALTURA_PALO_SEC, 0.75, 0.35,
 				new TMastilSecundario( desplazamiento ), parteBarco
