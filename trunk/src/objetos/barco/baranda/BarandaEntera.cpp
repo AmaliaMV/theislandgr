@@ -19,8 +19,8 @@ BarandaEntera::BarandaEntera( string nombreTextura, float altura, float longitud
 
 	this->abajo = new ParteAbajo ( textura, ALTURA / 2, LONGITUD, INICIO, FIN );
 	this->arriba = new ParteArriba ( textura, ALTURA / 2, LONGITUD, INICIO, FIN );
-	this->abajoAdentro = new ParteAbajo ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.01, -1 );
-	this->arribaAdentro = new ParteArriba ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.01, -1 );
+	this->abajoAdentro = new ParteAbajo ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.05, -1 );
+	this->arribaAdentro = new ParteArriba ( textura, ALTURA / 2, LONGITUD, INICIO, FIN, 0.05, -1 );
 
 	this->inicializarLuz();
 	this->compilarDisplayList();
