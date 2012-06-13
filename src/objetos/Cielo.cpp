@@ -20,7 +20,7 @@ Cielo::Cielo( string nombreTextura, float radio )
 	cantPtosY = floor(DELTA_FI) + 1;
 
 	this->inicializarLuz();
-	this->init(cantPtosX * cantPtosY, (cantPtosY-1)*cantPtosX*2, GL_TRIANGLE_STRIP);
+	this->init(cantPtosX * cantPtosY, (cantPtosY-1)*(cantPtosX)*2, GL_TRIANGLE_STRIP);
 }
 
 Cielo::~Cielo()
@@ -49,12 +49,15 @@ void Cielo::generarCoordPtos()
 
 void Cielo::generarIndice()
 {
-	unsigned int posPto = 0;
+	unsigned int posIndice = 0;
 
-	for (unsigned int posIndice = 0; posIndice < this->getCantTamIndice(); posPto += CteObjeto::CANT_COORD_PTO)
+	for (unsigned int fil = 0 ; fil < cantPtosY - 1; fil ++)
 	{
-		indice[posIndice++] = posPto / 3;
-		indice[posIndice++] = posPto/3 + cantPtosX; // el siguiente pto ya q usamos triangle strip
+		for (unsigned int col = 0 ; col < cantPtosX; col ++)
+		{
+			indice[posIndice++] = col + fil * cantPtosY;
+			indice[posIndice++] = col + (fil + 1) * cantPtosY;
+		}
 	}
 }
 
@@ -63,15 +66,15 @@ void Cielo::generarCoodText()
 	float pasoX, pasoY;
 	unsigned int indice = 0;
 
-	pasoX = 1.0 / cantPtosX;
-	pasoY = 1.0 / cantPtosY;
+	pasoX = 1.0 / (cantPtosX-1);
+	pasoY = 1.0 / (cantPtosY-1);
 
-	for (unsigned int col = 0 ; col < cantPtosY; col ++)
+	for (unsigned int col = 0 ; col < cantPtosX; col ++)
 	{
-		for (unsigned int fil = 0 ; fil < cantPtosX; fil ++)
+		for (unsigned int fil = 0 ; fil < cantPtosY; fil ++)
 		{
-			text[indice++] = pasoX * fil;
 			text[indice++] = pasoY * col;
+			text[indice++] = pasoX * fil;
 		}
 	}
 }
