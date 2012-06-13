@@ -151,10 +151,9 @@ void BordeIsla::generarCoodText()
 	float incY, valorTextY;
 	int nivel;
 
-	incY = 0.70 / ( ptosVerticales * 30/9 ); //todo
+	incY = 0.70 / ( ptosVerticales * 30/9 );
 	valorTextY = 1.0;
 	pos = 0;
-
 	for ( nivel = (ptosVerticales - 1);  0 <= nivel; nivel-- )
 	{
 		for ( ptoNum = 0; ptoNum < ptosHorizontales-1; ptoNum++) //no considero el primer pto q quite
