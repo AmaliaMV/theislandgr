@@ -38,7 +38,7 @@ Ladrillo* BuildLadrillo::construirLadrilloParedFrente( Textura* textura, btBoxSh
 	}
 
 	/*primero calculo las coordenadas de la textura para el frente del ladrillo*/
-	x0 = getCoordTextH( posY - factorT * shape->getHalfExtentsWithMargin().getY(), factorT, factorX, factorY ); //TODO cambiar los getY en la parte de abajo
+	x0 = getCoordTextH( posY - factorT * shape->getHalfExtentsWithMargin().getY(), factorT, factorX, factorY );
 	xf = getCoordTextH( posY + factorT * shape->getHalfExtentsWithMargin().getY(), factorT, factorX, factorY );
 	y0 = getCoordTextV( posZ - shape->getHalfExtentsWithMargin().getZ() );
 	yf = getCoordTextV( posZ + shape->getHalfExtentsWithMargin().getZ() );

@@ -59,7 +59,7 @@ void BSplineCerradaDibujable::dibujarPtosCtrl() const
 
 	glBegin(GL_POINTS);
 
-		for (i = 0; i < this->getPuntosControl()->getCantPtos(); i++) // todo ver de hacerlo con ClientState!!!
+		for (i = 0; i < this->getPuntosControl()->getCantPtos(); i++)
 		{
 			v = this->getPuntosControl()->getPto(i);
 			glVertex3fv( v );
