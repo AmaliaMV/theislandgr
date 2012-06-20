@@ -8,6 +8,13 @@
 #include "Mundo.h"
 #define ESCALADOZ 1.5
 #define TRASLASIONZ 1.5
+
+bool comparar_distancia (NodoPalmera* palm1, NodoPalmera* palm2)
+{
+  if (palm1->getDistancia() < palm2->getDistancia()) return false;
+  else return true;
+}
+
 Mundo::Mundo(string nombreArchivoNivel)
 {
 	AdministradorArchivo *admin = new AdministradorArchivo ( nombreArchivoNivel );
@@ -31,6 +38,13 @@ Mundo::Mundo(string nombreArchivoNivel)
 	pausa = false;
 
 	adminBombas = new AdminBombas( fisica, (CteBarco::RADIO_X - 5.0 + this->barco->getTCanon()->getLargoCanon()) * 0.25, (CteBarco::RADIO_Z - 2* CteMundo::NIVEL_AGUA + 1.8) * 0.25 );
+
+	palmeras = new list<NodoPalmera*>;
+
+	palmeras->push_back(new NodoPalmera(palmera, -10,   0));
+	palmeras->push_back(new NodoPalmera(palmera, -10, -10));
+	palmeras->push_back(new NodoPalmera(palmera,   8, -10));
+	palmeras->push_back(new NodoPalmera(palmera, -17,   6));
 }
 
 void Mundo::actualizar()
@@ -45,7 +59,7 @@ void Mundo::actualizar()
 	}
 }
 
-void Mundo::dibujar()
+void Mundo::dibujar(float xEYE, float yEYE)
 {
 	cielo->dibujar();
 
@@ -68,16 +82,26 @@ void Mundo::dibujar()
 	castillo->dibujar();
 	adminBombas->dibujarBombas();
 
-	glPushMatrix();
-		glTranslatef(-10.0,0.0, CteMundo::ALTURA_ISLA);
-		palmera->dibujar();
-		glTranslatef(0.0,-10.0, 0.0 );
-		palmera->dibujar();
-		glTranslatef(18.0,0.0, 0.0);
-		palmera->dibujar();
-		glTranslatef(-25.0, 16.0, 0.0);
-		palmera->dibujar();
-	glPopMatrix();
+	list<NodoPalmera*>::iterator itPalm = this->palmeras->begin();
+
+	for (; itPalm != this->palmeras->end(); itPalm++)
+		(*itPalm)->calcularDistancia(xEYE, yEYE);
+
+	this->palmeras->sort(comparar_distancia);
+
+	for (itPalm = this->palmeras->begin(); itPalm != this->palmeras->end(); itPalm++)
+		(*itPalm)->dibujar();
+
+//	glPushMatrix();
+//		glTranslatef(-10.0,0.0, CteMundo::ALTURA_ISLA);
+//		palmera->dibujar();
+//		glTranslatef(0.0,-10.0, 0.0 );
+//		palmera->dibujar();
+//		glTranslatef(18.0,0.0, 0.0);
+//		palmera->dibujar();
+//		glTranslatef(-25.0, 16.0, 0.0);
+//		palmera->dibujar();
+//	glPopMatrix();
 }
 void Mundo::reiniciarFisica()
 {
@@ -107,6 +131,13 @@ void Mundo::lanzarBomba()
 
 Mundo::~Mundo()
 {
+	list<NodoPalmera*>::iterator itPalm = this->palmeras->begin();
+
+	for (; itPalm != this->palmeras->end(); itPalm++)
+		delete (*itPalm);
+
+	delete this->palmeras;
+
 	delete piso;
 	delete agua;
 	delete cielo;

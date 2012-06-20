@@ -11,7 +11,7 @@
 #include "Agua.h"
 #include "Cielo.h"
 #include "TBarco.h"
-#include "Palmera.h"
+#include "NodoPalmera.h"
 #include "isla/Isla.h"
 #include "barco/Barco.h"
 #include "castillo/Castillo.h"
@@ -29,7 +29,7 @@ public:
 	 * 					 a los otros archivos que se usarn para dibujar
 	 * 					 el mundo*/
 	Mundo( string nombreArchivoNivel );
-	void dibujar();
+	void dibujar(float xEYE, float yEYE);
 	void actualizar();
 	void reiniciarFisica();
 	void pausar();
@@ -52,6 +52,8 @@ private:
 	AdminBombas *adminBombas;
 	PisoFisico* piso;
 	Fisica* fisica;
+
+	list<NodoPalmera*>* palmeras;
 
 	bool pausa;
 };

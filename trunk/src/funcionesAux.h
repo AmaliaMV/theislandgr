@@ -148,7 +148,7 @@ void dibujar3D()
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-	mundo->dibujar();
+	mundo->dibujar(adminCamaras->getCamaraActual()->getEye()[0], adminCamaras->getCamaraActual()->getEye()[1]);
 }
 
 void OnIdle (void)

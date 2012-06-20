@@ -55,7 +55,6 @@ void PuntosControl::sacarUltPto()
 
 float* PuntosControl::getPto( unsigned int pto ) const
 {
-	//todo ver el tema de la exception
 	if ( pto > cantPto)
 		throw new ECurvas("PuntoControl. El pto al que se quiere acceder no existe");
 
